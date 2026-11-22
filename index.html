@@ -1,0 +1,721 @@
+<title>London Job Hunt</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: recruiter's pipeline desk. Sticky header with three views (board, finder, stats); attention strip above a horizontally scrolling kanban that collapses to one stage at a time on phones. */
+:root{
+  --bg:#eef1ef; --surface:#ffffff; --sunk:#e3e8e5; --ink:#17201b; --ink2:#47524c; --ink3:#78837d; --line:#d4dbd7;
+  --accent:#1f5e46; --accent-ink:#ffffff; --accent-soft:#d9eae1;
+  --warn:#9a5507; --warn-soft:#fbefdb; --bad:#b0281f; --bad-soft:#fbe5e2; --good:#1d7449; --good-soft:#dff2e7;
+  --s-todo:#8a948f; --s-applied:#3567c9; --s-conv:#7a4fc4; --s-int:#c9820a; --s-final:#d0571b; --s-offer:#1d8a55; --s-rej:#b0281f; --s-wd:#9aa29e;
+  --src-csm:#0e7a6c; --src-pm:#7a3fb8; --src-pub:#b4610d;
+  --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#111613; --surface:#1a201c; --sunk:#141a16; --ink:#e8eee9; --ink2:#b4beb8; --ink3:#7f8a84; --line:#2b332e;
+  --accent:#6fcf9f; --accent-ink:#0f1a14; --accent-soft:#1c3328;
+  --warn:#f0b062; --warn-soft:#33260f; --bad:#ff8c80; --bad-soft:#3a1a17; --good:#6fd39c; --good-soft:#163024;
+  --s-todo:#8f9a94; --s-applied:#7aa2f0; --s-conv:#b08ef0; --s-int:#f0b445; --s-final:#f08a55; --s-offer:#5fd49a; --s-rej:#ff8c80; --s-wd:#78827d;
+  --src-csm:#5fd1bf; --src-pm:#c39cf0; --src-pub:#f0aa62; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#111613; --surface:#1a201c; --sunk:#141a16; --ink:#e8eee9; --ink2:#b4beb8; --ink3:#7f8a84; --line:#2b332e;
+  --accent:#6fcf9f; --accent-ink:#0f1a14; --accent-soft:#1c3328;
+  --warn:#f0b062; --warn-soft:#33260f; --bad:#ff8c80; --bad-soft:#3a1a17; --good:#6fd39c; --good-soft:#163024;
+  --s-todo:#8f9a94; --s-applied:#7aa2f0; --s-conv:#b08ef0; --s-int:#f0b445; --s-final:#f08a55; --s-offer:#5fd49a; --s-rej:#ff8c80; --s-wd:#78827d;
+  --src-csm:#5fd1bf; --src-pm:#c39cf0; --src-pub:#f0aa62; color-scheme:dark }
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:14px;line-height:1.45}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--surface)}
+button,select,input{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
+.top{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;padding-block:12px 0}
+.brand{display:flex;align-items:baseline;gap:10px;min-width:0}
+.brand h1{font-family:var(--f-display);font-size:22px;font-weight:700;letter-spacing:-.02em;margin:0}
+.brand span{color:var(--ink3);font-size:12px}
+.sync{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink2)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ink3);flex:none}
+.dot.live{background:var(--good);box-shadow:0 0 0 3px var(--good-soft)}
+.dot.err{background:var(--bad)}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:6px 12px;font-size:13px;font-weight:500;text-decoration:none;color:var(--ink);display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--ink3)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.sm{padding:3px 9px;font-size:12px}
+.btn:disabled{opacity:.55;cursor:default}
+nav.tabs{display:flex;gap:2px;overflow-x:auto;margin-top:6px}
+nav.tabs a{padding:10px 14px;font-weight:600;color:var(--ink3);text-decoration:none;border-bottom:2px solid transparent;white-space:nowrap}
+nav.tabs a[aria-current="page"]{color:var(--ink);border-color:var(--accent)}
+nav.tabs .n{font-family:var(--f-mono);font-size:11px;background:var(--sunk);color:var(--ink2);border-radius:10px;padding:1px 7px;margin-left:6px}
+
+main{padding-block:18px 56px;display:block}
+.view{display:flex;flex-direction:column;gap:16px}
+.banner{background:var(--warn-soft);color:var(--warn);border-radius:var(--r);padding:10px 14px;font-size:13px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+
+/* attention strip */
+.attn{display:flex;flex-direction:column;gap:8px}
+.attn h2,.sec-h{font-family:var(--f-display);font-size:15px;font-weight:600;margin:0;display:flex;align-items:center;gap:8px}
+.attn h2 .n{font-family:var(--f-mono);font-size:12px;color:var(--ink3);font-weight:400}
+.attn-list{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+.nudge{flex:0 0 250px;display:flex;gap:10px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--warn);border-radius:8px;padding:9px 10px;text-align:left}
+.nudge.bad{border-left-color:var(--bad)}
+.nudge .why{font-size:12px;color:var(--warn);font-weight:600}
+.nudge.bad .why{color:var(--bad)}
+.nudge .t{font-size:13px;font-weight:600;line-height:1.3}
+.nudge .c{font-size:12px;color:var(--ink2)}
+.quiet{font-size:13px;color:var(--ink3)}
+
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.search{flex:1 1 220px;max-width:360px;min-width:0;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:7px 11px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:12px;font-weight:500;color:var(--ink2)}
+.chip[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.hint{font-size:12px;color:var(--ink3)}
+
+/* board */
+.stage-pick{display:none;gap:6px;overflow-x:auto;padding-bottom:2px}
+.stage-pick .chip{white-space:nowrap}
+.board{display:flex;gap:10px;overflow-x:auto;padding-bottom:10px;align-items:flex-start}
+.col{flex:0 0 268px;background:var(--sunk);border-radius:var(--r);display:flex;flex-direction:column;max-height:calc(100vh - 250px);min-height:140px}
+.col.drop{outline:2px dashed var(--accent);outline-offset:-2px}
+.col h3{margin:0;padding:11px 12px 7px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px}
+.col h3 i{width:9px;height:9px;border-radius:3px;flex:none}
+.col h3 .n{font-family:var(--f-mono);font-weight:400;color:var(--ink3);font-size:12px}
+.col h3 button{margin-left:auto;border:0;background:none;color:var(--ink3);font-size:12px;padding:2px 4px}
+.col .cards{overflow-y:auto;padding:2px 8px 10px;display:flex;flex-direction:column;gap:7px}
+.col.min{flex-basis:46px}
+.col.min .cards{display:none}
+.col.min h3{writing-mode:vertical-rl;transform:rotate(180deg);padding:12px 0;align-items:center;height:200px}
+.col.min h3 button{margin:0 0 6px}
+.empty-col{font-size:12px;color:var(--ink3);padding:6px 4px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:9px 10px;cursor:grab;text-align:left;width:100%;display:flex;flex-direction:column;gap:7px}
+.card:hover{border-color:var(--ink3)}
+.card.dragging{opacity:.4}
+.row1{display:flex;gap:9px;align-items:flex-start;min-width:0}
+.row1 > div{min-width:0;flex:1}
+.co{font-size:12px;color:var(--ink2);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.role{font-weight:600;font-size:13px;line-height:1.3}
+.meta{display:flex;flex-wrap:wrap;gap:5px;font-size:11px;color:var(--ink2)}
+.tag{background:var(--sunk);border-radius:5px;padding:1px 6px;font-family:var(--f-mono);font-size:11px}
+.tag.warn{background:var(--warn-soft);color:var(--warn)}
+.tag.bad{background:var(--bad-soft);color:var(--bad)}
+.tag.prep{background:var(--accent-soft);color:var(--accent);font-family:var(--f-body);font-weight:600}
+.next{font-size:12px;background:var(--sunk);border-radius:6px;padding:5px 7px;color:var(--ink2)}
+.next.due{background:var(--warn-soft);color:var(--warn)}
+.next.over{background:var(--bad-soft);color:var(--bad)}
+.skel{height:64px;border-radius:9px;background:var(--surface);opacity:.55}
+
+.logo{flex:none;width:30px;height:30px;border-radius:7px;display:grid;place-items:center;font-weight:700;font-size:12px;color:#fff;overflow:hidden;background:var(--sunk)}
+.logo img{width:100%;height:100%;object-fit:contain;background:#fff;padding:3px}
+.logo.lg{width:40px;height:40px;border-radius:9px;font-size:14px}
+
+/* finder */
+.leads{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:10px}
+.lead{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:13px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.lead .hd{display:flex;gap:11px;align-items:flex-start}
+.lead .hd > div{min-width:0;flex:1}
+.lead .t{font-weight:600;line-height:1.3}
+.lead .c{font-size:12px;color:var(--ink2)}
+.badges{display:flex;flex-wrap:wrap;gap:5px}
+.b{font-size:11px;font-weight:600;border-radius:5px;padding:2px 7px;background:var(--sunk);color:var(--ink2)}
+.b.src{color:var(--surface)}
+.b.src.csm{background:var(--src-csm)} .b.src.pm{background:var(--src-pm)} .b.src.pub{background:var(--src-pub)}
+.b.new{background:var(--accent);color:var(--accent-ink)}
+.b.best{background:var(--good-soft);color:var(--good)}
+.b.closing{background:var(--bad-soft);color:var(--bad)}
+.b.tracked{background:var(--accent-soft);color:var(--accent)}
+.facts{font-size:12px;color:var(--ink2);display:flex;flex-wrap:wrap;gap:4px 12px}
+.flags{font-size:12px;color:var(--ink3);margin:0;padding-left:16px}
+.lead .why{font-size:12px;color:var(--ink2)}
+.lead .ft{display:flex;align-items:center;gap:8px;margin-top:auto;padding-top:2px}
+.lead .ft .btn{margin-left:auto}
+.grouphd{grid-column:1/-1;font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);margin-top:6px}
+.empty{color:var(--ink3);padding:36px;text-align:center;grid-column:1/-1}
+.note{font-size:12px;color:var(--ink3)}
+
+/* stats */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.kpi{background:var(--surface);padding:12px 14px;display:flex;flex-direction:column;gap:2px}
+.kpi b{font-family:var(--f-display);font-size:26px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.kpi span{font-size:12px;color:var(--ink2)}
+.panels{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:12px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.chart{width:100%;height:auto;display:block}
+.chart text{fill:var(--ink3);font-family:var(--f-mono);font-size:10px}
+.chart .v{fill:var(--ink2)}
+.hbar{display:grid;grid-template-columns:110px 1fr 36px;gap:8px;align-items:center;font-size:12px}
+.hbar .tr{background:var(--sunk);border-radius:4px;height:12px;overflow:hidden}
+.hbar .fl{height:100%;border-radius:4px}
+.hbar .num{font-family:var(--f-mono);text-align:right;color:var(--ink2)}
+
+/* drawer */
+.drawer{position:fixed;inset:0;background:rgba(10,16,12,.35);z-index:50}
+.sheet{position:absolute;right:0;top:0;bottom:0;width:min(440px,100%);background:var(--surface);border-left:1px solid var(--line);padding:calc(20px + env(safe-area-inset-top,0px)) max(20px,env(safe-area-inset-right,0px)) calc(20px + env(safe-area-inset-bottom,0px)) 20px;overflow-y:auto;display:flex;flex-direction:column;gap:16px}
+.sheet h2{font-family:var(--f-display);font-size:19px;margin:0;line-height:1.25}
+.sheet dl{display:grid;grid-template-columns:110px 1fr;gap:8px 12px;font-size:13px;margin:0}
+.sheet dt{color:var(--ink3)} .sheet dd{margin:0;word-break:break-word}
+.sheet select{border:1px solid var(--line);border-radius:6px;padding:4px 6px;background:var(--surface)}
+.prep-list{display:flex;flex-direction:column;gap:6px}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:8px;font-size:13px;z-index:60;max-width:calc(100% - 32px)}
+
+/* companies */
+.lookup{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:10px}
+.lookup h2{font-family:var(--f-display);font-size:18px;margin:0}
+.lookup form{display:flex;flex-wrap:wrap;gap:8px}
+.lookup input{flex:1 1 240px;min-width:0;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:9px 12px;font-size:15px}
+.recent{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.focus-co{display:flex;gap:12px;align-items:flex-start;background:var(--accent-soft);border-radius:var(--r);padding:14px}
+.focus-co h3{font-family:var(--f-display);font-size:18px;margin:0}
+.focus-co p{margin:4px 0 0;color:var(--ink2);max-width:70ch}
+.comps{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:10px}
+.comp{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:13px;display:flex;flex-direction:column;gap:9px;min-width:0}
+.comp .links{display:flex;flex-wrap:wrap;gap:6px}
+.ta{border-top:1px dashed var(--line);padding-top:10px;display:flex;flex-direction:column;gap:9px}
+.ta h4{margin:0;font-size:13px}
+.ta form{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.ta form input,.ta form select,.ta form textarea{border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:6px 8px;font-size:13px;min-width:0}
+.ta form textarea{grid-column:1/-1;resize:vertical;min-height:52px}
+.ta form .full{grid-column:1/-1}
+.contacts{display:flex;flex-direction:column;gap:5px;font-size:12px}
+.contact{display:flex;gap:8px;align-items:center;justify-content:space-between;background:var(--sunk);border-radius:6px;padding:5px 8px}
+.draft{background:var(--sunk);border-radius:8px;padding:10px;font-size:13px;white-space:pre-wrap;display:flex;flex-direction:column;gap:6px}
+.draft .lbl{font-family:var(--f-mono);font-size:11px;color:var(--ink3);text-transform:uppercase;letter-spacing:.05em}
+.thinking{color:var(--ink3);font-size:13px}
+
+@media (max-width:760px){
+  .ta form{grid-template-columns:1fr}
+  .stage-pick{display:flex}
+  .board{display:block}
+  .col{display:none;max-height:none}
+  .col.on{display:flex}
+  .col h3 button{display:none}
+  .card{cursor:pointer}
+  .brand span{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<header>
+  <div class="gut">
+    <div class="top">
+      <div class="brand"><h1>London Job Hunt</h1><span>CSM · Product · Public sector</span></div>
+      <div class="sync"><span class="dot" id="dot"></span><span id="syncTxt">Connecting to Notion…</span>
+        <button class="btn sm" id="refresh" type="button">Refresh</button></div>
+    </div>
+    <nav class="tabs" aria-label="Views">
+      <a href="#board" data-view="board">Applications<span class="n" id="nBoard">–</span></a>
+      <a href="#finder" data-view="finder">Job finder<span class="n" id="nFinder">–</span></a>
+      <a href="#companies" data-view="companies">Companies</a>
+      <a href="#stats" data-view="stats">Stats</a>
+    </nav>
+  </div>
+</header>
+
+<main class="gut">
+  <div class="banner" id="banner" hidden></div>
+
+  <section class="view" id="v-board">
+    <div class="attn" id="attn"></div>
+    <div class="toolbar">
+      <input class="search" id="qBoard" type="search" placeholder="Search company or role" aria-label="Search applications">
+      <button class="chip" id="hideClosed" type="button" aria-pressed="false">Hide rejected &amp; withdrawn</button>
+      <span class="hint" id="dragHint">Drag a card to another column to update its status in Notion.</span>
+    </div>
+    <div class="stage-pick" id="stagePick" role="tablist" aria-label="Stage"></div>
+    <div class="board" id="board"></div>
+  </section>
+
+  <section class="view" id="v-finder" hidden>
+    <div class="toolbar">
+      <input class="search" id="qFinder" type="search" placeholder="Search title, company or notes" aria-label="Search roles">
+      <button class="chip" data-src="csm" type="button" aria-pressed="true">London CSM</button>
+      <button class="chip" data-src="pm" type="button" aria-pressed="true">London PM</button>
+      <button class="chip" data-src="pub" type="button" aria-pressed="true">UK public sector</button>
+      <button class="chip" id="bestFit" type="button" aria-pressed="false">Best fit only</button>
+      <button class="chip" id="hideTracked" type="button" aria-pressed="true">Hide roles already in Notion</button>
+    </div>
+    <div class="leads" id="leads"><div class="empty">Loading roles from your job agents…</div></div>
+    <p class="note" id="leadNote"></p>
+  </section>
+
+  <section class="view" id="v-companies" hidden>
+    <div class="lookup">
+      <h2>Find companies like one you want</h2>
+      <p class="hint" style="margin:0">Type a company you're interested in. Claude lists competitors in the same sector with a London presence, then you can check each one for open roles and find its recruiters on LinkedIn.</p>
+      <form id="coForm"><input id="coInput" type="text" placeholder="e.g. AlphaSense" aria-label="Company name" autocomplete="off"><button class="btn primary" type="submit" id="coGo">Find competitors</button><button class="btn" type="button" id="coStop" hidden>Stop</button></form>
+      <div class="recent" id="coRecent"></div>
+    </div>
+    <div id="coOut"><p class="quiet">Try a company from your board, such as AlphaSense, Guidepoint or Metaview. Results come from Claude's own knowledge and may miss very recent changes, so check each company's careers page.</p></div>
+  </section>
+
+  <section class="view" id="v-stats" hidden>
+    <div class="kpis" id="kpis"></div>
+    <div class="panels">
+      <div class="panel"><h2 class="sec-h">Applications per week</h2><div id="weekly"></div></div>
+      <div class="panel"><h2 class="sec-h">Where things stand</h2><div id="funnel" style="display:flex;flex-direction:column;gap:8px"></div></div>
+      <div class="panel"><h2 class="sec-h">By track</h2><div id="tracks" style="display:flex;flex-direction:column;gap:8px"></div><p class="note">Track is guessed from the role title: customer or client success, account and engagement roles count as CSM; product, analyst and PMM roles as Product.</p></div>
+    </div>
+  </section>
+</main>
+
+<div class="drawer" id="drawer" hidden><div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Application details"></div></div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+/* ---------- config ---------- */
+const NOTION = "Notion";
+const DS = "636ebc2a-b03c-4227-9487-cd5a02b45f0d";           // Notion "Applications" data source
+const SQL = `SELECT url, "Role", "Company", "Status", "date:Date applied:start" AS applied, "Next step", "date:Next step date:start" AS next_date, "Salary range", "Location", "Source / board", "Job posting URL", createdTime FROM "collection://${DS}" WHERE "Status" IS NOT NULL`;
+const STAGES = [
+  {k:"To apply",v:"--s-todo"},{k:"Applied",v:"--s-applied"},{k:"In conversation",v:"--s-conv"},{k:"Interviewing",v:"--s-int"},
+  {k:"Final stage",v:"--s-final"},{k:"Offer",v:"--s-offer"},{k:"Rejected",v:"--s-rej",closed:true},{k:"Withdrawn",v:"--s-wd",closed:true}
+];
+const ACTIVE = ["Applied","In conversation","Interviewing","Final stage"];
+const CHASE_DAYS = 21;
+const SRC = {csm:"CSM agent",pm:"PM agent",pub:"Public sector"};
+const BEST = {Core:1,Strong:1};
+
+/* ---------- state ---------- */
+let apps = null, leadsData = null, logos = {}, domains = {}, prep = [];
+let mcp = null, hideClosed = false, mobileStage = "Applied";
+const collapsed = new Set(["Withdrawn"]);
+const srcOn = new Set(["csm","pm","pub"]); let bestOnly = false, hideTracked = true;
+try{ const s = JSON.parse(localStorage.getItem("ljh-ui")||"{}"); if(s.hideClosed) hideClosed = true; if(s.mobileStage) mobileStage = s.mobileStage; }catch(e){}
+const saveUi = ()=>{ try{ localStorage.setItem("ljh-ui", JSON.stringify({hideClosed, mobileStage})) }catch(e){} };
+
+/* ---------- helpers ---------- */
+const $ = s=>document.querySelector(s);
+const esc = s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const norm = s=>String(s||"").toLowerCase().replace(/\(.*?\)/g,"").replace(/[^a-z0-9]/g,"");
+const TODAY = (()=>{const d=new Date(); d.setHours(0,0,0,0); return d})();
+const dayDiff = d=>d?Math.round((new Date(String(d).slice(0,10)+"T00:00:00")-TODAY)/864e5):null;   // + future, - past
+const fmtD = d=>d?new Date(String(d).slice(0,10)+"T00:00:00").toLocaleDateString("en-GB",{day:"numeric",month:"short"}):"";
+const ago = d=>{const n=-dayDiff(d); return n===0?"today":n===1?"1d ago":n+"d ago"};
+function toast(m){const t=$("#toast");t.textContent=m;t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>t.hidden=true,2800)}
+function hue(s){let h=0;for(const ch of s)h=(h*31+ch.charCodeAt(0))%360;return h}
+function logo(name, big){
+  const n=(name||"?").trim(); const cls="logo"+(big?" lg":"");
+  const key=Object.keys(domains).find(k=>norm(k)===norm(n)) || Object.keys(domains).find(k=>norm(k).length>3 && (norm(n).startsWith(norm(k))||norm(k).startsWith(norm(n))&&norm(n).length>3));
+  const src=key&&logos[domains[key]];
+  if(src) return `<span class="${cls}"><img src="${esc(src)}" alt=""></span>`;
+  const w=n.replace(/[^A-Za-z0-9& ]/g," ").split(/\s+/).filter(Boolean);
+  const ini=(w.length>1?w[0][0]+w[1][0]:n.slice(0,2)).toUpperCase();
+  return `<span class="${cls}" style="background:hsl(${hue(n)} 42% 42%)" aria-hidden="true">${esc(ini)}</span>`;
+}
+const prepFor = a=>prep.filter(p=>{const m=p.match.toLowerCase(); return (a.company||"").toLowerCase().includes(m)||(a.role||"").toLowerCase().includes(m)});
+const track = role=>{const r=(role||"").toLowerCase();
+  if(/customer success|client success|\bcsm\b|account|engagement|onboarding|client|relations|membership/.test(r)) return "CSM";
+  if(/product|\bpm\b|analyst|pmm|marketing/.test(r)) return "Product"; return "Other"};
+function stageColor(k){const s=STAGES.find(x=>x.k===k);return s?`var(${s.v})`:"var(--ink3)"}
+
+/* attention rules: overdue / due-soon next steps, and applications gone quiet */
+function attention(a){
+  if(!a||STAGES.find(s=>s.k===a.status)?.closed||a.status==="Offer") return null;
+  const nd=dayDiff(a.nextDate);
+  if(nd!==null&&nd<0) return {lvl:"bad",why:`Next step overdue by ${-nd}d`,rank:0};
+  if(nd!==null&&nd<=3) return {lvl:"warn",why:nd===0?"Next step today":`Next step in ${nd}d`,rank:1};
+  if((a.status==="Interviewing"||a.status==="Final stage")&&!a.next&&!a.nextDate) return {lvl:"warn",why:"Interviewing, no next step logged",rank:2};
+  const ad=a.applied?-dayDiff(a.applied):null;
+  if(a.status==="Applied"&&ad!==null&&ad>=CHASE_DAYS) return {lvl:"warn",why:`No reply for ${ad}d: chase or close`,rank:3};
+  return null;
+}
+
+/* ---------- views / routing ---------- */
+const VIEWS=["board","finder","companies","stats"];
+function route(){
+  const v=VIEWS.includes(location.hash.slice(1))?location.hash.slice(1):"board";
+  VIEWS.forEach(x=>{$("#v-"+x).hidden=x!==v});
+  document.querySelectorAll("nav.tabs a").forEach(a=>{ if(a.dataset.view===v) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current") });
+}
+addEventListener("hashchange",route);
+
+/* ---------- board ---------- */
+function renderAttention(){
+  const el=$("#attn");
+  if(!apps){el.innerHTML="";return}
+  const items=apps.map(a=>({a,n:attention(a)})).filter(x=>x.n).sort((x,y)=>x.n.rank-y.n.rank);
+  el.innerHTML=`<h2>Needs attention <span class="n">${items.length}</span></h2>`+
+    (items.length?`<div class="attn-list">${items.map(({a,n})=>`<button class="nudge ${n.lvl}" type="button" data-open="${esc(a.id)}">${logo(a.company)}<span style="min-width:0"><span class="why">${esc(n.why)}</span><br><span class="t">${esc(a.role)}</span><br><span class="c">${esc(a.company||"—")}${a.next?" · "+esc(a.next):""}</span></span></button>`).join("")}</div>`
+      :`<p class="quiet">Nothing overdue. Next steps and applications quiet for ${CHASE_DAYS}+ days will show here.</p>`);
+}
+function card(a){
+  const n=attention(a); const nd=dayDiff(a.nextDate); const p=prepFor(a);
+  const nextCls=nd!==null&&nd<0?" over":nd!==null&&nd<=3?" due":"";
+  return `<div class="card" draggable="true" data-id="${esc(a.id)}" tabindex="0" role="button" aria-label="${esc(a.role)} at ${esc(a.company)}">
+    <div class="row1">${logo(a.company)}<div><div class="co">${esc(a.company||"—")}</div><div class="role">${esc(a.role)}</div></div></div>
+    <div class="meta">${a.applied?`<span class="tag${n&&n.rank===3?" warn":""}" title="Applied ${fmtD(a.applied)}">${ago(a.applied)}</span>`:""}${a.location?`<span class="tag">${esc(a.location)}</span>`:""}${a.salary?`<span class="tag">${esc(a.salary)}</span>`:""}${p.length?`<span class="tag prep">Prep ×${p.length}</span>`:""}</div>
+    ${a.next||a.nextDate?`<div class="next${nextCls}">→ ${esc(a.next||"Next step")}${a.nextDate?" · "+fmtD(a.nextDate):""}</div>`:""}
+  </div>`;
+}
+function renderBoard(){
+  const board=$("#board");
+  const cols=STAGES.filter(s=>!(hideClosed&&s.closed));
+  if(!cols.some(c=>c.k===mobileStage)) mobileStage="Applied";
+  if(!apps){
+    board.innerHTML=cols.map(c=>`<div class="col${c.k===mobileStage?" on":""}"><h3><i style="background:var(${c.v})"></i>${c.k}</h3><div class="cards"><div class="skel"></div><div class="skel"></div></div></div>`).join("");
+    $("#stagePick").innerHTML=""; return;
+  }
+  const q=norm($("#qBoard").value);
+  const list=apps.filter(a=>!q||norm(a.company+a.role).includes(q));
+  const count=k=>list.filter(a=>a.status===k).length;
+  $("#stagePick").innerHTML=cols.map(c=>`<button class="chip" type="button" role="tab" data-stage="${c.k}" aria-pressed="${c.k===mobileStage}">${c.k} ${count(c.k)}</button>`).join("");
+  board.innerHTML=cols.map(c=>{
+    const items=list.filter(a=>a.status===c.k).sort((x,y)=>(attention(y)?1:0)-(attention(x)?1:0)||(y.applied||y.created||"").localeCompare(x.applied||x.created||""));
+    const min=collapsed.has(c.k);
+    return `<div class="col${min?" min":""}${c.k===mobileStage?" on":""}" data-status="${c.k}">
+      <h3><i style="background:var(${c.v})"></i>${c.k}<span class="n">${items.length}</span><button type="button" data-collapse="${c.k}" aria-label="${min?"Expand":"Collapse"} ${c.k}">${min?"▸":"–"}</button></h3>
+      <div class="cards">${items.map(card).join("")||'<div class="empty-col">Nothing here</div>'}</div></div>`;
+  }).join("");
+  $("#nBoard").textContent=apps.filter(a=>ACTIVE.includes(a.status)).length;
+}
+
+/* ---------- finder ---------- */
+function renderLeads(){
+  if(!leadsData){return}
+  const L=leadsData.leads;
+  const keys=new Set((apps||[]).map(a=>norm(a.company)+"|"+norm(a.role)));
+  const cos=new Set((apps||[]).map(a=>norm(a.company)).filter(Boolean));
+  const q=$("#qFinder").value.toLowerCase();
+  let list=L.filter(l=>srcOn.has(l.src)&&(!bestOnly||BEST[l.fit])&&(!q||[l.title,l.company,l.industry,l.location,...(l.flags||[])].join(" ").toLowerCase().includes(q)));
+  list.forEach(l=>{l.tracked=keys.has(norm(l.company)+"|"+norm(l.title)); l.coMatch=!l.tracked&&cos.has(norm(l.company))});
+  list=list.filter(l=>!l.closing||dayDiff(l.closing)>=0);   // drop public-sector roles past their closing date
+  const total=list.length; if(hideTracked) list=list.filter(l=>!l.tracked);
+  list.sort((a,b)=>(b.added||"").localeCompare(a.added||"")||(BEST[b.fit]||0)-(BEST[a.fit]||0)||(b.posted||"").localeCompare(a.posted||""));
+  let html="",grp=null;
+  for(const l of list){ if(l.added!==grp){grp=l.added; html+=`<div class="grouphd">Added ${grp===leadsData.asOf?"in the latest run · ":""}${fmtD(grp)}</div>`} html+=lead(l,L.indexOf(l)) }
+  $("#leads").innerHTML=html||'<div class="empty">No roles match these filters.</div>';
+  $("#nFinder").textContent=L.filter(l=>l.added===leadsData.asOf).length+" new";
+  $("#leadNote").textContent=`${total} roles match. Lists from your three job agents, last rebuilt ${fmtD(leadsData.asOf)}; a daily task refreshes this tab at about 6pm, after the agents have run.`;
+}
+function lead(l,i){
+  const cd=l.closing?dayDiff(l.closing):null; const closing=cd!==null&&cd<=3;
+  return `<article class="lead">
+    <div class="hd">${logo(l.company,true)}<div><div class="t">${esc(l.title)}</div><div class="c">${esc(l.company)}${l.industry?" · "+esc(l.industry):""}</div></div></div>
+    <div class="badges"><span class="b src ${l.src}">${SRC[l.src]}</span>${l.added===leadsData.asOf?'<span class="b new">New</span>':""}${l.fit?`<span class="b${BEST[l.fit]?" best":""}">${esc(l.fit)} fit</span>`:""}${closing?`<span class="b closing">Closes ${cd===0?"today":fmtD(l.closing)}</span>`:""}${l.tracked?'<span class="b tracked">In Notion</span>':l.coMatch?'<span class="b">Applied here before</span>':""}</div>
+    <div class="facts">${l.location?`<span>${esc(l.location)}</span>`:""}${l.mode?`<span>${esc(l.mode)}</span>`:""}${l.salary?`<span>${esc(l.salary)}</span>`:""}${l.posted?`<span>Posted ${fmtD(l.posted)}</span>`:""}${l.closing&&!closing?`<span>Closes ${fmtD(l.closing)}</span>`:""}</div>
+    ${l.why?`<div class="why">${esc(l.why)}</div>`:""}
+    ${(l.flags||[]).length?`<ul class="flags">${l.flags.slice(0,3).map(f=>`<li>${esc(f)}</li>`).join("")}</ul>`:""}
+    <div class="ft">${l.url?`<a href="${esc(l.url)}" target="_blank" rel="noopener">View ad ↗</a>`:""}<a href="#companies" data-explore="${esc(l.company)}">Similar</a>${l.tracked?"":`<button class="btn sm primary" type="button" data-track="${i}">Add to “To apply”</button>`}</div>
+  </article>`;
+}
+
+/* ---------- stats ---------- */
+function renderStats(){
+  if(!apps){ $("#kpis").innerHTML='<div class="kpi"><b>–</b><span>Waiting for Notion</span></div>'; return }
+  const real=apps.filter(a=>a.status!=="To apply");
+  const by=k=>apps.filter(a=>a.status===k).length;
+  const progressed=by("In conversation")+by("Interviewing")+by("Final stage")+by("Offer");
+  const decided=progressed+by("Rejected");
+  const wk=real.filter(a=>a.applied&&-dayDiff(a.applied)<7).length;
+  const quiet=apps.filter(a=>a.status==="Applied"&&a.applied&&-dayDiff(a.applied)>=CHASE_DAYS).length;
+  $("#kpis").innerHTML=[
+    [real.length,"Applications sent"],[wk,"Sent in the last 7 days"],[apps.filter(a=>ACTIVE.includes(a.status)).length,"Still live"],
+    [by("Interviewing")+by("Final stage"),"Interviewing now"],[real.length?Math.round(progressed/real.length*100)+"%":"–","Got past the application"],
+    [quiet,`Quiet ${CHASE_DAYS}+ days`]
+  ].map(([n,l])=>`<div class="kpi"><b>${n}</b><span>${l}</span></div>`).join("");
+
+  // weekly bars: last 10 ISO-ish weeks (Mon start)
+  const mon=d=>{const x=new Date(d);const k=(x.getDay()+6)%7;x.setDate(x.getDate()-k);x.setHours(0,0,0,0);return x};
+  const start=mon(TODAY); const weeks=[...Array(10)].map((_,i)=>{const d=new Date(start);d.setDate(d.getDate()-7*(9-i));return {d,n:0}});
+  real.forEach(a=>{ if(!a.applied) return; const m=mon(a.applied+"T00:00:00").getTime(); const w=weeks.find(x=>x.d.getTime()===m); if(w) w.n++ });
+  const max=Math.max(4,...weeks.map(w=>w.n)); const top=Math.ceil(max/2)*2;
+  const W=360,H=170,pl=24,pb=22,pt=10,bw=(W-pl)/weeks.length;
+  const y=v=>pt+(H-pt-pb)*(1-v/top);
+  let svg=`<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Applications per week, last 10 weeks">`;
+  [0,top/2,top].forEach(t=>{svg+=`<line x1="${pl}" x2="${W}" y1="${y(t)}" y2="${y(t)}" stroke="var(--line)" stroke-width="1"/><text x="${pl-5}" y="${y(t)+3}" text-anchor="end">${t}</text>`});
+  weeks.forEach((w,i)=>{const x=pl+i*bw+bw*.18, h=y(0)-y(w.n), last=i===weeks.length-1;
+    svg+=`<rect x="${x}" y="${y(w.n)}" width="${bw*.64}" height="${Math.max(h,0)}" rx="3" fill="${last?"var(--accent)":"var(--s-applied)"}" opacity="${last?1:.75}"/>`;
+    if(w.n) svg+=`<text class="v" x="${x+bw*.32}" y="${y(w.n)-4}" text-anchor="middle">${w.n}</text>`;
+    if(i%2===1||last) svg+=`<text x="${x+bw*.32}" y="${H-6}" text-anchor="middle">${w.d.toLocaleDateString("en-GB",{day:"numeric",month:"short"})}</text>`});
+  $("#weekly").innerHTML=svg+"</svg>";
+
+  const fmax=Math.max(1,...STAGES.map(s=>by(s.k)));
+  $("#funnel").innerHTML=STAGES.map(s=>`<div class="hbar"><span>${s.k}</span><span class="tr"><span class="fl" style="display:block;width:${by(s.k)/fmax*100}%;background:var(${s.v})"></span></span><span class="num">${by(s.k)}</span></div>`).join("");
+
+  const T=["CSM","Product","Other"].map(t=>{const xs=real.filter(a=>track(a.role)===t); const prog=xs.filter(a=>["In conversation","Interviewing","Final stage","Offer"].includes(a.status)).length; return {t,n:xs.length,prog}});
+  const tmax=Math.max(1,...T.map(x=>x.n));
+  $("#tracks").innerHTML=T.map(x=>`<div class="hbar"><span>${x.t} <span class="note">${x.n?Math.round(x.prog/x.n*100):0}% progressed</span></span><span class="tr"><span class="fl" style="display:block;width:${x.n/tmax*100}%;background:${x.t==="CSM"?"var(--src-csm)":x.t==="Product"?"var(--src-pm)":"var(--ink3)"}"></span></span><span class="num">${x.n}</span></div>`).join("");
+}
+
+function renderAll(){ renderAttention(); renderBoard(); renderLeads(); renderStats() }
+
+/* ---------- drawer ---------- */
+function openApp(id){
+  const a=(apps||[]).find(x=>x.id===id); if(!a) return;
+  const p=prepFor(a); const n=attention(a);
+  $("#sheet").innerHTML=`<div class="row1">${logo(a.company,true)}<div><h2>${esc(a.role)}</h2><div class="co">${esc(a.company||"—")}</div></div></div>
+    ${n?`<div class="next ${n.lvl==="bad"?"over":"due"}">${esc(n.why)}</div>`:""}
+    <dl>
+      <dt><label for="dStatus">Status</label></dt><dd><select id="dStatus">${STAGES.map(s=>`<option${s.k===a.status?" selected":""}>${s.k}</option>`).join("")}</select></dd>
+      <dt>Applied</dt><dd>${a.applied?`${fmtD(a.applied)} (${ago(a.applied)})`:"—"}</dd>
+      <dt>Next step</dt><dd>${esc(a.next||"—")}${a.nextDate?" · "+fmtD(a.nextDate):""}</dd>
+      <dt>Salary</dt><dd>${esc(a.salary||"—")}</dd>
+      <dt>Location</dt><dd>${esc(a.location||"—")}</dd>
+      <dt>Found via</dt><dd>${esc(a.source||"—")}</dd>
+      <dt>Job ad</dt><dd>${a.url?`<a href="${esc(a.url)}" target="_blank" rel="noopener">Open posting ↗</a>`:"—"}</dd>
+    </dl>
+    ${p.length?`<div class="prep-list"><h3 class="sec-h">Interview prep</h3>${p.map(x=>`<a class="btn" href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.label)} ↗</a>`).join("")}</div>`:""}
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn" href="https://www.notion.so/${esc(a.id)}" target="_blank" rel="noopener">Edit in Notion ↗</a>${a.company?`<button class="btn" type="button" data-explore="${esc(a.company)}">Similar companies</button>`:""}<button class="btn" type="button" id="dClose">Close</button></div>`;
+  $("#drawer").hidden=false; $("#dStatus").focus();
+  $("#dClose").onclick=closeDrawer; $("#dStatus").onchange=e=>setStatus(a.id,e.target.value);
+}
+function closeDrawer(){ $("#drawer").hidden=true }
+$("#drawer").addEventListener("click",e=>{ if(e.target.id==="drawer") closeDrawer() });
+addEventListener("keydown",e=>{ if(e.key==="Escape"&&!$("#drawer").hidden) closeDrawer() });
+
+/* ---------- Notion: live read ---------- */
+function ingest(payload){
+  let p=payload; if(typeof p==="string"){try{p=JSON.parse(p)}catch{return false}}
+  const rows=p&&(p.results||p.rows); if(!Array.isArray(rows)) return false;
+  apps=rows.map(r=>({id:String(r.url||"").split("/").pop(),role:r.Role||"Untitled",company:r.Company||"",status:r.Status,applied:(r.applied||"").slice(0,10),
+    next:r["Next step"]||"",nextDate:(r.next_date||"").slice(0,10),salary:r["Salary range"]||"",location:r.Location||"",source:r["Source / board"]||"",
+    url:/^https?:/.test(r["Job posting URL"]||"")?r["Job posting URL"]:"",created:(r.createdTime||"").slice(0,10)}));
+  return true;
+}
+function setSync(state,txt){ $("#dot").className="dot"+(state?" "+state:""); $("#syncTxt").textContent=txt }
+function banner(html){ const b=$("#banner"); b.innerHTML=html||""; b.hidden=!html }
+const hhmm=t=>new Date(t).toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"});
+function handleErr(e, fromWatch){
+  const c=e&&e.code;
+  if(c==="needs_reauth"){ apps=null; banner("Notion needs reconnecting. Open claude.ai Settings → Connectors and reconnect Notion, then press Refresh."); setSync("err","Notion disconnected") }
+  else if(c==="server_not_connected"||c==="selection_required"){ apps=null; banner("Add or choose your Notion connector in claude.ai Settings → Connectors to load your applications."); setSync("err","Notion not connected") }
+  else if(["approval_required","not_in_manifest","consent_required","blocked_by_policy"].includes(c)){ apps=null;
+    banner(`This page needs your OK to read your Notion Applications database. <button class="btn sm primary" type="button" id="allow">Allow and load</button>`); setSync("err","Waiting for permission");
+    const b=$("#allow"); if(b) b.onclick=()=>loadOnce() }
+  else setSync("err", apps?"Couldn't reach Notion, showing the last load":"Couldn't reach Notion. Press Refresh to try again");
+  renderAll();
+}
+async function loadOnce(){
+  if(!mcp){ toast("Open this page on claude.ai to load your Notion board"); return }
+  setSync("","Refreshing…");
+  try{ const r=await mcp.callTool(NOTION,"notion-query-data-sources",{data:{data_source_urls:["collection://"+DS],query:SQL}},{cache:{refresh:true,gcTime:86400000}});
+    if(ingest(r.payload)){ banner(); setSync("live","Live from Notion · "+hhmm(Date.now())); renderAll() } else setSync("err","Notion replied in an unexpected format");
+  }catch(e){ handleErr(e) }
+}
+async function boot(){
+  renderAll();
+  try{ mcp=await claude.use("mcp") }catch(e){ mcp=null }
+  if(!mcp){ setSync("err","Open on claude.ai to connect Notion"); banner("Your applications load live from Notion when this page is opened on claude.ai. The job finder below works everywhere."); renderAll(); return }
+  mcp.watchTool(NOTION,"notion-query-data-sources",{data:{data_source_urls:["collection://"+DS],query:SQL}},ev=>{
+    if(ev.type==="data"){ if(ingest(ev.result.payload)){ banner(); const c=ev.result.cache; setSync("live",(c&&c.revalidating?"Updating… · last ":"Live from Notion · ")+hhmm(c?c.storedAt:Date.now())); renderAll() } }
+    else handleErr(ev.error,true);
+  },{refetchInterval:120000,cache:{staleTime:60000,gcTime:86400000}});
+  mcp.watchTool(NOTION,"notion-query-data-sources",{data:{data_source_urls:["collection://"+OUT_DS],query:OUT_SQL}},ev=>{
+    if(ev.type==="data") ingestOutreach(ev.result.payload);   // errors here only hide logged contacts; the board banner covers Notion problems
+  },{refetchInterval:300000,cache:{staleTime:120000,gcTime:86400000}});
+}
+
+/* ---------- Notion: writes ---------- */
+async function setStatus(id,status){
+  const a=apps&&apps.find(x=>x.id===id); if(!a||a.status===status) return;
+  const prev=a.status; a.status=status; renderAll();
+  if(!mcp){ a.status=prev; renderAll(); toast("Open on claude.ai to save changes to Notion"); return }
+  try{
+    await mcp.callTool(NOTION,"notion-update-page",{page_id:id,command:"update_properties",properties:{Status:status},allow_async:false});
+    toast(`${a.company||a.role} moved to ${status}. Saved to Notion.`);
+    mcp.invalidate(NOTION,"notion-query-data-sources").catch(()=>{});
+  }catch(e){ a.status=prev; renderAll();
+    toast(e&&e.code==="approval_required"?"Allow this page to edit Notion, then try again":"Not saved to Notion: "+((e&&e.message)||"unknown error")) }
+}
+async function trackLead(i,btn){
+  const l=leadsData.leads[i]; if(!mcp){ toast("Open on claude.ai to add roles to Notion"); return }
+  btn.disabled=true; btn.textContent="Adding…";
+  const props={Role:l.title,Company:l.company,Status:"To apply",Location:l.location||"","Salary range":l.salary||""};
+  if(l.url) props["Job posting URL"]=l.url;
+  if(/linkedin\.com/.test(l.url||"")) props["Source / board"]="LinkedIn";
+  try{
+    await mcp.callTool(NOTION,"notion-create-pages",{parent:{type:"data_source_id",data_source_id:DS},pages:[{properties:props}],allow_async:false});
+    (apps=apps||[]).push({id:"new-"+i,role:l.title,company:l.company,status:"To apply",applied:"",next:"",nextDate:"",salary:l.salary||"",location:l.location||"",source:"",url:l.url||""});
+    toast(`Added ${l.company} to “To apply” in Notion`); renderAll();
+    mcp.invalidate(NOTION,"notion-query-data-sources").catch(()=>{});
+  }catch(e){ btn.disabled=false; btn.textContent="Add to “To apply”";
+    toast(e&&e.code==="approval_required"?"Allow this page to edit Notion, then try again":"Not added. Check Notion before trying again: "+((e&&e.message)||"unknown error")) }
+}
+
+/* ---------- data files ---------- */
+async function loadFiles(){
+  const get=async(f,d)=>{ try{ const r=await fetch(f); return r.ok?await r.json():d }catch(e){ return d } };
+  [leadsData,logos,domains,prep]=await Promise.all([get("data/leads.json",null),get("data/logos.json",{}),get("data/domains.json",{}),get("data/prep.json",[])]);
+  if(!leadsData) $("#leads").innerHTML='<div class="empty">The job list didn\'t load. Reload the page; if it keeps failing, ask Claude to rebuild the finder data.</div>';
+  renderAll();
+}
+
+/* ---------- companies: competitors + recruiter mapping ---------- */
+const OUT_DS = "e539fda5-ebf8-41d7-ae43-046ff5ae5953";          // Notion "Outreach & messages" data source
+const OUT_SQL = `SELECT url, "Contact", "Channel", "Reply status", "date:Date sent:start" AS sent, "date:Follow-up date:start" AS follow, "Notes" FROM "collection://${OUT_DS}"`;
+const CHANNELS = ["LinkedIn message","LinkedIn InMail","Email","Phone call","In person / event","Other"];
+const TA_SEARCHES = [["Talent acquisition","talent acquisition"],["Recruiters","recruiter"],["Talent partners","talent partner"],["Head of talent / TA director","head of talent"]];
+const PROFILE = "Background: client services and stakeholder management in private-equity deal advisory and executive search (Heidrick & Struggles), running 15-20 client projects at once, CRM power user who wrote requirements for Product and Data teams, competitive and market research, completed the KCL Product Management Accelerator. Targeting Customer Success, client-facing and junior Product roles in London.";
+let sampleFn = null, outreach = null, coResult = null, coCtl = null;
+const openTA = new Set(); const drafts = {};
+let recent = []; try{ recent = JSON.parse(localStorage.getItem("ljh-recent")||"[]") }catch(e){ recent = [] }
+const enc = encodeURIComponent;
+
+function coLogo(name, domain, big){
+  if(domain && logos[domain]) return `<span class="logo${big?" lg":""}"><img src="${esc(logos[domain])}" alt=""></span>`;
+  return logo(name, big);
+}
+const leadsAt = name=>(leadsData?leadsData.leads:[]).filter(l=>norm(l.company).includes(norm(name))||norm(name).includes(norm(l.company))&&norm(l.company).length>3);
+const appsAt = name=>(apps||[]).filter(a=>a.company&&(norm(a.company).includes(norm(name))||norm(name).includes(norm(a.company))&&norm(a.company).length>3));
+const contactsAt = name=>(outreach||[]).filter(o=>(o.contact+" "+o.notes).toLowerCase().includes(String(name).toLowerCase()));
+
+function renderRecent(){
+  $("#coRecent").innerHTML = recent.length ? `<span class="hint">Recent:</span>`+recent.map(r=>`<button class="chip" type="button" data-recent="${esc(r)}">${esc(r)}</button>`).join("") : "";
+}
+async function findCompetitors(name){
+  name = name.trim(); if(!name) return;
+  recent = [name, ...recent.filter(r=>r.toLowerCase()!==name.toLowerCase())].slice(0,8);
+  try{ localStorage.setItem("ljh-recent", JSON.stringify(recent)) }catch(e){}
+  renderRecent(); $("#coInput").value = name;
+  if(!sampleFn){ $("#coOut").innerHTML = '<p class="quiet">Competitor search needs Claude, which is only available when this page is open on claude.ai.</p>'; return }
+  coCtl?.abort(); coCtl = new AbortController();
+  $("#coGo").disabled = true; $("#coStop").hidden = false;
+  $("#coOut").innerHTML = `<p class="thinking">Looking for companies like ${esc(name)}… this usually takes 20–60 seconds.</p>`;
+  const prompt = `You help a job seeker in London find employers adjacent to a company they like, so they can look for openings there.
+Company: "${name}"
+Reply with only JSON in this shape:
+{"company":{"name":string,"sector":string,"summary":string},"competitors":[{"name":string,"domain":string,"sector":string,"why":string,"londonOffice":"yes"|"no"|"unsure","size":"startup"|"scale-up"|"enterprise","likelyRoles":string}]}
+Rules: "summary" is one sentence on what the company does. List 10-12 real companies: direct competitors first, then close neighbours in the same sector or selling to the same customers. Prefer companies with a London office. "domain" is the main website domain only (e.g. example.com). "why" is one sentence on how it overlaps with ${name}. "likelyRoles" names which customer success, client-facing or junior product roles such a company typically hires for. Leave out any company you are not sure exists. If you don't recognise "${name}", return an empty competitors array and say so in "summary".`;
+  try{
+    const data = await sampleFn.json(prompt, {signal:coCtl.signal, cache:{gcTime:86400000}});
+    if(!data || !Array.isArray(data.competitors)) throw {code:"invalid_json"};
+    coResult = {query:name, ...data}; renderCompanies();
+  }catch(e){
+    const msg = {cancelled:"Stopped.", not_granted:"This page isn't allowed to use Claude. You can allow it from the page's permissions menu.", sampling_disabled:"Claude isn't available for this account here.",
+      rate_limited:"Too many requests just now. Wait a minute and try again.", invalid_json:"Claude's answer didn't come back in the expected format. Try again.", refused:"Claude couldn't answer that one. Try a different company name."}[e&&e.code] || "Something went wrong reaching Claude. Try again.";
+    $("#coOut").innerHTML = `<p class="quiet">${esc(msg)}</p>`;
+  }finally{ $("#coGo").disabled = false; $("#coStop").hidden = true }
+}
+function renderCompanies(){
+  if(!coResult) return;
+  const c = coResult.company || {name:coResult.query};
+  const own = [{name:c.name||coResult.query, domain:"", sector:c.sector, why:"The company you searched for.", self:true}, ...coResult.competitors];
+  $("#coOut").innerHTML = `<div class="view">
+    <div class="focus-co">${coLogo(c.name||coResult.query,"",true)}<div><h3>${esc(c.name||coResult.query)}</h3><p>${esc(c.sector||"")}${c.summary?" · "+esc(c.summary):""}</p></div></div>
+    <h2 class="sec-h">${coResult.competitors.length} companies in the same space</h2>
+    <div class="comps">${own.map(compCard).join("")}</div>
+    <p class="note">Company list from Claude's own knowledge, so check each careers page. Recruiter searches open LinkedIn in a new tab, signed in as you; nothing is sent from this page.</p></div>`;
+}
+function compCard(x){
+  const L = leadsAt(x.name), A = appsAt(x.name), C = contactsAt(x.name), key = norm(x.name), open = openTA.has(key);
+  return `<article class="comp" data-co="${esc(x.name)}">
+    <div class="row1">${coLogo(x.name,x.domain,true)}<div><div class="role">${esc(x.name)}${x.self?' <span class="b">Your search</span>':""}</div><div class="co" style="white-space:normal">${esc(x.sector||"")}${x.size?" · "+esc(x.size):""}</div></div></div>
+    ${x.self?"":`<div class="why" style="font-size:13px;color:var(--ink2)">${esc(x.why||"")}</div>`}
+    <div class="badges">${x.londonOffice==="yes"?'<span class="b best">London office</span>':x.londonOffice==="unsure"?'<span class="b">London office unclear</span>':x.londonOffice==="no"?'<span class="b closing">No London office known</span>':""}
+      ${L.length?`<span class="b new">${L.length} open in your finder</span>`:""}${A.length?`<span class="b tracked">${A.length} in your tracker</span>`:""}${C.length?`<span class="b">${C.length} contact${C.length>1?"s":""} logged</span>`:""}</div>
+    ${x.likelyRoles?`<div class="facts"><span>Likely roles: ${esc(x.likelyRoles)}</span></div>`:""}
+    <div class="links">
+      <a class="btn sm" href="https://www.linkedin.com/jobs/search/?keywords=${enc(x.name)}&location=${enc("London, England, United Kingdom")}" target="_blank" rel="noopener">London jobs on LinkedIn ↗</a>
+      <a class="btn sm" href="https://www.google.com/search?q=${enc(x.name+" careers London")}" target="_blank" rel="noopener">Careers page ↗</a>
+      ${x.domain?`<a class="btn sm" href="https://${esc(x.domain)}" target="_blank" rel="noopener">Website ↗</a>`:""}
+      <button class="btn sm${open?" primary":""}" type="button" data-ta="${esc(x.name)}" aria-expanded="${open}">Recruiters</button>
+    </div>
+    ${open?taPanel(x,C):""}
+  </article>`;
+}
+function taPanel(x,C){
+  const key = norm(x.name), d = drafts[key];
+  return `<div class="ta">
+    <h4>Find their talent team on LinkedIn</h4>
+    <div class="links">${TA_SEARCHES.map(([lbl,kw])=>`<a class="btn sm" href="https://www.linkedin.com/search/results/people/?keywords=${enc(kw+" "+x.name)}" target="_blank" rel="noopener">${lbl} ↗</a>`).join("")}</div>
+    ${C.length?`<div class="contacts">${C.map(o=>`<div class="contact"><span>${esc(o.contact)}</span><span class="tag">${esc(o.status||o.channel||"logged")}${o.sent?" · "+fmtD(o.sent):""}</span></div>`).join("")}</div>`:""}
+    <div class="links"><button class="btn sm" type="button" data-draft="${esc(x.name)}">${d?"Redraft intro":"Draft an intro message"}</button></div>
+    ${d?`<div class="draft">${d.loading?'<span class="thinking">Drafting…</span>':d.error?`<span>${esc(d.error)}</span>`:`<span class="lbl">Connection note (${(d.note||"").length}/300)</span><span>${esc(d.note)}</span><button class="btn sm" type="button" data-copy="note" data-co="${esc(x.name)}">Copy note</button><span class="lbl">Follow-up message</span><span>${esc(d.message)}</span><button class="btn sm" type="button" data-copy="message" data-co="${esc(x.name)}">Copy message</button>`}</div>`:""}
+    <h4>Log someone you contacted</h4>
+    <form class="taForm" data-co="${esc(x.name)}">
+      <input name="name" placeholder="Their name" required aria-label="Contact name">
+      <input name="title" placeholder="Job title" aria-label="Contact job title">
+      <select name="channel" aria-label="Channel">${CHANNELS.map(c=>`<option>${c}</option>`).join("")}</select>
+      <input name="link" placeholder="LinkedIn profile URL" aria-label="LinkedIn profile URL">
+      <textarea name="notes" placeholder="Notes (what you sent, role you asked about)" aria-label="Notes"></textarea>
+      <label class="hint full"><input type="checkbox" name="sent" checked> Sent today (sets a follow-up reminder in 7 days)</label>
+      <button class="btn sm primary full" type="submit">Save to Outreach in Notion</button>
+    </form>
+  </div>`;
+}
+async function draftIntro(name){
+  const key = norm(name); if(!sampleFn){ toast("Drafting needs this page open on claude.ai"); return }
+  const x = [coResult.company, ...coResult.competitors].find(c=>c&&norm(c.name)===key) || {name};
+  drafts[key] = {loading:true}; renderCompanies();
+  const prompt = `Write LinkedIn outreach from a job seeker to someone on the talent acquisition team at ${name}${x.sector?` (${x.sector})`:""}.
+${PROFILE}
+Reply with only JSON: {"note": string, "message": string}
+"note": a connection request note, at most 280 characters, warm and specific to ${name}, no flattery, ends by asking if they'd be open to a quick chat or pointing them to relevant openings.
+"message": a follow-up message of at most 110 words to send once connected: why ${name} specifically, the 1-2 most relevant parts of the background${x.likelyRoles?` for roles like: ${x.likelyRoles}`:""}, and one clear, easy ask. Plain British English, no emoji, no placeholders except [Name] for the recipient's first name.`;
+  try{
+    const r = await sampleFn.json(prompt, {modelTier:"quick", cache:false});
+    drafts[key] = {note:String(r.note||"").slice(0,300), message:String(r.message||"")};
+  }catch(e){ drafts[key] = {error: e&&e.code==="not_granted" ? "This page isn't allowed to use Claude." : "Couldn't draft just now. Try again."} }
+  renderCompanies();
+}
+async function logContact(form){
+  const co = form.dataset.co, f = new FormData(form); const name = String(f.get("name")||"").trim(); if(!name) return;
+  if(!mcp){ toast("Open on claude.ai to save contacts to Notion"); return }
+  const title = String(f.get("title")||"").trim(), link = String(f.get("link")||"").trim(), notes = String(f.get("notes")||"").trim();
+  const iso = d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+  const props = {Contact:`${name}${title?" – "+title:""}, ${co}`, Channel:String(f.get("channel")), Notes:[link,notes].filter(Boolean).join("\n")};
+  if(f.get("sent")){ const fu = new Date(TODAY); fu.setDate(fu.getDate()+7);
+    Object.assign(props, {"date:Date sent:start":iso(TODAY), "date:Date sent:is_datetime":0, "Reply status":"Awaiting reply", "date:Follow-up date:start":iso(fu), "date:Follow-up date:is_datetime":0}) }
+  const btn = form.querySelector("button[type=submit]"); btn.disabled = true; btn.textContent = "Saving…";
+  try{
+    await mcp.callTool(NOTION,"notion-create-pages",{parent:{type:"data_source_id",data_source_id:OUT_DS},pages:[{properties:props}],allow_async:false});
+    (outreach = outreach||[]).push({contact:props.Contact, channel:props.Channel, status:props["Reply status"]||"", sent:props["date:Date sent:start"]||"", notes:props.Notes});
+    toast(`Saved ${name} to Outreach in Notion`); renderCompanies();
+    mcp.invalidate(NOTION,"notion-query-data-sources").catch(()=>{});
+  }catch(e){ btn.disabled = false; btn.textContent = "Save to Outreach in Notion";
+    toast(e&&e.code==="approval_required"?"Allow this page to edit Notion, then try again":"Not saved. Check Notion before trying again: "+((e&&e.message)||"unknown error")) }
+}
+function ingestOutreach(payload){
+  let p = payload; if(typeof p==="string"){ try{ p = JSON.parse(p) }catch{ return } }
+  const rows = p&&(p.results||p.rows); if(!Array.isArray(rows)) return;
+  outreach = rows.map(r=>({contact:r.Contact||"", channel:r.Channel||"", status:r["Reply status"]||"", sent:(r.sent||"").slice(0,10), follow:(r.follow||"").slice(0,10), notes:r.Notes||""}));
+  renderCompanies();
+}
+function explore(name){ location.hash = "#companies"; closeDrawer(); findCompetitors(name) }
+
+$("#coForm").addEventListener("submit",e=>{ e.preventDefault(); findCompetitors($("#coInput").value) });
+$("#coStop").onclick = ()=>coCtl?.abort();
+$("#coRecent").addEventListener("click",e=>{ const b=e.target.closest("[data-recent]"); if(b) findCompetitors(b.dataset.recent) });
+$("#coOut").addEventListener("click",async e=>{
+  const t = e.target.closest("[data-ta]"); if(t){ const k=norm(t.dataset.ta); openTA.has(k)?openTA.delete(k):openTA.add(k); renderCompanies(); return }
+  const d = e.target.closest("[data-draft]"); if(d){ draftIntro(d.dataset.draft); return }
+  const c = e.target.closest("[data-copy]"); if(c){ const txt = drafts[norm(c.dataset.co)]?.[c.dataset.copy]||"";
+    try{ await navigator.clipboard.writeText(txt); toast("Copied") }catch(err){ toast("Couldn't copy automatically. Select the text and copy it.") } }
+});
+$("#coOut").addEventListener("submit",e=>{ const f=e.target.closest(".taForm"); if(!f) return; e.preventDefault(); logContact(f) });
+document.addEventListener("click",e=>{ const x=e.target.closest("[data-explore]"); if(x){ e.preventDefault(); explore(x.dataset.explore) } });
+renderRecent();
+(async()=>{ try{ sampleFn = await claude.use("sample") }catch(e){ sampleFn = null } })();
+
+/* ---------- events ---------- */
+$("#qBoard").oninput=renderBoard; $("#qFinder").oninput=renderLeads;
+$("#hideClosed").setAttribute("aria-pressed",hideClosed);
+$("#hideClosed").onclick=e=>{hideClosed=!hideClosed;e.currentTarget.setAttribute("aria-pressed",hideClosed);saveUi();renderBoard()};
+$("#bestFit").onclick=e=>{bestOnly=!bestOnly;e.currentTarget.setAttribute("aria-pressed",bestOnly);renderLeads()};
+$("#hideTracked").onclick=e=>{hideTracked=!hideTracked;e.currentTarget.setAttribute("aria-pressed",hideTracked);renderLeads()};
+document.querySelectorAll("[data-src]").forEach(b=>b.onclick=()=>{const s=b.dataset.src;srcOn.has(s)?srcOn.delete(s):srcOn.add(s);b.setAttribute("aria-pressed",srcOn.has(s));renderLeads()});
+$("#refresh").onclick=()=>{ loadOnce() };
+$("#leads").addEventListener("click",e=>{const b=e.target.closest("[data-track]");if(b)trackLead(+b.dataset.track,b)});
+$("#attn").addEventListener("click",e=>{const b=e.target.closest("[data-open]");if(b)openApp(b.dataset.open)});
+$("#stagePick").addEventListener("click",e=>{const b=e.target.closest("[data-stage]");if(!b)return;mobileStage=b.dataset.stage;saveUi();renderBoard()});
+
+const board=$("#board"); let dragId=null;
+board.addEventListener("click",e=>{
+  const t=e.target.closest("[data-collapse]"); if(t){const k=t.dataset.collapse;collapsed.has(k)?collapsed.delete(k):collapsed.add(k);renderBoard();return}
+  const c=e.target.closest(".card"); if(c) openApp(c.dataset.id);
+});
+board.addEventListener("keydown",e=>{const c=e.target.closest(".card");if(c&&(e.key==="Enter"||e.key===" ")){e.preventDefault();openApp(c.dataset.id)}});
+board.addEventListener("dragstart",e=>{const c=e.target.closest(".card");if(!c)return;dragId=c.dataset.id;c.classList.add("dragging");e.dataTransfer.effectAllowed="move";e.dataTransfer.setData("text/plain",dragId)});
+board.addEventListener("dragend",()=>document.querySelectorAll(".dragging,.drop").forEach(x=>x.classList.remove("dragging","drop")));
+board.addEventListener("dragover",e=>{const col=e.target.closest(".col");if(!col||!dragId)return;e.preventDefault();document.querySelectorAll(".col.drop").forEach(x=>x!==col&&x.classList.remove("drop"));col.classList.add("drop")});
+board.addEventListener("drop",e=>{const col=e.target.closest(".col");if(!col||!dragId)return;e.preventDefault();col.classList.remove("drop");setStatus(dragId,col.dataset.status);dragId=null});
+
+route(); loadFiles(); boot();
+</script>
