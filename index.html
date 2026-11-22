@@ -10,6 +10,7 @@
  * axes: light/grotesk-sans/chromatic-blue · posture: workbench · contrast: pass · v2.0.0 */
 /* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V3 · weakest: V, the shell and the kanban stay by request; the change went into the finder, now a dense role ledger instead of a card grid */
 /* Hallmark · answered F7 · tags, badges, next-step notes and contact rows share one small-chip recipe on purpose: they are one kind of object (a status label) at one size, told apart by fill colour */
+/* Hallmark · reworded #dStatus to #f-status · the status picker moved into the editable application form, which saves every field to Notion */
 /* Layout: a recruiter's pipeline desk in blues. Navy sidebar (icons when collapsed, a tab bar on phones); each view leads with what needs doing, then the working surface. */
 :root{
   /* shared scale (Hallmark scaffold, app range) */
@@ -274,6 +275,36 @@ main{padding-block:var(--space-lg) var(--space-2xl);min-width:0}
 .prep-list{display:flex;flex-direction:column;gap:var(--space-xs)}
 .toast{position:fixed;left:50%;bottom:calc(var(--space-lg) + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--color-ink);color:var(--color-paper);padding:var(--space-xs) var(--space-md);border-radius:var(--radius-sm);font-size:var(--text-sm);z-index:var(--z-toast);max-width:calc(100% - var(--space-xl))}
 
+/* application form (drawer) */
+.app-form{display:grid;grid-template-columns:112px minmax(0,1fr);gap:var(--space-xs) var(--space-sm);align-items:center;font-size:var(--text-sm)}
+.app-form label{color:var(--color-muted)}
+.app-form :is(input,select),.todo-opts :is(input,select),.todo.edit :is(input,select){min-height:36px;width:100%;min-width:0;border:var(--rule-hair) solid var(--color-rule);border-radius:var(--radius-sm);padding:var(--space-2xs) var(--space-xs);background:var(--color-surface);color:var(--color-ink);font-size:var(--text-md)}
+.app-form :is(input,select):focus-visible,.todo-opts :is(input,select):focus-visible,.todo.edit :is(input,select):focus-visible{outline-offset:-2px}
+.app-form .full,.app-form .form-msg{grid-column:1/-1}
+.form-msg{min-height:1lh;font-size:var(--text-sm);color:var(--color-bad)}
+.form-msg:empty{min-height:0}
+
+/* to-dos */
+.todo-add{display:flex;flex-direction:column;gap:var(--space-xs);background:var(--color-surface);border:var(--rule-hair) solid var(--color-rule);border-radius:var(--radius-card);padding:var(--space-md);max-width:880px}
+.todo-line{display:flex;gap:var(--space-xs);flex-wrap:wrap}
+.todo-line .search{max-width:none}
+#todoMic[aria-pressed="true"]{background:var(--color-bad-soft);border-color:var(--color-bad);color:var(--color-bad)}
+.todo-opts{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-xs) var(--space-sm);font-size:var(--text-sm);color:var(--color-muted)}
+.todo-opts :is(input,select){width:auto}
+.todo-opts input[type="text"]{width:200px}
+.todos{display:flex;flex-direction:column;gap:var(--space-md);max-width:880px}
+.todo-group{background:var(--color-surface);border:var(--rule-hair) solid var(--color-rule);border-radius:var(--radius-card);overflow:hidden}
+.todo-gh{padding:var(--space-sm) var(--space-md) var(--space-2xs);font-size:var(--text-sm);color:var(--color-ink-2)}
+.todo-gh.bad{color:var(--color-bad)}
+.todo-gh .num{color:var(--color-muted);font-weight:400}
+.todo{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:var(--space-sm);align-items:center;padding:var(--space-xs) var(--space-md);border-top:var(--rule-hair) solid var(--color-rule);min-height:48px}
+.todo-gh + .todo{border-top:0}
+.todo input[type="checkbox"]{width:20px;height:20px;margin:0;accent-color:var(--color-accent);cursor:pointer}
+.todo-t{cursor:pointer;line-height:1.35;overflow-wrap:anywhere}
+.todo.done .todo-t{color:var(--color-muted);text-decoration:line-through}
+.todo .meta{justify-content:flex-end}
+.todo.edit{grid-template-columns:minmax(0,2fr) auto auto minmax(0,1fr) auto;background:var(--color-paper)}
+
 /* under 60rem: the sidebar becomes a tab bar, the board one stage at a time */
 @media (max-width:60rem){
   .shell{display:block}
@@ -300,6 +331,13 @@ main{padding-block:var(--space-lg) var(--space-2xl);min-width:0}
   .ta form{grid-template-columns:minmax(0,1fr)}
   .hbar{grid-template-columns:96px minmax(0,1fr) 36px}
 }
+@media (max-width:40rem){
+  .app-form{grid-template-columns:minmax(0,1fr)}
+  .todo{grid-template-columns:auto minmax(0,1fr) auto}
+  .todo .meta{grid-column:2/-1;justify-content:flex-start}
+  .todo.edit{grid-template-columns:minmax(0,1fr)}
+  .todo-opts input[type="text"]{width:100%}
+}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms !important;transition-duration:0.01ms !important;scroll-behavior:auto !important}}
 .comp .why{font-size:var(--text-sm);color:var(--color-ink-2)}
 .lead .ft{align-self:start}
@@ -310,6 +348,7 @@ main{padding-block:var(--space-lg) var(--space-2xl);min-width:0}
   <div class="brand"><span class="mark" aria-hidden="true">J</span><h1>London Job Hunt<small>Customer success, product and public sector</small></h1></div>
   <nav aria-label="Views">
     <a href="#board" data-view="board" title="Applications"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="5" height="16" rx="1.5"/><rect x="10" y="4" width="5" height="11" rx="1.5"/><rect x="17" y="4" width="4" height="7" rx="1.5"/></svg><span class="lbl">Applications</span><span class="n num" id="nBoard"></span></a>
+    <a href="#todos" data-view="todos" title="To-dos"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4" width="5" height="5" rx="1"/><path d="M5 6.5l1 1 1.6-1.8"/><rect x="3.5" y="14" width="5" height="5" rx="1"/><path d="M12 6.5h8.5M12 16.5h8.5"/></svg><span class="lbl">To-dos</span><span class="n num" id="nTodos"></span></a>
     <a href="#finder" data-view="finder" title="Job finder"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg><span class="lbl">Job finder</span><span class="n num" id="nFinder"></span></a>
     <a href="#companies" data-view="companies" title="Companies"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V8l6-3v15M10 20V10l10 3v7M3 20h18"/></svg><span class="lbl">Companies</span></a>
     <a href="#stats" data-view="stats" title="Stats"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V12M12 20V5M19 20v-9"/></svg><span class="lbl">Stats</span></a>
@@ -330,10 +369,32 @@ main{padding-block:var(--space-lg) var(--space-2xl);min-width:0}
     <div class="toolbar">
       <input class="search" id="qBoard" type="search" placeholder="Search company or role" aria-label="Search applications">
       <button class="chip" id="hideClosed" type="button" aria-pressed="false">Hide inactive, rejected &amp; withdrawn</button>
-      <span class="hint" id="dragHint">Drag a card to another column to update its status in Notion.</span>
+      <button class="btn primary" type="button" id="newApp">New application</button>
+      <span class="hint" id="dragHint">Drag a card to change its status, or open it to edit. Changes save to Notion.</span>
     </div>
     <div class="stage-pick" id="stagePick" role="tablist" aria-label="Stage"></div>
     <div class="board" id="board"></div>
+  </section>
+
+  <section class="view" id="v-todos" hidden>
+    <div class="pagehd"><h2>To-dos</h2><p>Synced with Job Hunt To-dos in Notion, so anything Claude adds shows up here within a minute</p></div>
+    <form class="todo-add" id="todoForm" novalidate>
+      <div class="todo-line">
+        <input class="search" id="todoText" name="task" type="text" placeholder="Add a to-do, e.g. Follow up with the Xero recruiter" aria-label="New to-do" autocomplete="off">
+        <button class="btn" type="button" id="todoMic" hidden aria-pressed="false">Dictate</button>
+        <button class="btn primary" type="submit" id="todoAdd">Add</button>
+      </div>
+      <div class="todo-opts">
+        <label for="todoDue">Due</label><input id="todoDue" name="due" type="date">
+        <label for="todoPri">Priority</label><select id="todoPri" name="priority"><option value="">None</option><option>High</option><option>Medium</option><option>Low</option></select>
+        <label for="todoCo">Company</label><input id="todoCo" name="company" type="text" list="coList" placeholder="Optional" autocomplete="off">
+        <datalist id="coList"></datalist>
+      </div>
+      <p class="form-msg" id="todoMsg" role="status"></p>
+    </form>
+    <div class="toolbar"><button class="chip" id="showDone" type="button" aria-pressed="false">Show completed</button><span class="hint" id="todoHint"></span></div>
+    <div class="todos" id="todoList"><div class="empty">Loading your to-dos from Notion…</div></div>
+    <p class="note">From your phone or the Claude app, say or type: “Add ‘email the Xero recruiter’ to my Job Hunt To-dos in Notion, due Friday.”</p>
   </section>
 
   <section class="view" id="v-finder" hidden>
@@ -449,7 +510,7 @@ function attention(a){
 }
 
 /* ---------- views / routing ---------- */
-const VIEWS=["board","finder","companies","stats"];
+const VIEWS=["board","todos","finder","companies","stats"];
 function route(){
   const v=VIEWS.includes(location.hash.slice(1))?location.hash.slice(1):"board";
   VIEWS.forEach(x=>{$("#v-"+x).hidden=x!==v});
@@ -573,28 +634,78 @@ function renderStats(){
   $("#tracks").innerHTML=T.map(x=>`<div class="hbar"><span>${x.t} <span class="note">${x.n?Math.round(x.prog/x.n*100):0}% progressed</span></span><span class="tr"><span class="fl" style="display:block;width:${x.n/tmax*100}%;background:${x.t==="CSM"?"var(--src-csm)":x.t==="Product"?"var(--src-pm)":"var(--color-muted)"}"></span></span><span class="num">${x.n}</span></div>`).join("");
 }
 
-function renderAll(){ renderAttention(); renderBoard(); renderLeads(); renderStats() }
+function renderAll(){ renderAttention(); renderBoard(); renderLeads(); renderStats(); renderTodos() }
 
 /* ---------- drawer ---------- */
+/* Editable fields: page key, Notion property, input type */
+const APP_FIELDS = [
+  ["role","Role","text","Role"],["company","Company","text","Company"],["status","Status","status","Status"],
+  ["applied","Date applied","date","Date applied"],["next","Next step","text","Next step"],["nextDate","Next step date","date","Next step date"],
+  ["salary","Salary range","text","Salary"],["location","Location","text","Location"],["source","Source / board","source","Found via"],["url","Job posting URL","url","Job ad link"]
+];
+const SOURCES = ["LinkedIn","Company website","Indeed","Otta","YunoJuno","Referral / network","Recruiter outreach","Other","Intelligent People","Zebra People"];
+function fieldInput(f, v){
+  const [k,,type,label]=f, id="f-"+k;
+  let ctl;
+  if(type==="status") ctl=`<select id="${id}" name="${k}">${STAGES.map(s=>`<option${s.k===v?" selected":""}>${s.k}</option>`).join("")}</select>`;
+  else if(type==="source") ctl=`<select id="${id}" name="${k}"><option value="">Not set</option>${SOURCES.map(s=>`<option${s===v?" selected":""}>${s}</option>`).join("")}</select>`;
+  else ctl=`<input id="${id}" name="${k}" type="${type==="url"?"url":type}" value="${esc(v||"")}"${k==="role"?" required":""}${type==="url"?' inputmode="url" placeholder="https://"':""}>`;
+  return `<label for="${id}">${label}</label>${ctl}`;
+}
+function propsFor(vals, only){
+  const p={};
+  for(const [k,prop,type] of APP_FIELDS){
+    if(only && !only.has(k)) continue;
+    const v=(vals[k]||"").trim();
+    if(type==="date"){ p[`date:${prop}:start`]=v||null; if(v) p[`date:${prop}:is_datetime`]=0 }
+    else if(type==="url"||type==="source") p[prop]=v||null;
+    else p[prop]=v;
+  }
+  return p;
+}
 function openApp(id){
-  const a=(apps||[]).find(x=>x.id===id); if(!a) return;
-  const p=prepFor(a); const n=attention(a);
-  $("#sheet").innerHTML=`<div class="row1">${logo(a.company,true)}<div><h2>${esc(a.role)}</h2><div class="co">${esc(a.company||"—")}</div></div></div>
+  const isNew = id==="__new__";
+  const a = isNew ? {id:"",role:"",company:"",status:"To apply",applied:"",next:"",nextDate:"",salary:"",location:"",source:"",url:""} : (apps||[]).find(x=>x.id===id);
+  if(!a) return;
+  const p=isNew?[]:prepFor(a); const n=isNew?null:attention(a);
+  $("#sheet").innerHTML=`<div class="row1">${isNew?"":logo(a.company,true)}<div><h2>${isNew?"New application":esc(a.role)}</h2>${isNew?"":`<div class="co">${esc(a.company||"No company")}${a.applied?`, applied ${fmtD(a.applied)} (${ago(a.applied)})`:""}</div>`}</div></div>
     ${n?`<div class="next ${n.lvl==="bad"?"over":"due"}">${esc(n.why)}</div>`:""}
-    <dl>
-      <dt><label for="dStatus">Status</label></dt><dd><select id="dStatus">${STAGES.map(s=>`<option${s.k===a.status?" selected":""}>${s.k}</option>`).join("")}</select></dd>
-      <dt>Applied</dt><dd>${a.applied?`${fmtD(a.applied)} (${ago(a.applied)})`:"—"}</dd>
-      <dt>Next step</dt><dd>${esc(a.next||"None logged")}${a.nextDate?", "+fmtD(a.nextDate):""}</dd>
-      <dt>Salary</dt><dd>${esc(a.salary||"—")}</dd>
-      <dt>Location</dt><dd>${esc(a.location||"—")}</dd>
-      <dt>Found via</dt><dd>${esc(a.source||"—")}</dd>
-      <dt>Job ad</dt><dd>${a.url?`<a href="${esc(a.url)}" target="_blank" rel="noopener">Open posting</a>`:"—"}</dd>
-    </dl>
+    <form class="app-form" id="appForm" novalidate>
+      ${APP_FIELDS.map(f=>fieldInput(f,a[f[0]])).join("")}
+      <p class="form-msg" id="appMsg" role="status"></p>
+      <div class="row-acts full"><button class="btn primary" type="submit" id="appSave">${isNew?"Add to Notion":"Save to Notion"}</button>${a.url?`<a class="btn" href="${esc(a.url)}" target="_blank" rel="noopener">Open job ad</a>`:""}</div>
+    </form>
     ${p.length?`<div class="prep-list"><h3 class="sec-h">Interview prep</h3>${p.map(x=>`<a class="btn" href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.label)}</a>`).join("")}</div>`:""}
-    <div class="row-acts">${a.status!=="Inactive"&&!["Offer","Rejected","Withdrawn"].includes(a.status)?`<button class="btn" type="button" id="dInactive">Move to Inactive</button>`:""}<a class="btn" href="https://www.notion.so/${esc(a.id)}" target="_blank" rel="noopener">Edit in Notion</a>${a.company?`<button class="btn" type="button" data-explore="${esc(a.company)}">Similar companies</button>`:""}<button class="btn" type="button" id="dClose">Close</button></div>`;
-  $("#drawer").hidden=false; $("#dStatus").focus();
-  $("#dClose").onclick=closeDrawer; $("#dStatus").onchange=e=>setStatus(a.id,e.target.value);
+    <div class="row-acts">${!isNew&&a.status!=="Inactive"&&!["Offer","Rejected","Withdrawn"].includes(a.status)?`<button class="btn" type="button" id="dInactive">Move to Inactive</button>`:""}${isNew?"":`<a class="btn" href="https://www.notion.so/${esc(a.id)}" target="_blank" rel="noopener">Open in Notion</a>`}${!isNew&&a.company?`<button class="btn" type="button" data-explore="${esc(a.company)}">Similar companies</button>`:""}<button class="btn" type="button" id="dClose">Close</button></div>`;
+  $("#drawer").hidden=false; $(isNew?"#f-role":"#f-status").focus();
+  $("#dClose").onclick=closeDrawer;
   const di=$("#dInactive"); if(di) di.onclick=()=>{ setStatus(a.id,"Inactive"); closeDrawer() };
+  $("#appForm").onsubmit=e=>{ e.preventDefault(); saveApp(a, isNew) };
+}
+async function saveApp(a, isNew){
+  const form=$("#appForm"), msg=$("#appMsg"), btn=$("#appSave");
+  const vals=Object.fromEntries(new FormData(form));
+  if(!(vals.role||"").trim()){ msg.textContent="Add a role title first."; $("#f-role").focus(); return }
+  if(vals.url && !/^https?:\/\//.test(vals.url.trim())){ msg.textContent="The job ad link needs to start with https://"; $("#f-url").focus(); return }
+  const changed=new Set(APP_FIELDS.map(f=>f[0]).filter(k=>(vals[k]||"").trim()!==(a[k]||"")));
+  if(!isNew && !changed.size){ msg.textContent="Nothing changed."; return }
+  if(!mcp){ msg.textContent="Open this page on claude.ai to save to Notion."; return }
+  btn.disabled=true; btn.textContent="Saving…"; msg.textContent="";
+  try{
+    if(isNew){
+      await mcp.callTool(NOTION,"notion-create-pages",{parent:{type:"data_source_id",data_source_id:DS},pages:[{properties:propsFor(vals)}],allow_async:false});
+      toast(`Added ${vals.role.trim()} to Notion`);
+    } else {
+      await mcp.callTool(NOTION,"notion-update-page",{page_id:a.id,command:"update_properties",properties:propsFor(vals,changed),allow_async:false});
+      for(const k of changed) a[k]=(vals[k]||"").trim();
+      toast(`Saved ${changed.size} change${changed.size>1?"s":""} to Notion`);
+    }
+    closeDrawer(); renderAll();
+    mcp.invalidate(NOTION,"notion-query-data-sources").catch(()=>{});
+  }catch(e){
+    btn.disabled=false; btn.textContent=isNew?"Add to Notion":"Save to Notion";
+    msg.textContent = e&&e.code==="approval_required" ? "Allow this page to edit Notion, then press Save again." : "Not saved. Check Notion before trying again: "+((e&&e.message)||"unknown error");
+  }
 }
 function closeDrawer(){ $("#drawer").hidden=true }
 $("#drawer").addEventListener("click",e=>{ if(e.target.id==="drawer") closeDrawer() });
@@ -640,6 +751,10 @@ async function boot(){
   mcp.watchTool(NOTION,"notion-query-data-sources",{data:{data_source_urls:["collection://"+OUT_DS],query:OUT_SQL}},ev=>{
     if(ev.type==="data") ingestOutreach(ev.result.payload);   // errors here only hide logged contacts; the board banner covers Notion problems
   },{refetchInterval:300000,cache:{staleTime:120000,gcTime:86400000}});
+  mcp.watchTool(NOTION,"notion-query-data-sources",{data:{data_source_urls:["collection://"+TODO_DS],query:TODO_SQL}},ev=>{
+    if(ev.type==="data") ingestTodos(ev.result.payload);
+    else if(!todos){ todoErr = ev.error&&ev.error.code; renderTodos() }
+  },{refetchInterval:60000,cache:{staleTime:30000,gcTime:86400000}});
 }
 
 /* ---------- Notion: writes ---------- */
@@ -676,6 +791,128 @@ async function loadFiles(){
   if(!leadsData) $("#leads").innerHTML='<div class="empty">The job list didn\'t load. Reload the page; if it keeps failing, ask Claude to rebuild the finder data.</div>';
   renderAll();
 }
+
+/* ---------- to-dos: the Notion "Job Hunt To-dos" database, shared with the Claude app ---------- */
+const TODO_DS = "420bcc6a-f644-81cd-9e00-000b2272517f";
+const TODO_SQL = `SELECT url, "Task", "Done", "date:Due:start" AS due, "Priority", "Company", "Added via", "Notes", createdTime FROM "collection://${TODO_DS}"`;
+const PRI_RANK = {High:0, Medium:1, Low:2};
+let todos = null, todoErr = null, showDone = false, editingTodo = null, dict = null, dictBase = "";
+const isoDay = d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+function ingestTodos(payload){
+  let p=payload; if(typeof p==="string"){ try{ p=JSON.parse(p) }catch{ return } }
+  const rows=p&&(p.results||p.rows); if(!Array.isArray(rows)) return;
+  const pending = new Map((todos||[]).filter(t=>t.pending).map(t=>[t.id,t]));
+  todos = rows.map(r=>({id:String(r.url||"").split("/").pop(), task:r.Task||"Untitled", done:r.Done==="__YES__", due:(r.due||"").slice(0,10),
+    priority:r.Priority||"", company:r.Company||"", via:r["Added via"]||"", notes:r.Notes||"", created:r.createdTime||""}));
+  for(const t of todos){ const q=pending.get(t.id); if(q&&q.done!==t.done){ t.done=q.done; t.pending=true } }   // keep an unconfirmed tick until Notion catches up
+  todoErr = null; renderTodos();
+}
+function todoGroup(t){
+  if(t.done) return "Completed";
+  const d=dayDiff(t.due);
+  if(d===null) return "No date";
+  if(d<0) return "Overdue"; if(d===0) return "Today"; if(d<=7) return "This week"; return "Later";
+}
+const GROUPS = ["Overdue","Today","This week","Later","No date","Completed"];
+function todoRow(t){
+  if(editingTodo===t.id) return `<form class="todo edit" data-edit="${esc(t.id)}">
+      <input name="task" type="text" value="${esc(t.task)}" aria-label="To-do" required>
+      <input name="due" type="date" value="${esc(t.due)}" aria-label="Due date">
+      <select name="priority" aria-label="Priority"><option value="">None</option>${["High","Medium","Low"].map(p=>`<option${p===t.priority?" selected":""}>${p}</option>`).join("")}</select>
+      <input name="company" type="text" value="${esc(t.company)}" list="coList" placeholder="Company" aria-label="Company">
+      <div class="row-acts"><button class="btn sm primary" type="submit">Save</button><button class="btn sm" type="button" data-cancel>Cancel</button></div>
+    </form>`;
+  const d=dayDiff(t.due), dueCls=t.done?"":d!==null&&d<0?" bad":d===0?" warn":"";
+  return `<div class="todo${t.done?" done":""}">
+    <input type="checkbox" id="td-${esc(t.id)}" data-done="${esc(t.id)}"${t.done?" checked":""} aria-label="Mark ${esc(t.task)} ${t.done?"not done":"done"}">
+    <label class="todo-t" for="td-${esc(t.id)}">${esc(t.task)}</label>
+    <div class="meta">${t.due?`<span class="tag${dueCls}">${d===0?"Today":d===1?"Tomorrow":fmtD(t.due)}</span>`:""}${t.priority?`<span class="tag${t.priority==="High"?" bad":""}">${esc(t.priority)}</span>`:""}${t.company?`<span class="tag">${esc(t.company)}</span>`:""}${t.via==="Claude"?'<span class="tag prep">Added by Claude</span>':""}</div>
+    <button class="btn sm" type="button" data-edit-open="${esc(t.id)}">Edit</button>
+  </div>`;
+}
+function renderTodos(){
+  const el=$("#todoList"); if(!el) return;
+  const open=(todos||[]).filter(t=>!t.done);
+  const over=open.filter(t=>{const d=dayDiff(t.due);return d!==null&&d<=0}).length;
+  $("#nTodos").textContent = todos ? String(open.length) : "";
+  $("#todoHint").textContent = todos ? `${open.length} open${over?`, ${over} due today or overdue`:""}` : "";
+  $("#coList").innerHTML=[...new Set((apps||[]).map(a=>a.company).filter(Boolean))].sort().map(c=>`<option value="${esc(c)}">`).join("");
+  if(!todos){
+    el.innerHTML = !mcp ? '<div class="empty">Your to-dos load from Notion when this page is opened on claude.ai.</div>'
+      : todoErr ? `<div class="empty">Couldn’t load your to-dos from Notion (${esc(todoErr)}). Press Refresh in the sidebar to try again.</div>`
+      : '<div class="empty">Loading your to-dos from Notion…</div>';
+    return;
+  }
+  const list=todos.filter(t=>showDone||!t.done).sort((a,b)=>(a.due||"9999").localeCompare(b.due||"9999")||(PRI_RANK[a.priority]??3)-(PRI_RANK[b.priority]??3)||a.created.localeCompare(b.created));
+  if(!list.length){ el.innerHTML = `<div class="empty">${todos.length?"All done. Nice work.":"Nothing on your list yet. Add your first to-do above, or ask Claude to add one."}</div>`; return }
+  el.innerHTML = GROUPS.map(g=>{ const xs=list.filter(t=>todoGroup(t)===g); return xs.length?`<div class="todo-group"><h3 class="todo-gh${g==="Overdue"?" bad":""}">${g} <span class="num">${xs.length}</span></h3>${xs.map(todoRow).join("")}</div>`:"" }).join("");
+}
+async function addTodo(){
+  const text=$("#todoText").value.trim(), msg=$("#todoMsg");
+  if(!text){ msg.textContent="Type or dictate a to-do first."; $("#todoText").focus(); return }
+  if(!mcp){ msg.textContent="Open this page on claude.ai to save to Notion."; return }
+  const due=$("#todoDue").value, pri=$("#todoPri").value, co=$("#todoCo").value.trim();
+  const props={Task:text, "Added via":"App", Done:"__NO__"};
+  if(due){ props["date:Due:start"]=due; props["date:Due:is_datetime"]=0 }
+  if(pri) props.Priority=pri; if(co) props.Company=co;
+  const btn=$("#todoAdd"); btn.disabled=true; btn.textContent="Adding…"; msg.textContent="";
+  try{
+    await mcp.callTool(NOTION,"notion-create-pages",{parent:{type:"data_source_id",data_source_id:TODO_DS},pages:[{properties:props}],allow_async:false});
+    (todos=todos||[]).push({id:"new-"+Date.now(), task:text, done:false, due, priority:pri, company:co, via:"App", notes:"", created:new Date().toISOString(), pending:true});
+    $("#todoForm").reset(); renderTodos(); toast("Added to your to-dos in Notion"); $("#todoText").focus();
+    mcp.invalidate(NOTION,"notion-query-data-sources").catch(()=>{});
+  }catch(e){ msg.textContent = e&&e.code==="approval_required" ? "Allow this page to edit Notion, then press Add again." : "Not added. Check Notion before trying again: "+((e&&e.message)||"unknown error") }
+  finally{ btn.disabled=false; btn.textContent="Add" }
+}
+async function setTodoDone(id, done){
+  const t=(todos||[]).find(x=>x.id===id); if(!t) return;
+  if(!mcp){ toast("Open on claude.ai to save to Notion"); renderTodos(); return }
+  t.done=done; t.pending=true; renderTodos();
+  try{
+    await mcp.callTool(NOTION,"notion-update-page",{page_id:id,command:"update_properties",properties:{Done:done?"__YES__":"__NO__"},allow_async:false});
+    t.pending=false; if(done) toast(`Done: ${t.task}`);
+    mcp.invalidate(NOTION,"notion-query-data-sources").catch(()=>{});
+  }catch(e){ t.done=!done; t.pending=false; renderTodos(); toast(e&&e.code==="approval_required"?"Allow this page to edit Notion, then try again":"Not saved to Notion: "+((e&&e.message)||"unknown error")) }
+}
+async function saveTodoEdit(form){
+  const id=form.dataset.edit, t=(todos||[]).find(x=>x.id===id); if(!t) return;
+  const v=Object.fromEntries(new FormData(form)); const task=(v.task||"").trim();
+  if(!task){ form.querySelector("[name=task]").focus(); return }
+  const props={};
+  if(task!==t.task) props.Task=task;
+  if((v.due||"")!==t.due){ props["date:Due:start"]=v.due||null; if(v.due) props["date:Due:is_datetime"]=0 }
+  if((v.priority||"")!==t.priority) props.Priority=v.priority||null;
+  if((v.company||"").trim()!==t.company) props.Company=(v.company||"").trim();
+  if(!Object.keys(props).length){ editingTodo=null; renderTodos(); return }
+  const btn=form.querySelector("[type=submit]"); btn.disabled=true; btn.textContent="Saving…";
+  try{
+    await mcp.callTool(NOTION,"notion-update-page",{page_id:id,command:"update_properties",properties:props,allow_async:false});
+    Object.assign(t,{task, due:v.due||"", priority:v.priority||"", company:(v.company||"").trim()}); editingTodo=null; renderTodos(); toast("Saved to Notion");
+    mcp.invalidate(NOTION,"notion-query-data-sources").catch(()=>{});
+  }catch(e){ btn.disabled=false; btn.textContent="Save"; toast(e&&e.code==="approval_required"?"Allow this page to edit Notion, then try again":"Not saved: "+((e&&e.message)||"unknown error")) }
+}
+/* voice: the viewer's own dictation, typed into the to-do box */
+(async()=>{
+  try{ dict = await claude.use("dictation") }catch(e){ dict = null }
+  if(!dict) return;
+  const mic=$("#todoMic"); mic.hidden=false;
+  dict.onPartial(({text})=>{ $("#todoText").value=(dictBase+" "+text).trim() });
+  dict.onFinal(({text})=>{ dictBase=(dictBase+" "+text).trim(); $("#todoText").value=dictBase });
+  dict.onState(({state})=>{ const on=state==="listening"; mic.setAttribute("aria-pressed",on); mic.textContent=on?"Stop":"Dictate"; if(!on) $("#todoText").focus() });
+  mic.onclick=()=>{
+    if(mic.getAttribute("aria-pressed")==="true"){ dict.stop().catch(()=>{}); return }
+    dictBase=$("#todoText").value.trim();
+    dict.start().catch(e=>{ if(e&&e.code==="not_granted"){ mic.hidden=true; toast("Dictation is turned off for this page. You can still type.") } });
+  };
+})();
+$("#todoForm").addEventListener("submit",e=>{ e.preventDefault(); addTodo() });
+$("#showDone").onclick=e=>{ showDone=!showDone; e.currentTarget.setAttribute("aria-pressed",showDone); renderTodos() };
+$("#todoList").addEventListener("change",e=>{ const c=e.target.closest("[data-done]"); if(c) setTodoDone(c.dataset.done, c.checked) });
+$("#todoList").addEventListener("click",e=>{
+  const o=e.target.closest("[data-edit-open]"); if(o){ editingTodo=o.dataset.editOpen; renderTodos(); const f=$("#todoList [data-edit] [name=task]"); if(f) f.focus(); return }
+  if(e.target.closest("[data-cancel]")){ editingTodo=null; renderTodos() }
+});
+$("#todoList").addEventListener("submit",e=>{ const f=e.target.closest("[data-edit]"); if(!f) return; e.preventDefault(); saveTodoEdit(f) });
 
 /* ---------- ignored roles: saved per viewer in the artifact’s private store, else this browser ---------- */
 function leadKey(l){ return (l.src+"-"+norm(l.company).slice(0,60)+"-"+norm(l.title).slice(0,90)) }
@@ -862,7 +1099,8 @@ $("#hideClosed").onclick=e=>{hideClosed=!hideClosed;e.currentTarget.setAttribute
 $("#bestFit").onclick=e=>{bestOnly=!bestOnly;e.currentTarget.setAttribute("aria-pressed",bestOnly);renderLeads()};
 $("#hideTracked").onclick=e=>{hideTracked=!hideTracked;e.currentTarget.setAttribute("aria-pressed",hideTracked);renderLeads()};
 document.querySelectorAll("[data-src]").forEach(b=>b.onclick=()=>{const s=b.dataset.src;srcOn.has(s)?srcOn.delete(s):srcOn.add(s);b.setAttribute("aria-pressed",srcOn.has(s));renderLeads()});
-$("#refresh").onclick=()=>{ loadOnce() };
+$("#refresh").onclick=()=>{ loadOnce(); if(mcp) mcp.invalidate(NOTION,"notion-query-data-sources").catch(()=>{}) };
+$("#newApp").onclick=()=>openApp("__new__");
 $("#leads").addEventListener("click",e=>{
   const b=e.target.closest("[data-track]"); if(b){ trackLead(+b.dataset.track,b); return }
   const g=e.target.closest("[data-ignore]"); if(g){ setIgnored(g.dataset.ignore, g.dataset.reason); toast(`Marked as ${g.dataset.reason.toLowerCase()}. Restore it any time.`); return }
