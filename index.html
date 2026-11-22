@@ -3,46 +3,65 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: recruiter's pipeline desk. Sticky header with three views (board, finder, stats); attention strip above a horizontally scrolling kanban that collapses to one stage at a time on phones. */
+/* Layout: recruiter's pipeline desk in shades of blue. Left sidebar with the four views (collapsible to icons; a top tab bar on phones); attention strip above a horizontally scrolling kanban that shows one stage at a time on phones. */
 :root{
-  --bg:#eef1ef; --surface:#ffffff; --sunk:#e3e8e5; --ink:#17201b; --ink2:#47524c; --ink3:#78837d; --line:#d4dbd7;
-  --accent:#1f5e46; --accent-ink:#ffffff; --accent-soft:#d9eae1;
-  --warn:#9a5507; --warn-soft:#fbefdb; --bad:#b0281f; --bad-soft:#fbe5e2; --good:#1d7449; --good-soft:#dff2e7;
-  --s-todo:#8a948f; --s-applied:#3567c9; --s-conv:#7a4fc4; --s-int:#c9820a; --s-final:#d0571b; --s-offer:#1d8a55; --s-rej:#b0281f; --s-wd:#9aa29e;
-  --src-csm:#0e7a6c; --src-pm:#7a3fb8; --src-pub:#b4610d;
+  --bg:#edf2f9; --surface:#ffffff; --sunk:#e1e9f4; --ink:#0f1b2d; --ink2:#41526a; --ink3:#71829a; --line:#d2dcea;
+  --side:#0f2547; --side-ink:#c9d7ee; --side-ink-strong:#ffffff; --side-hover:#183462; --side-on:#24477f;
+  --accent:#1f56d6; --accent-ink:#ffffff; --accent-soft:#dbe6fb;
+  --warn:#9a5507; --warn-soft:#fbefdb; --bad:#c0261c; --bad-soft:#fde8e6; --good:#16679a; --good-soft:#dcedf8;
+  --s-todo:#94a3b8; --s-applied:#7fb0f5; --s-conv:#4f8ef0; --s-int:#2c6be0; --s-final:#1d4fb8; --s-offer:#0d3b8c; --s-rej:#c0261c; --s-wd:#a3adbb;
+  --src-csm:#0b6aa8; --src-pm:#3d4fc4; --src-pub:#1e3f94; --src-etc:#0a7f9e; --src-wttj:#2a3a8f; --src-ip:#2563b8;
   --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
   --f-body:"Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --f-mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
   --r:10px;
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
-  --bg:#111613; --surface:#1a201c; --sunk:#141a16; --ink:#e8eee9; --ink2:#b4beb8; --ink3:#7f8a84; --line:#2b332e;
-  --accent:#6fcf9f; --accent-ink:#0f1a14; --accent-soft:#1c3328;
-  --warn:#f0b062; --warn-soft:#33260f; --bad:#ff8c80; --bad-soft:#3a1a17; --good:#6fd39c; --good-soft:#163024;
-  --s-todo:#8f9a94; --s-applied:#7aa2f0; --s-conv:#b08ef0; --s-int:#f0b445; --s-final:#f08a55; --s-offer:#5fd49a; --s-rej:#ff8c80; --s-wd:#78827d;
-  --src-csm:#5fd1bf; --src-pm:#c39cf0; --src-pub:#f0aa62; color-scheme:dark }}
+  --bg:#0a1220; --surface:#111c30; --sunk:#0d1626; --ink:#e5edf8; --ink2:#a8b8cf; --ink3:#71839d; --line:#213252;
+  --side:#070e1a; --side-ink:#9fb3d3; --side-ink-strong:#ffffff; --side-hover:#13223d; --side-on:#1c3460;
+  --accent:#78a6ff; --accent-ink:#081224; --accent-soft:#17294b;
+  --warn:#f0b062; --warn-soft:#33260f; --bad:#ff8a80; --bad-soft:#3d1715; --good:#7cc4f0; --good-soft:#12304a;
+  --s-todo:#7d8ba0; --s-applied:#a9cbff; --s-conv:#7fb0ff; --s-int:#5a92ff; --s-final:#3b74f0; --s-offer:#9fd0ff; --s-rej:#ff8a80; --s-wd:#5f6b7d;
+  --src-csm:#62b8f0; --src-pm:#9aa6ff; --src-pub:#7f9de8; --src-etc:#5fd0e8; --src-wttj:#a6b0f5; --src-ip:#7fb0ff; color-scheme:dark }}
 :root[data-theme="dark"]{
-  --bg:#111613; --surface:#1a201c; --sunk:#141a16; --ink:#e8eee9; --ink2:#b4beb8; --ink3:#7f8a84; --line:#2b332e;
-  --accent:#6fcf9f; --accent-ink:#0f1a14; --accent-soft:#1c3328;
-  --warn:#f0b062; --warn-soft:#33260f; --bad:#ff8c80; --bad-soft:#3a1a17; --good:#6fd39c; --good-soft:#163024;
-  --s-todo:#8f9a94; --s-applied:#7aa2f0; --s-conv:#b08ef0; --s-int:#f0b445; --s-final:#f08a55; --s-offer:#5fd49a; --s-rej:#ff8c80; --s-wd:#78827d;
-  --src-csm:#5fd1bf; --src-pm:#c39cf0; --src-pub:#f0aa62; color-scheme:dark }
+  --bg:#0a1220; --surface:#111c30; --sunk:#0d1626; --ink:#e5edf8; --ink2:#a8b8cf; --ink3:#71839d; --line:#213252;
+  --side:#070e1a; --side-ink:#9fb3d3; --side-ink-strong:#ffffff; --side-hover:#13223d; --side-on:#1c3460;
+  --accent:#78a6ff; --accent-ink:#081224; --accent-soft:#17294b;
+  --warn:#f0b062; --warn-soft:#33260f; --bad:#ff8a80; --bad-soft:#3d1715; --good:#7cc4f0; --good-soft:#12304a;
+  --s-todo:#7d8ba0; --s-applied:#a9cbff; --s-conv:#7fb0ff; --s-int:#5a92ff; --s-final:#3b74f0; --s-offer:#9fd0ff; --s-rej:#ff8a80; --s-wd:#5f6b7d;
+  --src-csm:#62b8f0; --src-pm:#9aa6ff; --src-pub:#7f9de8; --src-etc:#5fd0e8; --src-wttj:#a6b0f5; --src-ip:#7fb0ff; color-scheme:dark }
 
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:14px;line-height:1.45}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--surface)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--side)}
+.shell{display:grid;grid-template-columns:auto minmax(0,1fr);min-height:100vh}
 button,select,input{font:inherit;color:inherit}
 button{cursor:pointer}
 a{color:var(--accent)}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 
-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
-.top{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;padding-block:12px 0}
-.brand{display:flex;align-items:baseline;gap:10px;min-width:0}
-.brand h1{font-family:var(--f-display);font-size:22px;font-weight:700;letter-spacing:-.02em;margin:0}
-.brand span{color:var(--ink3);font-size:12px}
-.sync{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink2)}
+/* sidebar */
+.side{position:sticky;top:env(safe-area-inset-top,0px);height:calc(100vh - env(safe-area-inset-top,0px));width:228px;background:var(--side);color:var(--side-ink);display:flex;flex-direction:column;gap:18px;padding:16px 10px 14px max(10px,env(safe-area-inset-left,0px));z-index:20;transition:width .15s}
+.side .brand{display:flex;align-items:center;gap:10px;padding:2px 6px;min-width:0}
+.side .mark{width:30px;height:30px;border-radius:8px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-family:var(--f-display);font-weight:700;flex:none}
+.side .brand h1{font-family:var(--f-display);font-size:17px;font-weight:700;letter-spacing:-.01em;margin:0;color:var(--side-ink-strong);white-space:nowrap}
+.side .brand small{display:block;font-size:11px;color:var(--side-ink);font-weight:400;font-family:var(--f-body)}
+.side nav{display:flex;flex-direction:column;gap:2px}
+.side nav a{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:8px;color:var(--side-ink);text-decoration:none;font-weight:500;white-space:nowrap}
+.side nav a:hover{background:var(--side-hover);color:var(--side-ink-strong)}
+.side nav a[aria-current="page"]{background:var(--side-on);color:var(--side-ink-strong)}
+.side nav svg{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.side nav .lbl{flex:1}
+.side nav .n{font-family:var(--f-mono);font-size:11px;background:rgba(255,255,255,.1);color:var(--side-ink-strong);border-radius:10px;padding:1px 7px}
+.side .foot{margin-top:auto;display:flex;flex-direction:column;gap:8px;padding:0 6px}
+.sync{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--side-ink);line-height:1.3}
+.side .btn{background:transparent;border-color:rgba(255,255,255,.18);color:var(--side-ink-strong)}
+.side .btn:hover{border-color:rgba(255,255,255,.45)}
+.side .collapse{border:0;background:none;color:var(--side-ink);font-size:12px;text-align:left;padding:4px 0;display:flex;align-items:center;gap:8px}
+.side.mini{width:64px}
+.side.mini .brand h1,.side.mini nav .lbl,.side.mini nav .n,.side.mini .sync span:last-child,.side.mini #refresh,.side.mini .collapse span{display:none}
+.side.mini nav a{justify-content:center}
 .dot{width:8px;height:8px;border-radius:50%;background:var(--ink3);flex:none}
 .dot.live{background:var(--good);box-shadow:0 0 0 3px var(--good-soft)}
 .dot.err{background:var(--bad)}
@@ -51,12 +70,10 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:va
 .btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 .btn.sm{padding:3px 9px;font-size:12px}
 .btn:disabled{opacity:.55;cursor:default}
-nav.tabs{display:flex;gap:2px;overflow-x:auto;margin-top:6px}
-nav.tabs a{padding:10px 14px;font-weight:600;color:var(--ink3);text-decoration:none;border-bottom:2px solid transparent;white-space:nowrap}
-nav.tabs a[aria-current="page"]{color:var(--ink);border-color:var(--accent)}
-nav.tabs .n{font-family:var(--f-mono);font-size:11px;background:var(--sunk);color:var(--ink2);border-radius:10px;padding:1px 7px;margin-left:6px}
-
-main{padding-block:18px 56px;display:block}
+main{padding-block:22px 56px;display:block;min-width:0}
+.pagehd{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;margin-bottom:14px}
+.pagehd h2{font-family:var(--f-display);font-size:24px;font-weight:700;letter-spacing:-.02em;margin:0}
+.pagehd p{margin:0;color:var(--ink3);font-size:13px}
 .view{display:flex;flex-direction:column;gap:16px}
 .banner{background:var(--warn-soft);color:var(--warn);border-radius:var(--r);padding:10px 14px;font-size:13px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 
@@ -83,7 +100,7 @@ main{padding-block:18px 56px;display:block}
 .stage-pick{display:none;gap:6px;overflow-x:auto;padding-bottom:2px}
 .stage-pick .chip{white-space:nowrap}
 .board{display:flex;gap:10px;overflow-x:auto;padding-bottom:10px;align-items:flex-start}
-.col{flex:0 0 268px;background:var(--sunk);border-radius:var(--r);display:flex;flex-direction:column;max-height:calc(100vh - 250px);min-height:140px}
+.col{flex:0 0 268px;background:var(--sunk);border-radius:var(--r);display:flex;flex-direction:column;max-height:calc(100vh - 230px);min-height:140px}
 .col.drop{outline:2px dashed var(--accent);outline-offset:-2px}
 .col h3{margin:0;padding:11px 12px 7px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px}
 .col h3 i{width:9px;height:9px;border-radius:3px;flex:none}
@@ -127,6 +144,13 @@ main{padding-block:18px 56px;display:block}
 .b{font-size:11px;font-weight:600;border-radius:5px;padding:2px 7px;background:var(--sunk);color:var(--ink2)}
 .b.src{color:var(--surface)}
 .b.src.csm{background:var(--src-csm)} .b.src.pm{background:var(--src-pm)} .b.src.pub{background:var(--src-pub)}
+.b.src.etc{background:var(--src-etc)} .b.src.wttj{background:var(--src-wttj)} .b.src.ip{background:var(--src-ip)}
+.lead.ignored{border-color:var(--bad);background:var(--bad-soft)}
+.lead.ignored .t{text-decoration:line-through;text-decoration-color:var(--bad)}
+.b.ign{background:var(--bad);color:var(--surface)}
+.ign-acts{display:flex;gap:6px;flex-wrap:wrap}
+.btn.danger{color:var(--bad);border-color:var(--bad)}
+.boards{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12px;color:var(--ink3)}
 .b.new{background:var(--accent);color:var(--accent-ink)}
 .b.best{background:var(--good-soft);color:var(--good)}
 .b.closing{background:var(--bad-soft);color:var(--bad)}
@@ -197,31 +221,42 @@ main{padding-block:18px 56px;display:block}
   .col.on{display:flex}
   .col h3 button{display:none}
   .card{cursor:pointer}
-  .brand span{display:none}
+  .shell{display:block}
+  .side,.side.mini{position:sticky;width:auto;height:auto;flex-direction:row;flex-wrap:wrap;align-items:center;gap:8px 10px;padding:10px max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px))}
+  .side .brand h1,.side.mini .brand h1{display:block;font-size:16px}
+  .side .brand small{display:none}
+  .side nav{order:3;flex-direction:row;width:100%;overflow-x:auto;gap:2px}
+  .side nav a,.side.mini nav a{padding:9px 10px;border-radius:8px 8px 0 0;justify-content:flex-start}
+  .side.mini nav .lbl,.side.mini nav .n{display:inline}
+  .side nav svg{display:none}
+  .side .foot{margin:0 0 0 auto;flex-direction:row;align-items:center;padding:0}
+  .side .collapse{display:none}
+  .side.mini .sync span:last-child,.side.mini #refresh{display:inline-flex}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 
-<header>
-  <div class="gut">
-    <div class="top">
-      <div class="brand"><h1>London Job Hunt</h1><span>CSM · Product · Public sector</span></div>
-      <div class="sync"><span class="dot" id="dot"></span><span id="syncTxt">Connecting to Notion…</span>
-        <button class="btn sm" id="refresh" type="button">Refresh</button></div>
-    </div>
-    <nav class="tabs" aria-label="Views">
-      <a href="#board" data-view="board">Applications<span class="n" id="nBoard">–</span></a>
-      <a href="#finder" data-view="finder">Job finder<span class="n" id="nFinder">–</span></a>
-      <a href="#companies" data-view="companies">Companies</a>
-      <a href="#stats" data-view="stats">Stats</a>
-    </nav>
+<div class="shell">
+<aside class="side" id="side">
+  <div class="brand"><span class="mark" aria-hidden="true">J</span><h1>London Job Hunt<small>CSM · Product · Public sector</small></h1></div>
+  <nav aria-label="Views">
+    <a href="#board" data-view="board" title="Applications"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="5" height="16" rx="1.5"/><rect x="10" y="4" width="5" height="11" rx="1.5"/><rect x="17" y="4" width="4" height="7" rx="1.5"/></svg><span class="lbl">Applications</span><span class="n" id="nBoard">–</span></a>
+    <a href="#finder" data-view="finder" title="Job finder"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg><span class="lbl">Job finder</span><span class="n" id="nFinder">–</span></a>
+    <a href="#companies" data-view="companies" title="Companies"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V8l6-3v15M10 20V10l10 3v7M3 20h18"/></svg><span class="lbl">Companies</span></a>
+    <a href="#stats" data-view="stats" title="Stats"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V12M12 20V5M19 20v-9"/></svg><span class="lbl">Stats</span></a>
+  </nav>
+  <div class="foot">
+    <div class="sync"><span class="dot" id="dot"></span><span id="syncTxt">Connecting to Notion…</span></div>
+    <button class="btn sm" id="refresh" type="button">Refresh</button>
+    <button class="collapse" id="collapseSide" type="button" aria-label="Collapse sidebar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><span>Collapse</span></button>
   </div>
-</header>
+</aside>
 
 <main class="gut">
   <div class="banner" id="banner" hidden></div>
 
   <section class="view" id="v-board">
+    <div class="pagehd"><h2>Applications</h2><p>Live from your Notion tracker</p></div>
     <div class="attn" id="attn"></div>
     <div class="toolbar">
       <input class="search" id="qBoard" type="search" placeholder="Search company or role" aria-label="Search applications">
@@ -233,14 +268,23 @@ main{padding-block:18px 56px;display:block}
   </section>
 
   <section class="view" id="v-finder" hidden>
+    <div class="pagehd"><h2>Job finder</h2><p>Your job agents plus Escape the City, Welcome to the Jungle and Intelligent People</p></div>
     <div class="toolbar">
       <input class="search" id="qFinder" type="search" placeholder="Search title, company or notes" aria-label="Search roles">
       <button class="chip" data-src="csm" type="button" aria-pressed="true">London CSM</button>
       <button class="chip" data-src="pm" type="button" aria-pressed="true">London PM</button>
       <button class="chip" data-src="pub" type="button" aria-pressed="true">UK public sector</button>
+      <button class="chip" data-src="etc" type="button" aria-pressed="true">Escape the City</button>
+      <button class="chip" data-src="wttj" type="button" aria-pressed="true">Welcome to the Jungle</button>
+      <button class="chip" data-src="ip" type="button" aria-pressed="true">Intelligent People</button>
+    </div>
+    <div class="toolbar">
       <button class="chip" id="bestFit" type="button" aria-pressed="false">Best fit only</button>
       <button class="chip" id="hideTracked" type="button" aria-pressed="true">Hide roles already in Notion</button>
+      <button class="chip" id="hideIgnored" type="button" aria-pressed="false">Hide ignored</button>
+      <span class="hint" id="ignHint"></span>
     </div>
+    <div class="boards" id="boards"></div>
     <div class="leads" id="leads"><div class="empty">Loading roles from your job agents…</div></div>
     <p class="note" id="leadNote"></p>
   </section>
@@ -256,6 +300,7 @@ main{padding-block:18px 56px;display:block}
   </section>
 
   <section class="view" id="v-stats" hidden>
+    <div class="pagehd"><h2>Stats</h2><p>How the search is going</p></div>
     <div class="kpis" id="kpis"></div>
     <div class="panels">
       <div class="panel"><h2 class="sec-h">Applications per week</h2><div id="weekly"></div></div>
@@ -264,6 +309,7 @@ main{padding-block:18px 56px;display:block}
     </div>
   </section>
 </main>
+</div>
 
 <div class="drawer" id="drawer" hidden><div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Application details"></div></div>
 <div class="toast" id="toast" hidden></div>
@@ -279,16 +325,22 @@ const STAGES = [
 ];
 const ACTIVE = ["Applied","In conversation","Interviewing","Final stage"];
 const CHASE_DAYS = 21;
-const SRC = {csm:"CSM agent",pm:"PM agent",pub:"Public sector"};
+const SRC = {csm:"CSM agent",pm:"PM agent",pub:"Public sector",etc:"Escape the City",wttj:"Welcome to the Jungle",ip:"Intelligent People"};
+const BOARDS = [
+  {src:"etc", label:"Escape the City", url:"https://www.escapethecity.org/search/jobs"},
+  {src:"wttj", label:"Welcome to the Jungle", url:"https://www.welcometothejungle.com/en/jobs"},
+  {src:"ip", label:"Intelligent People (product)", url:"https://www.intelligentpeople.co.uk/jobs/discipline/product-management/"}
+];
 const BEST = {Core:1,Strong:1};
 
 /* ---------- state ---------- */
 let apps = null, leadsData = null, logos = {}, domains = {}, prep = [];
 let mcp = null, hideClosed = false, mobileStage = "Applied";
 const collapsed = new Set(["Withdrawn"]);
-const srcOn = new Set(["csm","pm","pub"]); let bestOnly = false, hideTracked = true;
-try{ const s = JSON.parse(localStorage.getItem("ljh-ui")||"{}"); if(s.hideClosed) hideClosed = true; if(s.mobileStage) mobileStage = s.mobileStage; }catch(e){}
-const saveUi = ()=>{ try{ localStorage.setItem("ljh-ui", JSON.stringify({hideClosed, mobileStage})) }catch(e){} };
+const srcOn = new Set(Object.keys(SRC)); let bestOnly = false, hideTracked = true, hideIgnored = false, sideMini = false;
+let ignored = new Map(), ignStore = null, ignMode = "loading";   // ignMode: db | local | loading
+try{ const s = JSON.parse(localStorage.getItem("ljh-ui")||"{}"); if(s.hideClosed) hideClosed = true; if(s.mobileStage) mobileStage = s.mobileStage; if(s.sideMini) sideMini = true; if(s.hideIgnored) hideIgnored = true; }catch(e){}
+const saveUi = ()=>{ try{ localStorage.setItem("ljh-ui", JSON.stringify({hideClosed, mobileStage, sideMini, hideIgnored})) }catch(e){} };
 
 /* ---------- helpers ---------- */
 const $ = s=>document.querySelector(s);
@@ -307,7 +359,7 @@ function logo(name, big){
   if(src) return `<span class="${cls}"><img src="${esc(src)}" alt=""></span>`;
   const w=n.replace(/[^A-Za-z0-9& ]/g," ").split(/\s+/).filter(Boolean);
   const ini=(w.length>1?w[0][0]+w[1][0]:n.slice(0,2)).toUpperCase();
-  return `<span class="${cls}" style="background:hsl(${hue(n)} 42% 42%)" aria-hidden="true">${esc(ini)}</span>`;
+  return `<span class="${cls}" style="background:hsl(${200+hue(n)%35} 58% ${32+hue(n)%16}%)" aria-hidden="true">${esc(ini)}</span>`;
 }
 const prepFor = a=>prep.filter(p=>{const m=p.match.toLowerCase(); return (a.company||"").toLowerCase().includes(m)||(a.role||"").toLowerCase().includes(m)});
 const track = role=>{const r=(role||"").toLowerCase();
@@ -332,7 +384,7 @@ const VIEWS=["board","finder","companies","stats"];
 function route(){
   const v=VIEWS.includes(location.hash.slice(1))?location.hash.slice(1):"board";
   VIEWS.forEach(x=>{$("#v-"+x).hidden=x!==v});
-  document.querySelectorAll("nav.tabs a").forEach(a=>{ if(a.dataset.view===v) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current") });
+  document.querySelectorAll(".side nav a").forEach(a=>{ if(a.dataset.view===v) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current") });
 }
 addEventListener("hashchange",route);
 
@@ -384,25 +436,33 @@ function renderLeads(){
   const cos=new Set((apps||[]).map(a=>norm(a.company)).filter(Boolean));
   const q=$("#qFinder").value.toLowerCase();
   let list=L.filter(l=>srcOn.has(l.src)&&(!bestOnly||BEST[l.fit])&&(!q||[l.title,l.company,l.industry,l.location,...(l.flags||[])].join(" ").toLowerCase().includes(q)));
-  list.forEach(l=>{l.tracked=keys.has(norm(l.company)+"|"+norm(l.title)); l.coMatch=!l.tracked&&cos.has(norm(l.company))});
+  list.forEach(l=>{l.tracked=keys.has(norm(l.company)+"|"+norm(l.title)); l.coMatch=!l.tracked&&cos.has(norm(l.company)); l.ign=ignored.get(leadKey(l))||null});
   list=list.filter(l=>!l.closing||dayDiff(l.closing)>=0);   // drop public-sector roles past their closing date
-  const total=list.length; if(hideTracked) list=list.filter(l=>!l.tracked);
-  list.sort((a,b)=>(b.added||"").localeCompare(a.added||"")||(BEST[b.fit]||0)-(BEST[a.fit]||0)||(b.posted||"").localeCompare(a.posted||""));
+  const total=list.length, nIgn=list.filter(l=>l.ign).length;
+  if(hideTracked) list=list.filter(l=>!l.tracked);
+  if(hideIgnored) list=list.filter(l=>!l.ign);
+  list.sort((a,b)=>(a.ign?1:0)-(b.ign?1:0)||(b.added||"").localeCompare(a.added||"")||(BEST[b.fit]||0)-(BEST[a.fit]||0)||(b.posted||"").localeCompare(a.posted||""));
   let html="",grp=null;
-  for(const l of list){ if(l.added!==grp){grp=l.added; html+=`<div class="grouphd">Added ${grp===leadsData.asOf?"in the latest run · ":""}${fmtD(grp)}</div>`} html+=lead(l,L.indexOf(l)) }
+  for(const l of list){ const g=l.ign?"ignored":l.added; if(g!==grp){grp=g; html+=`<div class="grouphd">${g==="ignored"?"Ignored · they stay red so you know you've ruled them out":`Added ${g===leadsData.asOf?"in the latest run · ":""}${fmtD(g)}`}</div>`} html+=lead(l,L.indexOf(l)) }
+  $("#ignHint").textContent = nIgn ? `${nIgn} ignored${ignMode==="local"?" (saved in this browser only)":""}` : "";
+  const sc = leadsData.scanned||{};
+  $("#boards").innerHTML = `<span>Browse directly:</span>`+BOARDS.map(b=>`<a class="btn sm" href="${b.url}" target="_blank" rel="noopener">${b.label} ↗</a><span>${sc[b.src]?"scanned "+fmtD(sc[b.src]):"first scan with tonight's refresh"}</span>`).join("");
   $("#leads").innerHTML=html||'<div class="empty">No roles match these filters.</div>';
   $("#nFinder").textContent=L.filter(l=>l.added===leadsData.asOf).length+" new";
   $("#leadNote").textContent=`${total} roles match. Lists from your three job agents, last rebuilt ${fmtD(leadsData.asOf)}; a daily task refreshes this tab at about 6pm, after the agents have run.`;
 }
 function lead(l,i){
   const cd=l.closing?dayDiff(l.closing):null; const closing=cd!==null&&cd<=3;
-  return `<article class="lead">
+  const k=esc(leadKey(l));
+  return `<article class="lead${l.ign?" ignored":""}">
     <div class="hd">${logo(l.company,true)}<div><div class="t">${esc(l.title)}</div><div class="c">${esc(l.company)}${l.industry?" · "+esc(l.industry):""}</div></div></div>
-    <div class="badges"><span class="b src ${l.src}">${SRC[l.src]}</span>${l.added===leadsData.asOf?'<span class="b new">New</span>':""}${l.fit?`<span class="b${BEST[l.fit]?" best":""}">${esc(l.fit)} fit</span>`:""}${closing?`<span class="b closing">Closes ${cd===0?"today":fmtD(l.closing)}</span>`:""}${l.tracked?'<span class="b tracked">In Notion</span>':l.coMatch?'<span class="b">Applied here before</span>':""}</div>
+    <div class="badges">${l.ign?`<span class="b ign">Ignored · ${esc(l.ign.reason||"Not for me")}</span>`:""}<span class="b src ${l.src}">${SRC[l.src]||esc(l.src)}</span>${l.added===leadsData.asOf?'<span class="b new">New</span>':""}${l.fit?`<span class="b${BEST[l.fit]?" best":""}">${esc(l.fit)} fit</span>`:""}${closing?`<span class="b closing">Closes ${cd===0?"today":fmtD(l.closing)}</span>`:""}${l.tracked?'<span class="b tracked">In Notion</span>':l.coMatch?'<span class="b">Applied here before</span>':""}</div>
     <div class="facts">${l.location?`<span>${esc(l.location)}</span>`:""}${l.mode?`<span>${esc(l.mode)}</span>`:""}${l.salary?`<span>${esc(l.salary)}</span>`:""}${l.posted?`<span>Posted ${fmtD(l.posted)}</span>`:""}${l.closing&&!closing?`<span>Closes ${fmtD(l.closing)}</span>`:""}</div>
     ${l.why?`<div class="why">${esc(l.why)}</div>`:""}
     ${(l.flags||[]).length?`<ul class="flags">${l.flags.slice(0,3).map(f=>`<li>${esc(f)}</li>`).join("")}</ul>`:""}
-    <div class="ft">${l.url?`<a href="${esc(l.url)}" target="_blank" rel="noopener">View ad ↗</a>`:""}<a href="#companies" data-explore="${esc(l.company)}">Similar</a>${l.tracked?"":`<button class="btn sm primary" type="button" data-track="${i}">Add to “To apply”</button>`}</div>
+    <div class="ft">${l.url?`<a href="${esc(l.url)}" target="_blank" rel="noopener">View ad ↗</a>`:""}<a href="#companies" data-explore="${esc(l.company)}">Similar</a>${l.tracked||l.ign?"":`<button class="btn sm primary" type="button" data-track="${i}">Add to “To apply”</button>`}</div>
+    <div class="ign-acts">${l.ign?`<button class="btn sm" type="button" data-unignore="${k}">Restore</button>`
+      :`<button class="btn sm danger" type="button" data-ignore="${k}" data-reason="Not for me">Not for me</button><button class="btn sm danger" type="button" data-ignore="${k}" data-reason="Declining">Declining</button>`}</div>
   </article>`;
 }
 
@@ -545,6 +605,37 @@ async function loadFiles(){
   [leadsData,logos,domains,prep]=await Promise.all([get("data/leads.json",null),get("data/logos.json",{}),get("data/domains.json",{}),get("data/prep.json",[])]);
   if(!leadsData) $("#leads").innerHTML='<div class="empty">The job list didn\'t load. Reload the page; if it keeps failing, ask Claude to rebuild the finder data.</div>';
   renderAll();
+}
+
+/* ---------- ignored roles: saved per viewer in the artifact's private store, else this browser ---------- */
+function leadKey(l){ return (l.src+"-"+norm(l.company).slice(0,60)+"-"+norm(l.title).slice(0,90)) }
+function loadLocalIgnored(){ try{ ignored = new Map(Object.entries(JSON.parse(localStorage.getItem("ljh-ignored")||"{}"))) }catch(e){ ignored = new Map() } }
+function saveLocalIgnored(){ try{ localStorage.setItem("ljh-ignored", JSON.stringify(Object.fromEntries(ignored))) }catch(e){} }
+async function initIgnored(){
+  let db=null, user=null, uid=null;
+  try{ db = await claude.use("db"); user = await claude.use("user"); uid = user ? await user.id() : null }catch(e){}
+  if(!db || !uid){ ignMode="local"; loadLocalIgnored(); renderLeads(); return }
+  ignStore = db.collection("data/users/"+uid);
+  const timer = setTimeout(()=>{ if(ignMode==="loading"){ ignMode="local"; loadLocalIgnored(); renderLeads() } }, 10000);
+  ignStore.where("kind","==","ignored").onSnapshot(snap=>{
+    if(!snap.metadata.fromCache) clearTimeout(timer);
+    ignMode="db"; ignored = new Map(snap.docs.map(d=>[d.id.replace(/^ign-/,""), d.data()])); renderLeads();
+  }, ()=>{ clearTimeout(timer); ignMode="local"; ignStore=null; loadLocalIgnored(); renderLeads() });
+}
+async function setIgnored(key, reason){
+  const l = leadsData.leads.find(x=>leadKey(x)===key);
+  const prev = ignored.get(key);
+  if(reason) ignored.set(key, {kind:"ignored", reason, at:new Date().toISOString(), title:l?l.title:"", company:l?l.company:""});
+  else ignored.delete(key);
+  renderLeads();
+  if(ignMode!=="db"||!ignStore){ saveLocalIgnored(); return }
+  try{
+    const ref = ignStore.doc("ign-"+key);
+    if(reason) await ref.set(ignored.get(key)); else await ref.delete();
+  }catch(e){
+    if(prev) ignored.set(key, prev); else ignored.delete(key);
+    renderLeads(); toast("Couldn't save that change. Try again in a moment.");
+  }
 }
 
 /* ---------- companies: competitors + recruiter mapping ---------- */
@@ -702,7 +793,16 @@ $("#bestFit").onclick=e=>{bestOnly=!bestOnly;e.currentTarget.setAttribute("aria-
 $("#hideTracked").onclick=e=>{hideTracked=!hideTracked;e.currentTarget.setAttribute("aria-pressed",hideTracked);renderLeads()};
 document.querySelectorAll("[data-src]").forEach(b=>b.onclick=()=>{const s=b.dataset.src;srcOn.has(s)?srcOn.delete(s):srcOn.add(s);b.setAttribute("aria-pressed",srcOn.has(s));renderLeads()});
 $("#refresh").onclick=()=>{ loadOnce() };
-$("#leads").addEventListener("click",e=>{const b=e.target.closest("[data-track]");if(b)trackLead(+b.dataset.track,b)});
+$("#leads").addEventListener("click",e=>{
+  const b=e.target.closest("[data-track]"); if(b){ trackLead(+b.dataset.track,b); return }
+  const g=e.target.closest("[data-ignore]"); if(g){ setIgnored(g.dataset.ignore, g.dataset.reason); toast(`Marked as ${g.dataset.reason.toLowerCase()}. Restore it any time.`); return }
+  const u=e.target.closest("[data-unignore]"); if(u){ setIgnored(u.dataset.unignore, null) }
+});
+$("#hideIgnored").setAttribute("aria-pressed",hideIgnored);
+$("#hideIgnored").onclick=e=>{hideIgnored=!hideIgnored;e.currentTarget.setAttribute("aria-pressed",hideIgnored);saveUi();renderLeads()};
+$("#side").classList.toggle("mini",sideMini);
+$("#collapseSide").onclick=()=>{ sideMini=!sideMini; $("#side").classList.toggle("mini",sideMini); $("#collapseSide").setAttribute("aria-label",sideMini?"Expand sidebar":"Collapse sidebar"); $("#collapseSide span").textContent=sideMini?"Expand":"Collapse"; $("#collapseSide svg").style.transform=sideMini?"rotate(180deg)":""; saveUi() };
+if(sideMini){ $("#collapseSide span").textContent="Expand"; $("#collapseSide svg").style.transform="rotate(180deg)" }
 $("#attn").addEventListener("click",e=>{const b=e.target.closest("[data-open]");if(b)openApp(b.dataset.open)});
 $("#stagePick").addEventListener("click",e=>{const b=e.target.closest("[data-stage]");if(!b)return;mobileStage=b.dataset.stage;saveUi();renderBoard()});
 
@@ -717,5 +817,5 @@ board.addEventListener("dragend",()=>document.querySelectorAll(".dragging,.drop"
 board.addEventListener("dragover",e=>{const col=e.target.closest(".col");if(!col||!dragId)return;e.preventDefault();document.querySelectorAll(".col.drop").forEach(x=>x!==col&&x.classList.remove("drop"));col.classList.add("drop")});
 board.addEventListener("drop",e=>{const col=e.target.closest(".col");if(!col||!dragId)return;e.preventDefault();col.classList.remove("drop");setStatus(dragId,col.dataset.status);dragId=null});
 
-route(); loadFiles(); boot();
+route(); loadFiles(); boot(); initIgnored();
 </script>

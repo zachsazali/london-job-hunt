@@ -38,11 +38,24 @@ foreach ($r in (Get-Rows $Pub)) {
     salary=$r[7]; closing=$r[9]; posted=$r[10]; board=$r[11]; url=$r[12]; flags=@($r[13]); why=$r[14]; added=$r[15] })
 }
 
+# Roles from boards without an agent page (Escape the City, Welcome to the Jungle, Intelligent People)
+$extraPath = Join-Path $data 'extra-leads.json'
+$scanned = $null
+if (Test-Path $extraPath) {
+  $extra = Get-Content $extraPath -Raw -Encoding UTF8 | ConvertFrom-Json
+  $scanned = $extra.scanned
+  foreach ($e in @($extra.leads)) {
+    $h = [ordered]@{}; $e.PSObject.Properties | ForEach-Object { $h[$_.Name] = $_.Value }
+    $h.flags = @($e.flags); [void]$leads.Add($h)
+  }
+}
+
 $asOf = ($leads | ForEach-Object { $_.added } | Sort-Object -Descending | Select-Object -First 1)
-$out = [ordered]@{ asOf = $asOf; builtAt = (Get-Date).ToString('s'); leads = $leads }
+$out = [ordered]@{ asOf = $asOf; builtAt = (Get-Date).ToString('s'); scanned = $scanned; leads = $leads }
 $json = $out | ConvertTo-Json -Depth 6 -Compress
 [IO.File]::WriteAllText((Join-Path $data 'leads.json'), $json, (New-Object Text.UTF8Encoding $false))
-Write-Output "leads.json: $($leads.Count) roles (csm/pm/pub), as of $asOf"
+$bySrc = ($leads | Group-Object { $_.src } | ForEach-Object { "$($_.Name)=$($_.Count)" }) -join ' '
+Write-Output "leads.json: $($leads.Count) roles ($bySrc), as of $asOf"
 
 if ($SkipLogos) { return }
 # Logos: company -> data URI, fetched once per domain and kept between runs.

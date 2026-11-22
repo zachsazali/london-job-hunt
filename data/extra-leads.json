@@ -1,0 +1,9 @@
+{
+  "note": "Roles gathered from job boards without an agent page (Escape the City, Welcome to the Jungle, Intelligent People). Each daily run replaces the list for any source it scanned. src: etc | wttj | ip.",
+  "scanned": {"ip": "2026-11-22"},
+  "leads": [
+    {"src": "ip", "family": "Product", "title": "Product Manager (Tech4Good B2B SaaS)", "company": "Intelligent People (client unnamed)", "fit": "Agency", "industry": "Tech4Good B2B SaaS", "location": "London", "mode": "Hybrid", "salary": "£65,000–£70,000", "url": "https://www.intelligentpeople.co.uk/job/product-manager-tech4good-b2b-saas-65-70k-hybrid-london-js9919/", "flags": ["Agency", "Mid-level PM title: check product experience asked"], "added": "2026-11-22"},
+    {"src": "ip", "family": "Product", "title": "Product Manager (Compound Pharmacy)", "company": "Intelligent People (client unnamed)", "fit": "Agency", "industry": "Healthtech / pharmacy", "location": "London", "mode": "Hybrid, 4 days", "salary": "£60,000–£75,000", "url": "https://www.intelligentpeople.co.uk/job/product-manager-compound-pharmacy-hybrid-4-days/", "flags": ["Agency", "4 days in the office", "Mid-level PM title: check product experience asked"], "added": "2026-11-22"},
+    {"src": "ip", "family": "Product Marketing", "title": "Product Marketing Manager (AI SaaS)", "company": "Intelligent People (client unnamed)", "fit": "Agency", "industry": "AI SaaS", "location": "UK remote / London hub", "mode": "Remote", "salary": "£65,000–£75,000", "url": "https://www.intelligentpeople.co.uk/job/product-marketing-manager-65-75k-ai-saas-uk-remote-london-hub-ja9925/", "flags": ["Agency", "Mostly remote with a London hub"], "added": "2026-11-22"}
+  ]
+}
