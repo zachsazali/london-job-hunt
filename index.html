@@ -9,7 +9,7 @@
   --side:#0f2547; --side-ink:#c9d7ee; --side-ink-strong:#ffffff; --side-hover:#183462; --side-on:#24477f;
   --accent:#1f56d6; --accent-ink:#ffffff; --accent-soft:#dbe6fb;
   --warn:#9a5507; --warn-soft:#fbefdb; --bad:#c0261c; --bad-soft:#fde8e6; --good:#16679a; --good-soft:#dcedf8;
-  --s-todo:#94a3b8; --s-applied:#7fb0f5; --s-conv:#4f8ef0; --s-int:#2c6be0; --s-final:#1d4fb8; --s-offer:#0d3b8c; --s-rej:#c0261c; --s-wd:#a3adbb;
+  --s-todo:#94a3b8; --s-applied:#7fb0f5; --s-conv:#4f8ef0; --s-int:#2c6be0; --s-final:#1d4fb8; --s-offer:#0d3b8c; --s-rej:#c0261c; --s-wd:#a3adbb; --s-inact:#6b7f9e;
   --src-csm:#0b6aa8; --src-pm:#3d4fc4; --src-pub:#1e3f94; --src-etc:#0a7f9e; --src-wttj:#2a3a8f; --src-ip:#2563b8;
   --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
   --f-body:"Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -21,14 +21,14 @@
   --side:#070e1a; --side-ink:#9fb3d3; --side-ink-strong:#ffffff; --side-hover:#13223d; --side-on:#1c3460;
   --accent:#78a6ff; --accent-ink:#081224; --accent-soft:#17294b;
   --warn:#f0b062; --warn-soft:#33260f; --bad:#ff8a80; --bad-soft:#3d1715; --good:#7cc4f0; --good-soft:#12304a;
-  --s-todo:#7d8ba0; --s-applied:#a9cbff; --s-conv:#7fb0ff; --s-int:#5a92ff; --s-final:#3b74f0; --s-offer:#9fd0ff; --s-rej:#ff8a80; --s-wd:#5f6b7d;
+  --s-todo:#7d8ba0; --s-applied:#a9cbff; --s-conv:#7fb0ff; --s-int:#5a92ff; --s-final:#3b74f0; --s-offer:#9fd0ff; --s-rej:#ff8a80; --s-wd:#5f6b7d; --s-inact:#7a8daa;
   --src-csm:#62b8f0; --src-pm:#9aa6ff; --src-pub:#7f9de8; --src-etc:#5fd0e8; --src-wttj:#a6b0f5; --src-ip:#7fb0ff; color-scheme:dark }}
 :root[data-theme="dark"]{
   --bg:#0a1220; --surface:#111c30; --sunk:#0d1626; --ink:#e5edf8; --ink2:#a8b8cf; --ink3:#71839d; --line:#213252;
   --side:#070e1a; --side-ink:#9fb3d3; --side-ink-strong:#ffffff; --side-hover:#13223d; --side-on:#1c3460;
   --accent:#78a6ff; --accent-ink:#081224; --accent-soft:#17294b;
   --warn:#f0b062; --warn-soft:#33260f; --bad:#ff8a80; --bad-soft:#3d1715; --good:#7cc4f0; --good-soft:#12304a;
-  --s-todo:#7d8ba0; --s-applied:#a9cbff; --s-conv:#7fb0ff; --s-int:#5a92ff; --s-final:#3b74f0; --s-offer:#9fd0ff; --s-rej:#ff8a80; --s-wd:#5f6b7d;
+  --s-todo:#7d8ba0; --s-applied:#a9cbff; --s-conv:#7fb0ff; --s-int:#5a92ff; --s-final:#3b74f0; --s-offer:#9fd0ff; --s-rej:#ff8a80; --s-wd:#5f6b7d; --s-inact:#7a8daa;
   --src-csm:#62b8f0; --src-pm:#9aa6ff; --src-pub:#7f9de8; --src-etc:#5fd0e8; --src-wttj:#a6b0f5; --src-ip:#7fb0ff; color-scheme:dark }
 
 *{box-sizing:border-box}
@@ -260,7 +260,7 @@ main{padding-block:22px 56px;display:block;min-width:0}
     <div class="attn" id="attn"></div>
     <div class="toolbar">
       <input class="search" id="qBoard" type="search" placeholder="Search company or role" aria-label="Search applications">
-      <button class="chip" id="hideClosed" type="button" aria-pressed="false">Hide rejected &amp; withdrawn</button>
+      <button class="chip" id="hideClosed" type="button" aria-pressed="false">Hide inactive, rejected &amp; withdrawn</button>
       <span class="hint" id="dragHint">Drag a card to another column to update its status in Notion.</span>
     </div>
     <div class="stage-pick" id="stagePick" role="tablist" aria-label="Stage"></div>
@@ -321,7 +321,7 @@ const DS = "636ebc2a-b03c-4227-9487-cd5a02b45f0d";           // Notion "Applicat
 const SQL = `SELECT url, "Role", "Company", "Status", "date:Date applied:start" AS applied, "Next step", "date:Next step date:start" AS next_date, "Salary range", "Location", "Source / board", "Job posting URL", createdTime FROM "collection://${DS}" WHERE "Status" IS NOT NULL`;
 const STAGES = [
   {k:"To apply",v:"--s-todo"},{k:"Applied",v:"--s-applied"},{k:"In conversation",v:"--s-conv"},{k:"Interviewing",v:"--s-int"},
-  {k:"Final stage",v:"--s-final"},{k:"Offer",v:"--s-offer"},{k:"Rejected",v:"--s-rej",closed:true},{k:"Withdrawn",v:"--s-wd",closed:true}
+  {k:"Final stage",v:"--s-final"},{k:"Offer",v:"--s-offer"},{k:"Inactive",v:"--s-inact",closed:true},{k:"Rejected",v:"--s-rej",closed:true},{k:"Withdrawn",v:"--s-wd",closed:true}
 ];
 const ACTIVE = ["Applied","In conversation","Interviewing","Final stage"];
 const CHASE_DAYS = 21;
@@ -375,7 +375,7 @@ function attention(a){
   if(nd!==null&&nd<=3) return {lvl:"warn",why:nd===0?"Next step today":`Next step in ${nd}d`,rank:1};
   if((a.status==="Interviewing"||a.status==="Final stage")&&!a.next&&!a.nextDate) return {lvl:"warn",why:"Interviewing, no next step logged",rank:2};
   const ad=a.applied?-dayDiff(a.applied):null;
-  if(a.status==="Applied"&&ad!==null&&ad>=CHASE_DAYS) return {lvl:"warn",why:`No reply for ${ad}d: chase or close`,rank:3};
+  if(a.status==="Applied"&&ad!==null&&ad>=CHASE_DAYS) return {lvl:"warn",why:`No reply for ${ad}d: chase, or move to Inactive`,rank:3};
   return null;
 }
 
@@ -522,9 +522,10 @@ function openApp(id){
       <dt>Job ad</dt><dd>${a.url?`<a href="${esc(a.url)}" target="_blank" rel="noopener">Open posting ↗</a>`:"—"}</dd>
     </dl>
     ${p.length?`<div class="prep-list"><h3 class="sec-h">Interview prep</h3>${p.map(x=>`<a class="btn" href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.label)} ↗</a>`).join("")}</div>`:""}
-    <div style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn" href="https://www.notion.so/${esc(a.id)}" target="_blank" rel="noopener">Edit in Notion ↗</a>${a.company?`<button class="btn" type="button" data-explore="${esc(a.company)}">Similar companies</button>`:""}<button class="btn" type="button" id="dClose">Close</button></div>`;
+    <div style="display:flex;gap:8px;flex-wrap:wrap">${a.status!=="Inactive"&&!["Offer","Rejected","Withdrawn"].includes(a.status)?`<button class="btn" type="button" id="dInactive">Move to Inactive</button>`:""}<a class="btn" href="https://www.notion.so/${esc(a.id)}" target="_blank" rel="noopener">Edit in Notion ↗</a>${a.company?`<button class="btn" type="button" data-explore="${esc(a.company)}">Similar companies</button>`:""}<button class="btn" type="button" id="dClose">Close</button></div>`;
   $("#drawer").hidden=false; $("#dStatus").focus();
   $("#dClose").onclick=closeDrawer; $("#dStatus").onchange=e=>setStatus(a.id,e.target.value);
+  const di=$("#dInactive"); if(di) di.onclick=()=>{ setStatus(a.id,"Inactive"); closeDrawer() };
 }
 function closeDrawer(){ $("#drawer").hidden=true }
 $("#drawer").addEventListener("click",e=>{ if(e.target.id==="drawer") closeDrawer() });
