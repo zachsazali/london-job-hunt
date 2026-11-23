@@ -716,7 +716,7 @@ function openApp(id, prefill){
       <div class="row-acts full"><button class="btn primary" type="submit" id="appSave">${isNew?"Add to Notion":"Save to Notion"}</button>${a.url?`<a class="btn" href="${esc(a.url)}" target="_blank" rel="noopener">Open job ad</a>`:""}</div>
     </form>
     ${p.length?`<div class="prep-list"><h3 class="sec-h">Interview prep</h3>${p.map(x=>`<a class="btn" href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.label)}</a>`).join("")}</div>`:""}
-    <div class="row-acts">${!isNew&&a.status!=="Inactive"&&!["Offer","Rejected","Withdrawn"].includes(a.status)?`<button class="btn" type="button" id="dInactive">Move to Inactive</button>`:""}${isNew?"":`<a class="btn" href="https://www.notion.so/${esc(a.id)}" target="_blank" rel="noopener">Open in Notion</a>`}${!isNew&&a.company?`<button class="btn" type="button" data-explore="${esc(a.company)}">Similar companies</button>`:""}<button class="btn" type="button" id="dClose">Close</button></div>`;
+    <div class="row-acts">${!isNew&&a.status!=="Inactive"&&!["Offer","Rejected","Withdrawn"].includes(a.status)?`<button class="btn" type="button" id="dInactive">Inactive / no reply</button>`:""}${isNew?"":`<a class="btn" href="https://www.notion.so/${esc(a.id)}" target="_blank" rel="noopener">Open in Notion</a>`}${!isNew&&a.company?`<button class="btn" type="button" data-explore="${esc(a.company)}">Similar companies</button>`:""}<button class="btn" type="button" id="dClose">Close</button></div>`;
   $("#drawer").hidden=false; $(isNew?"#f-role":"#f-status").focus();
   $("#dClose").onclick=closeDrawer;
   const di=$("#dInactive"); if(di) di.onclick=()=>{ setStatus(a.id,"Inactive"); closeDrawer() };
