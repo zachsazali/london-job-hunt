@@ -688,12 +688,12 @@ const APP_FIELDS = [
   ["applied","Date applied","date","Date applied"],["next","Next step","text","Next step"],["nextDate","Next step date","date","Next step date"],
   ["salary","Salary range","text","Salary"],["location","Location","text","Location"],["source","Source / board","source","Found via"],["url","Job posting URL","url","Job ad link"]
 ];
-const SOURCES = ["LinkedIn","Company website","Indeed","Otta","YunoJuno","Referral / network","Recruiter outreach","Other","Intelligent People","Zebra People"];
+const SOURCES = ["LinkedIn","Company website","Indeed","Otta","Escape the City","Referral / network","Recruiter outreach","Other"];
 function fieldInput(f, v){
   const [k,,type,label]=f, id="f-"+k;
   let ctl;
   if(type==="status") ctl=`<select id="${id}" name="${k}">${STAGES.map(s=>`<option${s.k===v?" selected":""}>${s.k}</option>`).join("")}</select>`;
-  else if(type==="source") ctl=`<select id="${id}" name="${k}"><option value="">Not set</option>${SOURCES.map(s=>`<option${s===v?" selected":""}>${s}</option>`).join("")}</select>`;
+  else if(type==="source") ctl=`<select id="${id}" name="${k}"><option value="">Not set</option>${(v&&!SOURCES.includes(v)?[...SOURCES,v]:SOURCES).map(s=>`<option${s===v?" selected":""}>${esc(s)}</option>`).join("")}</select>`;
   else ctl=`<input id="${id}" name="${k}" type="${type==="url"?"url":type}" value="${esc(v||"")}"${k==="role"?" required":""}${type==="url"?' inputmode="url" placeholder="https://"':""}>`;
   return `<label for="${id}">${label}</label>${ctl}`;
 }
@@ -998,9 +998,9 @@ function guessFromUrl(u){
   if(/linkedin\.com$/.test(h)) g.source="LinkedIn";
   else if(/welcometothejungle\.com$|otta\.com$/.test(h)){ g.source="Otta"; const i=parts.indexOf("companies"); if(i>=0){ g.company=co(parts[i+1]); if(parts[i+3]) g.role=titleCase(parts[i+3].split("_")[0]) } }
   else if(/indeed\./.test(h)) g.source="Indeed";
-  else if(/intelligentpeople\.co\.uk$/.test(h)){ g.source="Intelligent People"; g.company="Intelligent People (client unnamed)"; if(parts[1]) g.role=titleCase(parts[1].split(/-\d|-£/)[0]) }
-  else if(/yunojuno\.com$/.test(h)) g.source="YunoJuno";
-  else if(/escapethecity\.org$/.test(h)){ g.source="Other"; const m=(parts[1]||"").match(/^\d+-(.+)-at-(.+)$/); if(m){ g.role=titleCase(m[1]); g.company=titleCase(m[2]) } }
+  else if(/intelligentpeople\.co\.uk$/.test(h)){ g.source="Other"; g.company="Intelligent People (client unnamed)"; if(parts[1]) g.role=titleCase(parts[1].split(/-\d|-£/)[0]) }
+  else if(/yunojuno\.com$/.test(h)) g.source="Other";
+  else if(/escapethecity\.org$/.test(h)){ g.source="Escape the City"; const m=(parts[1]||"").match(/^\d+-(.+)-at-(.+)$/); if(m){ g.role=titleCase(m[1]); g.company=titleCase(m[2]) } }
   else if(/greenhouse\.io$|lever\.co$|ashbyhq\.com$|workable\.com$|teamtailor\.com$|pinpointhq\.com$|smartrecruiters\.com$/.test(h)){ g.source="Company website"; g.company=co(parts[0]==="en"?parts[1]:parts[0]) }
   else if(/myworkdayjobs\.com$/.test(h)){ g.source="Company website"; g.company=co(h.split(".")[0]) }
   else { g.source="Company website"; g.company=co(h.split(".").slice(-2,-1)[0]) }
