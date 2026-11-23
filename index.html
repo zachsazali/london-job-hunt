@@ -310,6 +310,11 @@ main{padding-block:var(--space-lg) calc(var(--space-2xl) + 56px);min-width:0}
 .fab:active{transform:scale(0.94)}
 .fab:focus-visible{outline:3px solid var(--color-focus);outline-offset:3px}
 
+.notes-box{display:flex;flex-direction:column;gap:var(--space-xs)}
+.notes-hd{display:flex;align-items:baseline;justify-content:space-between;gap:var(--space-xs)}
+.notes-box textarea{width:100%;min-height:132px;resize:vertical;border:var(--rule-hair) solid var(--color-rule);border-radius:var(--radius-sm);padding:var(--space-xs) var(--space-sm);background:var(--color-paper);color:var(--color-ink);font-size:var(--text-md);line-height:1.5}
+.notes-box textarea:focus-visible{outline-offset:-2px;background:var(--color-surface)}
+
 /* to-dos */
 .todo-add{display:flex;flex-direction:column;gap:var(--space-xs);background:var(--color-surface);border:var(--rule-hair) solid var(--color-rule);border-radius:var(--radius-card);padding:var(--space-md);max-width:880px}
 .todo-line{display:flex;gap:var(--space-xs);flex-wrap:wrap}
@@ -488,7 +493,7 @@ main{padding-block:var(--space-lg) calc(var(--space-2xl) + 56px);min-width:0}
 /* ---------- config ---------- */
 const NOTION = "Notion";
 const DS = "636ebc2a-b03c-4227-9487-cd5a02b45f0d";           // Notion "Applications" data source
-const SQL = `SELECT url, "Role", "Company", "Status", "date:Date applied:start" AS applied, "Next step", "date:Next step date:start" AS next_date, "Salary range", "Location", "Source / board", "Job posting URL", createdTime FROM "collection://${DS}" WHERE "Status" IS NOT NULL`;
+const SQL = `SELECT url, "Role", "Company", "Status", "date:Date applied:start" AS applied, "Next step", "date:Next step date:start" AS next_date, "Salary range", "Location", "Source / board", "Job posting URL", "Notes", createdTime FROM "collection://${DS}" WHERE "Status" IS NOT NULL`;
 const STAGES = [
   {k:"To apply",v:"--s-todo"},{k:"Applied",v:"--s-applied"},{k:"In conversation",v:"--s-conv"},{k:"Interviewing",v:"--s-int"},
   {k:"Final stage",v:"--s-final"},{k:"Offer",v:"--s-offer"},{k:"Inactive",v:"--s-inact",closed:true},{k:"Rejected",v:"--s-rej",closed:true},{k:"Withdrawn",v:"--s-wd",closed:true}
@@ -572,7 +577,7 @@ function card(a){
   const nextCls=nd!==null&&nd<0?" over":nd!==null&&nd<=3?" due":"";
   return `<div class="card" draggable="true" data-id="${esc(a.id)}" tabindex="0" role="button" aria-label="${esc(a.role)} at ${esc(a.company)}">
     <div class="row1">${logo(a.company)}<div><div class="co">${esc(a.company||"—")}</div><div class="role">${esc(a.role)}</div></div></div>
-    <div class="meta">${a.applied?`<span class="tag${n&&n.rank===3?" warn":""}" title="Applied ${fmtD(a.applied)}">${ago(a.applied)}</span>`:""}${a.location?`<span class="tag">${esc(a.location)}</span>`:""}${a.salary?`<span class="tag">${esc(a.salary)}</span>`:""}${p.length?`<span class="tag prep">Prep ×${p.length}</span>`:""}</div>
+    <div class="meta">${a.applied?`<span class="tag${n&&n.rank===3?" warn":""}" title="Applied ${fmtD(a.applied)}">${ago(a.applied)}</span>`:""}${a.location?`<span class="tag">${esc(a.location)}</span>`:""}${a.salary?`<span class="tag">${esc(a.salary)}</span>`:""}${p.length?`<span class="tag prep">Prep ×${p.length}</span>`:""}${a.notes?`<span class="tag" title="${esc(a.notes.slice(0,200))}">Notes</span>`:""}</div>
     ${a.next||a.nextDate?`<div class="next${nextCls}">Next: ${esc(a.next||"step due")}${a.nextDate?", "+fmtD(a.nextDate):""}</div>`:""}
   </div>`;
 }
@@ -715,12 +720,39 @@ function openApp(id, prefill){
       <p class="form-msg" id="appMsg" role="status"></p>
       <div class="row-acts full"><button class="btn primary" type="submit" id="appSave">${isNew?"Add to Notion":"Save to Notion"}</button>${a.url?`<a class="btn" href="${esc(a.url)}" target="_blank" rel="noopener">Open job ad</a>`:""}</div>
     </form>
+    ${isNew?"":`<section class="notes-box"><div class="notes-hd"><h3 class="sec-h">Notes</h3><span class="hint num" id="notesCount"></span></div><textarea id="appNotes" rows="6" maxlength="2000" placeholder="Reminders and points to remember: who you spoke to, what they asked, what to follow up on" aria-label="Notes for this application">${esc(a.notes||"")}</textarea><div class="row-acts"><button class="btn" type="button" id="notesStamp">Add today’s date</button><button class="btn" type="button" id="notesSave">Save notes</button><span class="hint" id="notesMsg" role="status">${a.notes?"Saved in Notion":""}</span></div></section>`}
     ${p.length?`<div class="prep-list"><h3 class="sec-h">Interview prep</h3>${p.map(x=>`<a class="btn" href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.label)}</a>`).join("")}</div>`:""}
     <div class="row-acts">${!isNew&&a.status!=="Inactive"&&!["Offer","Rejected","Withdrawn"].includes(a.status)?`<button class="btn" type="button" id="dInactive">Inactive / no reply</button>`:""}${isNew?"":`<a class="btn" href="https://www.notion.so/${esc(a.id)}" target="_blank" rel="noopener">Open in Notion</a>`}${!isNew&&a.company?`<button class="btn" type="button" data-explore="${esc(a.company)}">Similar companies</button>`:""}<button class="btn" type="button" id="dClose">Close</button></div>`;
   $("#drawer").hidden=false; $(isNew?"#f-role":"#f-status").focus();
   $("#dClose").onclick=closeDrawer;
   const di=$("#dInactive"); if(di) di.onclick=()=>{ setStatus(a.id,"Inactive"); closeDrawer() };
   $("#appForm").onsubmit=e=>{ e.preventDefault(); saveApp(a, isNew) };
+  if(!isNew) wireNotes(a);
+}
+function wireNotes(a){
+  const ta=$("#appNotes"), msg=$("#notesMsg"), cnt=$("#notesCount");
+  const count=()=>{ cnt.textContent=ta.value.length>1500?`${ta.value.length} / 2000`:"" };
+  const dirty=()=>ta.value.trim()!==(a.notes||"").trim();
+  ta.addEventListener("input",()=>{ count(); msg.textContent=dirty()?"Unsaved changes":"Saved in Notion" });
+  ta.addEventListener("keydown",e=>{ if((e.ctrlKey||e.metaKey)&&e.key==="Enter"){ e.preventDefault(); saveNotes(a) } });
+  ta.addEventListener("blur",()=>{ if(dirty()) saveNotes(a) });
+  $("#notesSave").onclick=()=>saveNotes(a);
+  $("#notesStamp").onclick=()=>{ const d=new Date().toLocaleDateString("en-GB",{day:"numeric",month:"short"}); ta.value=(ta.value.trim()?ta.value.replace(/\s+$/,"")+"\n":"")+d+": "; ta.focus(); ta.setSelectionRange(ta.value.length,ta.value.length); count(); msg.textContent="Unsaved changes" };
+  count();
+}
+let notesBusy=false;
+async function saveNotes(a){
+  const ta=$("#appNotes"), msg=$("#notesMsg"); if(!ta||notesBusy) return;
+  const text=ta.value.replace(/\s+$/,"");
+  if(text===(a.notes||"").replace(/\s+$/,"")){ msg.textContent="Saved in Notion"; return }
+  if(!mcp){ msg.textContent="Open this page on claude.ai to save notes to Notion."; return }
+  notesBusy=true; msg.textContent="Saving…";
+  try{
+    await mcp.callTool(NOTION,"notion-update-page",{page_id:a.id,command:"update_properties",properties:{Notes:text},allow_async:false});
+    a.notes=text; msg.textContent="Saved in Notion"; renderBoard();
+    mcp.invalidate(NOTION,"notion-query-data-sources").catch(()=>{});
+  }catch(e){ msg.textContent = e&&e.code==="approval_required" ? "Allow this page to edit Notion, then press Save notes." : "Not saved: "+((e&&e.message)||"unknown error") }
+  finally{ notesBusy=false }
 }
 async function saveApp(a, isNew){
   const form=$("#appForm"), msg=$("#appMsg"), btn=$("#appSave");
@@ -757,7 +789,7 @@ function ingest(payload){
   const rows=p&&(p.results||p.rows); if(!Array.isArray(rows)) return false;
   apps=rows.map(r=>({id:String(r.url||"").split("/").pop(),role:r.Role||"Untitled",company:r.Company||"",status:r.Status,applied:(r.applied||"").slice(0,10),
     next:r["Next step"]||"",nextDate:(r.next_date||"").slice(0,10),salary:r["Salary range"]||"",location:r.Location||"",source:r["Source / board"]||"",
-    url:/^https?:/.test(r["Job posting URL"]||"")?r["Job posting URL"]:"",created:(r.createdTime||"").slice(0,10)}));
+    url:/^https?:/.test(r["Job posting URL"]||"")?r["Job posting URL"]:"",created:(r.createdTime||"").slice(0,10),notes:r.Notes||""}));
   return true;
 }
 function setSync(state,txt){ $("#dot").className="dot"+(state?" "+state:""); $("#syncTxt").textContent=txt }
@@ -1040,7 +1072,7 @@ function omniResults(q){
   const t=q.trim(), lo=t.toLowerCase(), out=[];
   if(isUrl(t)) out.push({grp:"Actions", label:"Add this job to your tracker", sub:cleanUrl(t).replace(/^https?:\/\//,"").slice(0,70), run:()=>openQuickAdd(t)});
   if(t && !isUrl(t)){
-    const apMatch=(apps||[]).filter(a=>(a.role+" "+a.company).toLowerCase().includes(lo)).slice(0,6);
+    const apMatch=(apps||[]).filter(a=>(a.role+" "+a.company+" "+(a.notes||"")).toLowerCase().includes(lo)).slice(0,6);
     apMatch.forEach(a=>out.push({grp:"Applications", label:a.role, sub:`${a.company||"No company"}, ${a.status}`, logo:a.company, run:()=>{ location.hash="#board"; openApp(a.id) }}));
     const tdMatch=(todos||[]).filter(x=>!x.done&&(x.task+" "+x.company).toLowerCase().includes(lo)).slice(0,4);
     tdMatch.forEach(x=>out.push({grp:"To-dos", label:x.task, sub:x.due?`Due ${fmtD(x.due)}`:"No date", run:()=>{ location.hash="#todos"; editingTodo=x.id; renderTodos() }}));
