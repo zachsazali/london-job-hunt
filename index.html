@@ -265,6 +265,18 @@ main{padding-block:var(--space-lg) calc(var(--space-2xl) + 56px);min-width:0}
 .hbar .fl{height:100%;border-radius:var(--radius-sm)}
 .hbar .num{text-align:right;color:var(--color-ink-2)}
 
+/* interview hit rate */
+.panel.iv{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:var(--space-lg);align-items:start}
+.iv-a,.iv-b{display:flex;flex-direction:column;gap:var(--space-sm);min-width:0}
+.iv .hbar{grid-template-columns:minmax(0,13rem) minmax(0,1fr) 72px}
+.iv-wrap{overflow-x:auto}
+.iv-t{width:100%;border-collapse:collapse;font-size:var(--text-sm)}
+.iv-t th{text-align:left;font-weight:600;color:var(--color-muted);font-size:var(--text-xs);padding:var(--space-2xs) var(--space-xs);border-bottom:var(--rule-hair) solid var(--color-rule);white-space:nowrap}
+.iv-t td{padding:var(--space-xs);border-bottom:var(--rule-hair) solid var(--color-rule);vertical-align:top}
+.iv-t tbody tr{cursor:pointer}
+.iv-t tbody tr:hover{background:var(--color-accent-soft)}
+@media (max-width:60rem){ .panel.iv{grid-template-columns:minmax(0,1fr)} }
+
 /* roles applied for, by type */
 .panel.wide{grid-column:1/-1}
 .rt-hd{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:var(--space-xs) var(--space-md)}
@@ -501,6 +513,7 @@ main{padding-block:var(--space-lg) calc(var(--space-2xl) + 56px);min-width:0}
     <div class="panels">
       <div class="panel"><h2 class="sec-h">Applications per week</h2><div id="weekly"></div></div>
       <div class="panel"><h2 class="sec-h">Where things stand</h2><div id="funnel" class="stack"></div></div>
+      <div class="panel wide iv"><div class="iv-a"><h2 class="sec-h">Interview hit rate</h2><p class="hint">Counts every interview you got, including ones that later ended in a rejection, a withdrawal or silence.</p><div id="ivFunnel" class="stack"></div></div><div class="iv-b"><h3 class="sec-h">Roles that got an interview</h3><div id="ivList" class="iv-wrap"></div></div></div>
       <div class="panel wide"><div class="rt-hd"><h2 class="sec-h">Roles applied for, by type</h2><div class="rt-legend" id="rtLegend"></div></div><div id="tracks" class="rt"></div><p class="note" id="rtNote"></p></div>
     </div>
   </section>
@@ -515,7 +528,21 @@ main{padding-block:var(--space-lg) calc(var(--space-2xl) + 56px);min-width:0}
 /* ---------- config ---------- */
 const NOTION = "Notion";
 const DS = "636ebc2a-b03c-4227-9487-cd5a02b45f0d";           // Notion "Applications" data source
-const SQL = `SELECT url, "Role", "Company", "Status", "date:Date applied:start" AS applied, "Next step", "date:Next step date:start" AS next_date, "Salary range", "Location", "Source / board", "Job posting URL", "Notes", createdTime FROM "collection://${DS}" WHERE "Status" IS NOT NULL`;
+const SQL = `SELECT url, "Role", "Company", "Status", "date:Date applied:start" AS applied, "Next step", "date:Next step date:start" AS next_date, "Salary range", "Location", "Source / board", "Job posting URL", "Notes", "Reached interview", createdTime FROM "collection://${DS}" WHERE "Status" IS NOT NULL`;
+/* interview stages: kept in Notion ("Reached interview") so a rejection doesn't erase that you got an interview */
+const ROUNDS = ["No","Recruiter screen","1st round","2nd round","Final round"];
+const roundRank = s=>Math.max(0, ROUNDS.indexOf(s||"No"));
+function detectRound(a){       // what the status, next step and notes say, used when the field hasn't caught up yet
+  let r = a.status==="Final stage"||a.status==="Offer" ? 4 : a.status==="Interviewing" ? 2 : 0;
+  const t = ((a.next||"")+" "+(a.notes||"")).toLowerCase();
+  if(/final (round|interview|stage)/.test(t)) r=Math.max(r,4);
+  else if(/\b(2nd|second)\b.{0,24}(round|interview|stage)/.test(t)) r=Math.max(r,3);
+  else if(/\b(1st|first)\b.{0,24}(round|interview|call)|\binterview(ed)? with\b|hiring manager|in-person with/.test(t)) r=Math.max(r,2);
+  else if(/recruiter (screen|call)|screening call|phone screen/.test(t)) r=Math.max(r,1);
+  return r;
+}
+const reachedRank = a=>Math.max(roundRank(a.reached), detectRound(a));
+const impliedRound = status=> status==="Final stage"||status==="Offer" ? "Final round" : status==="Interviewing" ? "1st round" : "";
 const STAGES = [
   {k:"To apply",v:"--s-todo"},{k:"Applied",v:"--s-applied"},{k:"In conversation",v:"--s-conv"},{k:"Interviewing",v:"--s-int"},
   {k:"Final stage",v:"--s-final"},{k:"Offer",v:"--s-offer"},{k:"Inactive",v:"--s-inact",closed:true},{k:"Rejected",v:"--s-rej",closed:true},{k:"Withdrawn",v:"--s-wd",closed:true}
@@ -612,7 +639,7 @@ function card(a){
   const nextCls=nd!==null&&nd<0?" over":nd!==null&&nd<=3?" due":"";
   return `<div class="card" draggable="true" data-id="${esc(a.id)}" tabindex="0" role="button" aria-label="${esc(a.role)} at ${esc(a.company)}">
     <div class="row1">${logo(a.company)}<div><div class="co">${esc(a.company||"—")}</div><div class="role">${esc(a.role)}</div></div></div>
-    <div class="meta">${a.applied?`<span class="tag${n&&n.rank===3?" warn":""}" title="Applied ${fmtD(a.applied)}">${ago(a.applied)}</span>`:""}${a.location?`<span class="tag">${esc(a.location)}</span>`:""}${a.salary?`<span class="tag">${esc(a.salary)}</span>`:""}${p.length?`<span class="tag prep">Prep ×${p.length}</span>`:""}${a.notes?`<span class="tag" title="${esc(a.notes.slice(0,200))}">Notes</span>`:""}</div>
+    <div class="meta">${a.applied?`<span class="tag${n&&n.rank===3?" warn":""}" title="Applied ${fmtD(a.applied)}">${ago(a.applied)}</span>`:""}${a.location?`<span class="tag">${esc(a.location)}</span>`:""}${a.salary?`<span class="tag">${esc(a.salary)}</span>`:""}${p.length?`<span class="tag prep">Prep ×${p.length}</span>`:""}${a.notes?`<span class="tag" title="${esc(a.notes.slice(0,200))}">Notes</span>`:""}${reachedRank(a)>0&&!["Interviewing","Final stage","Offer"].includes(a.status)?`<span class="tag prep">Interviewed: ${ROUNDS[reachedRank(a)]}</span>`:""}</div>
     ${a.next||a.nextDate?`<div class="next${nextCls}">Next: ${esc(a.next||"step due")}${a.nextDate?", "+fmtD(a.nextDate):""}</div>`:""}
   </div>`;
 }
@@ -687,7 +714,8 @@ function renderStats(){
   const quiet=apps.filter(a=>a.status==="Applied"&&a.applied&&-dayDiff(a.applied)>=CHASE_DAYS).length;
   $("#kpis").innerHTML=[
     [real.length,"Applications sent"],[wk,"Sent in the last 7 days"],[apps.filter(a=>ACTIVE.includes(a.status)).length,"Still live"],
-    [by("Interviewing")+by("Final stage"),"Interviewing now"],[real.length?Math.round(progressed/real.length*100)+"%":"0%","Got past the application"],
+    [by("Interviewing")+by("Final stage"),"Interviewing now"],
+    [real.length?Math.round(real.filter(a=>reachedRank(a)>0).length/real.length*100)+"%":"0%",`Interview hit rate (${real.filter(a=>reachedRank(a)>0).length} of ${real.length})`],
     [quiet,`Quiet ${CHASE_DAYS}+ days`]
   ].map(([n,l])=>`<div class="kpi"><b>${n}</b><span>${l}</span></div>`).join("");
 
@@ -710,21 +738,30 @@ function renderStats(){
   $("#funnel").innerHTML=STAGES.map(s=>`<div class="hbar"><span>${s.k}</span><span class="tr"><span class="fl" style="display:block;width:${by(s.k)/fmax*100}%;background:var(${s.v})"></span></span><span class="num">${by(s.k)}</span></div>`).join("");
 
   renderRoleTypes(real);
+  renderInterviews(real);
 }
-const SEGS = [["Waiting to hear",["Applied","In conversation"],"--s-applied"],["Interviewing or further",["Interviewing","Final stage","Offer"],"--s-final"],["Closed",["Rejected","Withdrawn","Inactive"],"--s-wd"]];
+/* each application lands in one segment: got an interview (whatever happened after), still waiting, or closed without one */
+const SEGS = [["Got an interview",a=>reachedRank(a)>0,"--s-final"],["Waiting to hear",a=>reachedRank(a)===0&&["Applied","In conversation"].includes(a.status),"--s-applied"],["Closed, no interview",a=>reachedRank(a)===0&&["Rejected","Withdrawn","Inactive"].includes(a.status),"--s-wd"]];
+function renderInterviews(sent){
+  const got=sent.filter(a=>reachedRank(a)>0), n=sent.length||1;
+  const steps=[["Applied",sent.length],["Any interview, incl. recruiter screen",got.length],["1st round or further",sent.filter(a=>reachedRank(a)>=2).length],["2nd round or further",sent.filter(a=>reachedRank(a)>=3).length],["Final round",sent.filter(a=>reachedRank(a)>=4).length]];
+  $("#ivFunnel").innerHTML=steps.map(([l,c],i)=>`<div class="hbar"><span>${l}</span><span class="tr"><span class="fl" style="display:block;width:${c/n*100}%;background:var(${i?"--s-final":"--s-applied"})"></span></span><span class="num">${c}${i?` <span class="note">${Math.round(c/n*100)}%</span>`:""}</span></div>`).join("");
+  const list=got.slice().sort((a,b)=>reachedRank(b)-reachedRank(a)||(b.applied||"").localeCompare(a.applied||""));
+  $("#ivList").innerHTML=list.length?`<table class="iv-t"><thead><tr><th scope="col">Company</th><th scope="col">Role</th><th scope="col">Furthest</th><th scope="col">Outcome</th></tr></thead><tbody>${list.map(a=>`<tr data-open="${esc(a.id)}" tabindex="0"><td>${esc(a.company||"—")}</td><td>${esc(a.role)}</td><td>${ROUNDS[reachedRank(a)]}${roundRank(a.reached)<reachedRank(a)?' <span class="note" title="Spotted in the status, next step or notes; not yet saved in Notion">(detected)</span>':""}</td><td><span class="tag" style="background:color-mix(in oklab,var(${(STAGES.find(s=>s.k===a.status)||{v:"--s-todo"}).v}) 22%,transparent)">${esc(a.status)}</span></td></tr>`).join("")}</tbody></table>`:'<p class="hint">No interviews recorded yet.</p>';
+}
 function renderRoleTypes(sent){
   const total=sent.length||1, tmax=Math.max(1,...THEMES.map(t=>sent.filter(a=>roleTheme(a.role)===t.k).length));
   $("#rtLegend").innerHTML=SEGS.map(([l,,v])=>`<span><span class="sw" style="background:var(${v})" aria-hidden="true"></span>${l}</span>`).join("");
   $("#tracks").innerHTML=THEMES.map(t=>{
     const xs=sent.filter(a=>roleTheme(a.role)===t.k);
-    const seg=SEGS.map(([l,ks,v])=>({l,v,n:xs.filter(a=>ks.includes(a.status)).length}));
-    const far=seg[1].n, titles={};
+    const seg=SEGS.map(([l,fn,v])=>({l,v,n:xs.filter(fn).length}));
+    const far=seg[0].n, titles={};
     xs.forEach(a=>{ const k=a.role.replace(/\s+/g," ").trim(); titles[k]=(titles[k]||0)+1 });
     const list=Object.entries(titles).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]));
     return `<div class="rt-row">
       <div class="rt-name"><h3>${t.k}</h3><span class="hint">${t.says}</span></div>
       <div class="rt-bar"><div class="stk" style="width:${Math.max(xs.length/tmax*100,xs.length?4:0)}%" role="img" aria-label="${t.k}: ${seg.map(s=>s.n+" "+s.l.toLowerCase()).join(", ")}">${seg.map(s=>s.n?`<span style="flex:${s.n};background:var(${s.v})" title="${s.l}: ${s.n}"></span>`:"").join("")}</div>
-        <div class="rt-figs num"><b>${xs.length}</b> applied, ${Math.round(xs.length/total*100)}% of all${xs.length?`, ${far} reached interview (${Math.round(far/xs.length*100)}%)`:""}</div></div>
+        <div class="rt-figs num"><b>${xs.length}</b> applied, ${Math.round(xs.length/total*100)}% of all${xs.length?`, <b>${Math.round(far/xs.length*100)}%</b> interview hit rate (${far})`:""}</div></div>
       ${list.length?`<details class="rt-titles"><summary>${list.length} title${list.length>1?"s":""}</summary><ul>${list.map(([k,n])=>`<li>${esc(k)}${n>1?` <span class="num">×${n}</span>`:""}</li>`).join("")}</ul></details>`:'<p class="hint">None yet</p>'}
     </div>`;
   }).join("");
@@ -737,7 +774,7 @@ function renderAll(){ renderAttention(); renderBoard(); renderLeads(); renderSta
 /* ---------- drawer ---------- */
 /* Editable fields: page key, Notion property, input type */
 const APP_FIELDS = [
-  ["role","Role","text","Role"],["company","Company","text","Company"],["status","Status","status","Status"],
+  ["role","Role","text","Role"],["company","Company","text","Company"],["status","Status","status","Status"],["reached","Reached interview","reached","Furthest interview"],
   ["applied","Date applied","date","Date applied"],["next","Next step","text","Next step"],["nextDate","Next step date","date","Next step date"],
   ["salary","Salary range","text","Salary"],["location","Location","text","Location"],["source","Source / board","source","Found via"],["url","Job posting URL","url","Job ad link"]
 ];
@@ -746,6 +783,7 @@ function fieldInput(f, v){
   const [k,,type,label]=f, id="f-"+k;
   let ctl;
   if(type==="status") ctl=`<select id="${id}" name="${k}">${STAGES.map(s=>`<option${s.k===v?" selected":""}>${s.k}</option>`).join("")}</select>`;
+  else if(type==="reached") ctl=`<select id="${id}" name="${k}"><option value="">Not set</option>${ROUNDS.map(s=>`<option${s===v?" selected":""}>${s}</option>`).join("")}</select>`;
   else if(type==="source") ctl=`<select id="${id}" name="${k}"><option value="">Not set</option>${(v&&!SOURCES.includes(v)?[...SOURCES,v]:SOURCES).map(s=>`<option${s===v?" selected":""}>${esc(s)}</option>`).join("")}</select>`;
   else ctl=`<input id="${id}" name="${k}" type="${type==="url"?"url":type}" value="${esc(v||"")}"${k==="role"?" required":""}${type==="url"?' inputmode="url" placeholder="https://"':""}>`;
   return `<label for="${id}">${label}</label>${ctl}`;
@@ -756,7 +794,7 @@ function propsFor(vals, only){
     if(only && !only.has(k)) continue;
     const v=(vals[k]||"").trim();
     if(type==="date"){ p[`date:${prop}:start`]=v||null; if(v) p[`date:${prop}:is_datetime`]=0 }
-    else if(type==="url"||type==="source") p[prop]=v||null;
+    else if(type==="url"||type==="source"||type==="reached") p[prop]=v||null;
     else p[prop]=v;
   }
   return p;
@@ -810,6 +848,7 @@ async function saveNotes(a){
 async function saveApp(a, isNew){
   const form=$("#appForm"), msg=$("#appMsg"), btn=$("#appSave");
   const vals=Object.fromEntries(new FormData(form));
+  const imp=impliedRound(vals.status); if(imp && roundRank(imp)>roundRank(vals.reached)) vals.reached=imp;   // Interviewing / Final stage records the interview
   if(!(vals.role||"").trim()){ msg.textContent="Add a role title first."; $("#f-role").focus(); return }
   if(vals.url && !/^https?:\/\//.test(vals.url.trim())){ msg.textContent="The job ad link needs to start with https://"; $("#f-url").focus(); return }
   const changed=new Set(APP_FIELDS.map(f=>f[0]).filter(k=>(vals[k]||"").trim()!==(a[k]||"")));
@@ -842,7 +881,7 @@ function ingest(payload){
   const rows=p&&(p.results||p.rows); if(!Array.isArray(rows)) return false;
   apps=rows.map(r=>({id:String(r.url||"").split("/").pop(),role:r.Role||"Untitled",company:r.Company||"",status:r.Status,applied:(r.applied||"").slice(0,10),
     next:r["Next step"]||"",nextDate:(r.next_date||"").slice(0,10),salary:r["Salary range"]||"",location:r.Location||"",source:r["Source / board"]||"",
-    url:/^https?:/.test(r["Job posting URL"]||"")?r["Job posting URL"]:"",created:(r.createdTime||"").slice(0,10),notes:r.Notes||""}));
+    url:/^https?:/.test(r["Job posting URL"]||"")?r["Job posting URL"]:"",created:(r.createdTime||"").slice(0,10),notes:r.Notes||"",reached:r["Reached interview"]||""}));
   return true;
 }
 function setSync(state,txt){ $("#dot").className="dot"+(state?" "+state:""); $("#syncTxt").textContent=txt }
@@ -885,13 +924,15 @@ async function boot(){
 /* ---------- Notion: writes ---------- */
 async function setStatus(id,status){
   const a=apps&&apps.find(x=>x.id===id); if(!a||a.status===status) return;
-  const prev=a.status; a.status=status; renderAll();
-  if(!mcp){ a.status=prev; renderAll(); toast("Open on claude.ai to save changes to Notion"); return }
+  const prev=a.status, prevReached=a.reached, props={Status:status};
+  const imp=impliedRound(status); if(imp && roundRank(imp)>roundRank(a.reached)){ props["Reached interview"]=imp; a.reached=imp }   // moving to Interviewing records the interview
+  a.status=status; renderAll();
+  if(!mcp){ a.status=prev; a.reached=prevReached; renderAll(); toast("Open on claude.ai to save changes to Notion"); return }
   try{
-    await mcp.callTool(NOTION,"notion-update-page",{page_id:id,command:"update_properties",properties:{Status:status},allow_async:false});
+    await mcp.callTool(NOTION,"notion-update-page",{page_id:id,command:"update_properties",properties:props,allow_async:false});
     toast(`${a.company||a.role} moved to ${status}. Saved to Notion.`);
     mcp.invalidate(NOTION,"notion-query-data-sources").catch(()=>{});
-  }catch(e){ a.status=prev; renderAll();
+  }catch(e){ a.status=prev; a.reached=prevReached; renderAll();
     toast(e&&e.code==="approval_required"?"Allow this page to edit Notion, then try again":"Not saved to Notion: "+((e&&e.message)||"unknown error")) }
 }
 async function trackLead(i,btn){
@@ -1358,6 +1399,8 @@ $("#hideTracked").onclick=e=>{hideTracked=!hideTracked;e.currentTarget.setAttrib
 document.querySelectorAll("[data-src]").forEach(b=>b.onclick=()=>{const s=b.dataset.src;srcOn.has(s)?srcOn.delete(s):srcOn.add(s);b.setAttribute("aria-pressed",srcOn.has(s));renderLeads()});
 $("#refresh").onclick=()=>{ loadOnce(); if(mcp) mcp.invalidate(NOTION,"notion-query-data-sources").catch(()=>{}) };
 $("#newApp").onclick=()=>openApp("__new__");
+$("#ivList").addEventListener("click",e=>{ const r=e.target.closest("[data-open]"); if(r) openApp(r.dataset.open) });
+$("#ivList").addEventListener("keydown",e=>{ const r=e.target.closest("[data-open]"); if(r&&(e.key==="Enter"||e.key===" ")){ e.preventDefault(); openApp(r.dataset.open) } });
 $("#leads").addEventListener("click",e=>{
   const b=e.target.closest("[data-track]"); if(b){ trackLead(+b.dataset.track,b); return }
   const g=e.target.closest("[data-ignore]"); if(g){ setIgnored(g.dataset.ignore, g.dataset.reason); toast(`Marked as ${g.dataset.reason.toLowerCase()}. Restore it any time.`); return }
