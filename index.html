@@ -265,6 +265,28 @@ main{padding-block:var(--space-lg) calc(var(--space-2xl) + 56px);min-width:0}
 .hbar .fl{height:100%;border-radius:var(--radius-sm)}
 .hbar .num{text-align:right;color:var(--color-ink-2)}
 
+/* roles applied for, by type */
+.panel.wide{grid-column:1/-1}
+.rt-hd{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:var(--space-xs) var(--space-md)}
+.rt-legend{display:flex;flex-wrap:wrap;gap:var(--space-2xs) var(--space-md);font-size:var(--text-xs);color:var(--color-ink-2)}
+.rt-legend > span{display:inline-flex;align-items:center;gap:var(--space-2xs)}
+.rt{display:flex;flex-direction:column}
+.rt-row{display:grid;grid-template-columns:minmax(0,15rem) minmax(0,1fr) minmax(0,12rem);gap:var(--space-xs) var(--space-lg);align-items:start;padding:var(--space-sm) 0;border-top:var(--rule-hair) solid var(--color-rule)}
+.rt-row:first-child{border-top:0}
+.rt-name{display:flex;flex-direction:column;gap:var(--space-3xs)}
+.rt-name h3{font-size:var(--text-md)}
+.rt-name .hint{font-size:var(--text-xs)}
+.rt-bar{display:flex;flex-direction:column;gap:var(--space-2xs);padding-top:var(--space-3xs)}
+.stk{display:flex;height:16px;border-radius:var(--radius-sm);overflow:hidden;background:var(--color-paper-2);min-width:0}
+.stk span{display:block;height:100%}
+.rt-figs{font-size:var(--text-sm);color:var(--color-ink-2)}
+.rt-figs b{color:var(--color-ink);font-size:var(--text-md)}
+.rt-titles{font-size:var(--text-sm)}
+.rt-titles summary{cursor:pointer;color:var(--color-accent);font-weight:600;min-height:32px;display:flex;align-items:center}
+.rt-titles summary:hover{color:var(--color-accent-hover)}
+.rt-titles ul{margin:var(--space-2xs) 0 0;padding-left:var(--space-md);color:var(--color-ink-2)}
+@media (max-width:60rem){ .rt-row{grid-template-columns:minmax(0,1fr)} }
+
 /* drawer and toast */
 .drawer{position:fixed;inset:0;background:var(--color-scrim);z-index:var(--z-modal)}
 .sheet{position:absolute;right:0;top:0;bottom:0;width:min(440px,100%);background:var(--color-surface);color:var(--color-ink);border-left:var(--rule-hair) solid var(--color-rule);padding:calc(var(--space-lg) + env(safe-area-inset-top,0px)) max(var(--space-lg),env(safe-area-inset-right,0px)) calc(var(--space-lg) + env(safe-area-inset-bottom,0px)) var(--space-lg);overflow-y:auto;display:flex;flex-direction:column;gap:var(--space-md)}
@@ -479,7 +501,7 @@ main{padding-block:var(--space-lg) calc(var(--space-2xl) + 56px);min-width:0}
     <div class="panels">
       <div class="panel"><h2 class="sec-h">Applications per week</h2><div id="weekly"></div></div>
       <div class="panel"><h2 class="sec-h">Where things stand</h2><div id="funnel" class="stack"></div></div>
-      <div class="panel"><h2 class="sec-h">By track</h2><div id="tracks" class="stack"></div><p class="note">Track is guessed from the role title: customer or client success, account and engagement roles count as CSM; product, analyst and PMM roles as Product.</p></div>
+      <div class="panel wide"><div class="rt-hd"><h2 class="sec-h">Roles applied for, by type</h2><div class="rt-legend" id="rtLegend"></div></div><div id="tracks" class="rt"></div><p class="note" id="rtNote"></p></div>
     </div>
   </section>
 </main>
@@ -537,9 +559,22 @@ function logo(name, big){
   return `<span class="${cls}" style="background:var(--logo-${hue(n)%5})" aria-hidden="true">${esc(ini)}</span>`;
 }
 const prepFor = a=>prep.filter(p=>{const m=p.match.toLowerCase(); return (a.company||"").toLowerCase().includes(m)||(a.role||"").toLowerCase().includes(m)});
-const track = role=>{const r=(role||"").toLowerCase();
-  if(/customer success|client success|\bcsm\b|account|engagement|onboarding|client|relations|membership/.test(r)) return "CSM";
-  if(/product|\bpm\b|analyst|pmm|marketing/.test(r)) return "Product"; return "Other"};
+/* role types, from the titles in the tracker and the families the job agents search */
+const THEMES = [
+  {k:"Product", v:"--src-pm", says:"Product manager, associate, owner, analyst, ops and marketing, business analyst"},
+  {k:"Customer Success", v:"--src-csm", says:"Customer and client success, customer and client relations, onboarding, engagement, account management"},
+  {k:"Business Development", v:"--src-wttj", says:"Business development, account executive, new business and client development, sales"},
+  {k:"Others", v:"--s-inact", says:"Delivery, consulting and anything without a clear role yet"}
+];
+const NOT_A_JOB = /job ?board|star questions|^new application$/i;    // sign-ups and notes kept in the tracker, not roles
+function roleTheme(title){
+  const r=String(title||"").toLowerCase().trim();
+  if(!r || NOT_A_JOB.test(r)) return null;
+  if(/business development|\bbdr?\b|\bbde\b|account executive|\bsales\b|new business|client development|partnerships?\b/.test(r)) return "Business Development";
+  if(/customer success|client success|\bcsm\b|customer relations|client relations|onboarding|engagement|account manag|client services|customer experience/.test(r)) return "Customer Success";
+  if(/product|\bpm\b|\bapm\b|\bpmm\b|business analyst/.test(r)) return "Product";
+  return "Others";
+}
 function stageColor(k){const s=STAGES.find(x=>x.k===k);return s?`var(${s.v})`:"var(--color-muted)"}
 
 /* attention rules: overdue / due-soon next steps, and applications gone quiet */
@@ -644,7 +679,7 @@ function lead(l,i){
 /* ---------- stats ---------- */
 function renderStats(){
   if(!apps){ $("#kpis").innerHTML='<div class="kpi"><b>0</b><span>Waiting for Notion</span></div>'; return }
-  const real=apps.filter(a=>a.status!=="To apply");
+  const real=apps.filter(a=>a.status!=="To apply"&&roleTheme(a.role));   // sign-ups and notes are not counted as applications
   const by=k=>apps.filter(a=>a.status===k).length;
   const progressed=by("In conversation")+by("Interviewing")+by("Final stage")+by("Offer");
   const decided=progressed+by("Rejected");
@@ -674,9 +709,27 @@ function renderStats(){
   const fmax=Math.max(1,...STAGES.map(s=>by(s.k)));
   $("#funnel").innerHTML=STAGES.map(s=>`<div class="hbar"><span>${s.k}</span><span class="tr"><span class="fl" style="display:block;width:${by(s.k)/fmax*100}%;background:var(${s.v})"></span></span><span class="num">${by(s.k)}</span></div>`).join("");
 
-  const T=["CSM","Product","Other"].map(t=>{const xs=real.filter(a=>track(a.role)===t); const prog=xs.filter(a=>["In conversation","Interviewing","Final stage","Offer"].includes(a.status)).length; return {t,n:xs.length,prog}});
-  const tmax=Math.max(1,...T.map(x=>x.n));
-  $("#tracks").innerHTML=T.map(x=>`<div class="hbar"><span>${x.t} <span class="note">${x.n?Math.round(x.prog/x.n*100):0}% progressed</span></span><span class="tr"><span class="fl" style="display:block;width:${x.n/tmax*100}%;background:${x.t==="CSM"?"var(--src-csm)":x.t==="Product"?"var(--src-pm)":"var(--color-muted)"}"></span></span><span class="num">${x.n}</span></div>`).join("");
+  renderRoleTypes(real);
+}
+const SEGS = [["Waiting to hear",["Applied","In conversation"],"--s-applied"],["Interviewing or further",["Interviewing","Final stage","Offer"],"--s-final"],["Closed",["Rejected","Withdrawn","Inactive"],"--s-wd"]];
+function renderRoleTypes(sent){
+  const total=sent.length||1, tmax=Math.max(1,...THEMES.map(t=>sent.filter(a=>roleTheme(a.role)===t.k).length));
+  $("#rtLegend").innerHTML=SEGS.map(([l,,v])=>`<span><span class="sw" style="background:var(${v})" aria-hidden="true"></span>${l}</span>`).join("");
+  $("#tracks").innerHTML=THEMES.map(t=>{
+    const xs=sent.filter(a=>roleTheme(a.role)===t.k);
+    const seg=SEGS.map(([l,ks,v])=>({l,v,n:xs.filter(a=>ks.includes(a.status)).length}));
+    const far=seg[1].n, titles={};
+    xs.forEach(a=>{ const k=a.role.replace(/\s+/g," ").trim(); titles[k]=(titles[k]||0)+1 });
+    const list=Object.entries(titles).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]));
+    return `<div class="rt-row">
+      <div class="rt-name"><h3>${t.k}</h3><span class="hint">${t.says}</span></div>
+      <div class="rt-bar"><div class="stk" style="width:${Math.max(xs.length/tmax*100,xs.length?4:0)}%" role="img" aria-label="${t.k}: ${seg.map(s=>s.n+" "+s.l.toLowerCase()).join(", ")}">${seg.map(s=>s.n?`<span style="flex:${s.n};background:var(${s.v})" title="${s.l}: ${s.n}"></span>`:"").join("")}</div>
+        <div class="rt-figs num"><b>${xs.length}</b> applied, ${Math.round(xs.length/total*100)}% of all${xs.length?`, ${far} reached interview (${Math.round(far/xs.length*100)}%)`:""}</div></div>
+      ${list.length?`<details class="rt-titles"><summary>${list.length} title${list.length>1?"s":""}</summary><ul>${list.map(([k,n])=>`<li>${esc(k)}${n>1?` <span class="num">×${n}</span>`:""}</li>`).join("")}</ul></details>`:'<p class="hint">None yet</p>'}
+    </div>`;
+  }).join("");
+  const skipped=(apps||[]).filter(a=>!roleTheme(a.role)).length, toApply=(apps||[]).filter(a=>a.status==="To apply"&&roleTheme(a.role)).length;
+  $("#rtNote").textContent=`Sorted by the job title in Notion. Counts every application except “To apply” (${toApply} waiting)${skipped?`; ${skipped} tracker entr${skipped>1?"ies":"y"} that aren’t jobs (job-board sign-ups and notes) are left out`:""}.`;
 }
 
 function renderAll(){ renderAttention(); renderBoard(); renderLeads(); renderStats(); renderTodos() }
