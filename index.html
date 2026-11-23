@@ -31,7 +31,7 @@
   --color-scrim:oklch(20% 0.04 262 / 0.42); --color-plate:oklch(100% 0 0); --color-on-strong:oklch(99% 0 0); --color-on-bad:oklch(99% 0 0);
   --logo-0:oklch(42% 0.12 255); --logo-1:oklch(36% 0.1 265); --logo-2:oklch(46% 0.11 240); --logo-3:oklch(39% 0.13 275); --logo-4:oklch(44% 0.09 230);
   --s-todo:oklch(70% 0.03 255); --s-applied:oklch(74% 0.1 255); --s-conv:oklch(64% 0.15 258); --s-int:oklch(55% 0.18 262); --s-final:oklch(45% 0.17 265); --s-offer:oklch(36% 0.13 265); --s-inact:oklch(58% 0.05 258); --s-rej:var(--color-bad); --s-wd:oklch(74% 0.02 255);
-  --src-csm:oklch(48% 0.12 240); --src-pm:oklch(46% 0.16 275); --src-pub:oklch(38% 0.12 262); --src-etc:oklch(50% 0.1 220); --src-wttj:oklch(38% 0.13 272); --src-ip:oklch(50% 0.15 255);
+  --src-csm:oklch(48% 0.12 240); --src-pm:oklch(46% 0.16 275); --src-pub:oklch(38% 0.12 262); --src-etc:oklch(50% 0.1 220); --src-wttj:oklch(38% 0.13 272); --src-ip:oklch(50% 0.15 255); --src-li:oklch(44% 0.17 250);
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
   --color-paper:oklch(17% 0.03 258); --color-surface:oklch(21% 0.035 258); --color-paper-2:oklch(19% 0.03 258); --color-paper-3:oklch(25% 0.04 258);
@@ -42,7 +42,7 @@
   --color-scrim:oklch(5% 0.02 262 / 0.6); --color-plate:oklch(97% 0 0); --color-on-bad:oklch(18% 0.04 27);
   --logo-0:oklch(48% 0.12 255); --logo-1:oklch(44% 0.1 265); --logo-2:oklch(52% 0.11 240); --logo-3:oklch(46% 0.13 275); --logo-4:oklch(50% 0.09 230);
   --s-todo:oklch(56% 0.03 255); --s-applied:oklch(82% 0.08 255); --s-conv:oklch(74% 0.12 258); --s-int:oklch(66% 0.16 262); --s-final:oklch(58% 0.17 265); --s-offer:oklch(86% 0.07 250); --s-inact:oklch(62% 0.05 258); --s-wd:oklch(46% 0.02 255);
-  --src-csm:oklch(70% 0.11 235); --src-pm:oklch(72% 0.12 278); --src-pub:oklch(68% 0.1 262); --src-etc:oklch(76% 0.1 215); --src-wttj:oklch(74% 0.09 272); --src-ip:oklch(72% 0.12 255); color-scheme:dark }}
+  --src-csm:oklch(70% 0.11 235); --src-pm:oklch(72% 0.12 278); --src-pub:oklch(68% 0.1 262); --src-etc:oklch(76% 0.1 215); --src-wttj:oklch(74% 0.09 272); --src-ip:oklch(72% 0.12 255); --src-li:oklch(74% 0.13 245); color-scheme:dark }}
 :root[data-theme="dark"]{
   --color-paper:oklch(17% 0.03 258); --color-surface:oklch(21% 0.035 258); --color-paper-2:oklch(19% 0.03 258); --color-paper-3:oklch(25% 0.04 258);
   --color-ink:oklch(94% 0.012 255); --color-ink-2:oklch(80% 0.025 255); --color-muted:oklch(66% 0.03 255); --color-rule:oklch(30% 0.04 258);
@@ -52,7 +52,7 @@
   --color-scrim:oklch(5% 0.02 262 / 0.6); --color-plate:oklch(97% 0 0); --color-on-bad:oklch(18% 0.04 27);
   --logo-0:oklch(48% 0.12 255); --logo-1:oklch(44% 0.1 265); --logo-2:oklch(52% 0.11 240); --logo-3:oklch(46% 0.13 275); --logo-4:oklch(50% 0.09 230);
   --s-todo:oklch(56% 0.03 255); --s-applied:oklch(82% 0.08 255); --s-conv:oklch(74% 0.12 258); --s-int:oklch(66% 0.16 262); --s-final:oklch(58% 0.17 265); --s-offer:oklch(86% 0.07 250); --s-inact:oklch(62% 0.05 258); --s-wd:oklch(46% 0.02 255);
-  --src-csm:oklch(70% 0.11 235); --src-pm:oklch(72% 0.12 278); --src-pub:oklch(68% 0.1 262); --src-etc:oklch(76% 0.1 215); --src-wttj:oklch(74% 0.09 272); --src-ip:oklch(72% 0.12 255); color-scheme:dark }
+  --src-csm:oklch(70% 0.11 235); --src-pm:oklch(72% 0.12 278); --src-pub:oklch(68% 0.1 262); --src-etc:oklch(76% 0.1 215); --src-wttj:oklch(74% 0.09 272); --src-ip:oklch(72% 0.12 255); --src-li:oklch(74% 0.13 245); color-scheme:dark }
 
 /* base (Hallmark floor) */
 *,*::before,*::after{box-sizing:border-box}
@@ -214,7 +214,7 @@ main{padding-block:var(--space-lg) calc(var(--space-2xl) + 56px);min-width:0}
 .b{font-size:var(--text-xs);font-weight:600;border-radius:var(--radius-sm);padding:0 var(--space-xs);line-height:1.7;background:var(--color-paper-2);color:var(--color-ink-2)}
 .b.src{color:var(--color-on-strong)}
 .b.src.csm{background:var(--src-csm)} .b.src.pm{background:var(--src-pm)} .b.src.pub{background:var(--src-pub)}
-.b.src.etc{background:var(--src-etc)} .b.src.wttj{background:var(--src-wttj)} .b.src.ip{background:var(--src-ip)}
+.b.src.li24{background:var(--src-li)} .b.src.etc{background:var(--src-etc)} .b.src.wttj{background:var(--src-wttj)} .b.src.ip{background:var(--src-ip)}
 .b.new{background:var(--color-accent);color:var(--color-accent-ink)}
 .b.best{background:var(--color-good-soft);color:var(--color-good)}
 .b.closing{background:var(--color-bad-soft);color:var(--color-bad)}
@@ -264,6 +264,10 @@ main{padding-block:var(--space-lg) calc(var(--space-2xl) + 56px);min-width:0}
 .hbar .tr{background:var(--color-paper-2);border-radius:var(--radius-sm);height:12px;overflow:hidden}
 .hbar .fl{height:100%;border-radius:var(--radius-sm)}
 .hbar .num{text-align:right;color:var(--color-ink-2)}
+
+/* refresh now */
+.fresh-bar{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-xs) var(--space-sm)}
+.fresh-bar .hint{flex:1 1 280px;min-width:0}
 
 /* interview hit rate */
 .panel.iv{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:var(--space-lg);align-items:start}
@@ -351,24 +355,36 @@ main{padding-block:var(--space-lg) calc(var(--space-2xl) + 56px);min-width:0}
 
 /* to-dos */
 .todo-add{display:flex;flex-direction:column;gap:var(--space-xs);background:var(--color-surface);border:var(--rule-hair) solid var(--color-rule);border-radius:var(--radius-card);padding:var(--space-md);max-width:880px}
-.todo-line{display:flex;gap:var(--space-xs);flex-wrap:wrap}
-.todo-line .search{max-width:none}
+.todo-line{display:flex;gap:var(--space-xs);flex-wrap:wrap;align-items:center;justify-content:flex-end}
+.todo-line .hint{margin-right:auto}
 #todoMic[aria-pressed="true"]{background:var(--color-bad-soft);border-color:var(--color-bad);color:var(--color-bad)}
-.todo-opts{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-xs) var(--space-sm);font-size:var(--text-sm);color:var(--color-muted)}
+textarea.todo-text{width:100%;min-height:96px;max-height:60vh;resize:vertical;border:var(--rule-hair) solid var(--color-rule);border-radius:var(--radius-sm);padding:var(--space-sm);background:var(--color-paper);color:var(--color-ink);font-size:var(--text-md);line-height:1.5;overflow-y:auto}
+textarea.todo-text:focus-visible{outline-offset:-2px;background:var(--color-surface)}
+.todo-opts{display:flex;flex-wrap:wrap;align-items:flex-end;gap:var(--space-sm);font-size:var(--text-sm);color:var(--color-muted)}
+.todo-opts .opt{display:flex;flex-direction:column;gap:var(--space-3xs)}
+.todo-opts .opt > label{display:flex;flex-direction:column;gap:var(--space-3xs)}
+.todo-opts .opt-cos{flex:1 1 320px;min-width:0}
 .todo-opts :is(input,select){width:auto}
-.todo-opts input[type="text"]{width:200px}
+.cos{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2xs);min-height:40px;padding:var(--space-2xs);border:var(--rule-hair) solid var(--color-rule);border-radius:var(--radius-sm);background:var(--color-surface);cursor:text}
+.cos:focus-within{outline:2px solid var(--color-focus);outline-offset:-2px}
+.cos input[type="text"]{flex:1 1 140px;min-width:120px;border:0 !important;min-height:30px !important;padding:0 var(--space-2xs) !important;background:transparent !important;outline:0}
+.co-chip{display:inline-flex;align-items:center;gap:var(--space-3xs);background:var(--color-accent-soft);color:var(--color-accent);border-radius:var(--radius-pill);padding:0 var(--space-3xs) 0 var(--space-xs);font-size:var(--text-sm);font-weight:600;line-height:1.8}
+.co-chip button{border:0;background:none;color:inherit;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:var(--text-md);line-height:1}
+.co-chip button:hover{background:var(--color-paper-3)}
 .todos{display:flex;flex-direction:column;gap:var(--space-md);max-width:880px}
 .todo-group{background:var(--color-surface);border:var(--rule-hair) solid var(--color-rule);border-radius:var(--radius-card);overflow:hidden}
 .todo-gh{padding:var(--space-sm) var(--space-md) var(--space-2xs);font-size:var(--text-sm);color:var(--color-ink-2)}
 .todo-gh.bad{color:var(--color-bad)}
 .todo-gh .num{color:var(--color-muted);font-weight:400}
-.todo{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:var(--space-sm);align-items:center;padding:var(--space-xs) var(--space-md);border-top:var(--rule-hair) solid var(--color-rule);min-height:48px}
+.todo{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:var(--space-sm);align-items:start;padding:var(--space-sm) var(--space-md);border-top:var(--rule-hair) solid var(--color-rule);min-height:48px}
 .todo-gh + .todo{border-top:0}
-.todo input[type="checkbox"]{width:20px;height:20px;margin:0;accent-color:var(--color-accent);cursor:pointer}
-.todo-t{cursor:pointer;line-height:1.35;overflow-wrap:anywhere}
+.todo input[type="checkbox"]{width:20px;height:20px;margin:var(--space-3xs) 0 0;accent-color:var(--color-accent);cursor:pointer}
+.todo-body{display:flex;flex-direction:column;gap:var(--space-2xs);min-width:0}
+.todo-t{line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}
 .todo.done .todo-t{color:var(--color-muted);text-decoration:line-through}
-.todo .meta{justify-content:flex-end}
-.todo.edit{grid-template-columns:minmax(0,2fr) auto auto minmax(0,1fr) auto;background:var(--color-paper)}
+.tag.co{background:var(--color-accent-soft);color:var(--color-accent);font-weight:600}
+.todo.edit{display:flex;flex-direction:column;gap:var(--space-sm);background:var(--color-paper)}
+.todo.edit .row-acts{align-items:center}
 
 /* under 60rem: the sidebar becomes a tab bar, the board one stage at a time */
 @media (max-width:60rem){
@@ -404,9 +420,7 @@ main{padding-block:var(--space-lg) calc(var(--space-2xl) + 56px);min-width:0}
   .omni input{padding-right:var(--space-md)}
   .fab{width:52px;height:52px;right:calc(var(--space-md) + env(safe-area-inset-right,0px));bottom:calc(var(--space-md) + env(safe-area-inset-bottom,0px))}
   .todo{grid-template-columns:auto minmax(0,1fr) auto}
-  .todo .meta{grid-column:2/-1;justify-content:flex-start}
   .todo.edit{grid-template-columns:minmax(0,1fr)}
-  .todo-opts input[type="text"]{width:100%}
 }
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms !important;transition-duration:0.01ms !important;scroll-behavior:auto !important}}
 .comp .why{font-size:var(--text-sm);color:var(--color-ink-2)}
@@ -457,16 +471,17 @@ main{padding-block:var(--space-lg) calc(var(--space-2xl) + 56px);min-width:0}
   <section class="view" id="v-todos" hidden>
     <div class="pagehd"><h2>To-dos</h2><p>Synced with Job Hunt To-dos in Notion, so anything Claude adds shows up here within a minute</p></div>
     <form class="todo-add" id="todoForm" novalidate>
+      <textarea class="todo-text" id="todoText" name="task" rows="3" placeholder="Add a to-do. Write as much as you need: what to do, who to contact, links, details" aria-label="New to-do" autocomplete="off"></textarea>
+      <div class="todo-opts">
+        <div class="opt"><label for="todoDue">Due</label><input id="todoDue" name="due" type="date"></div>
+        <div class="opt"><label for="todoPri">Priority</label><select id="todoPri" name="priority"><option value="">None</option><option>High</option><option>Medium</option><option>Low</option></select></div>
+        <div class="opt opt-cos"><label for="todoCoIn">Companies</label><div class="cos" data-cos id="todoCos"><input id="todoCoIn" type="text" list="coList" placeholder="Add companies" autocomplete="off"><input type="hidden" name="company" value=""></div></div>
+        <datalist id="coList"></datalist>
+      </div>
       <div class="todo-line">
-        <input class="search" id="todoText" name="task" type="text" placeholder="Add a to-do, e.g. Follow up with the Xero recruiter" aria-label="New to-do" autocomplete="off">
+        <span class="hint">Press Enter or a comma after each company. Ctrl+Enter adds the to-do.</span>
         <button class="btn" type="button" id="todoMic" hidden aria-pressed="false">Dictate</button>
         <button class="btn primary" type="submit" id="todoAdd">Add</button>
-      </div>
-      <div class="todo-opts">
-        <label for="todoDue">Due</label><input id="todoDue" name="due" type="date">
-        <label for="todoPri">Priority</label><select id="todoPri" name="priority"><option value="">None</option><option>High</option><option>Medium</option><option>Low</option></select>
-        <label for="todoCo">Company</label><input id="todoCo" name="company" type="text" list="coList" placeholder="Optional" autocomplete="off">
-        <datalist id="coList"></datalist>
       </div>
       <p class="form-msg" id="todoMsg" role="status"></p>
     </form>
@@ -477,8 +492,14 @@ main{padding-block:var(--space-lg) calc(var(--space-2xl) + 56px);min-width:0}
 
   <section class="view" id="v-finder" hidden>
     <div class="pagehd"><h2>Job finder</h2><p>Your job agents plus Escape the City, Welcome to the Jungle and Intelligent People</p></div>
+    <div class="fresh-bar">
+      <button class="btn primary" type="button" id="freshBtn">Refresh now</button>
+      <button class="btn" type="button" id="freshStop" hidden>Stop</button>
+      <p class="hint" id="freshMsg" role="status">Searches LinkedIn for London roles posted in the last 24 hours, newest first. Works in the Claude desktop app.</p>
+    </div>
     <div class="toolbar">
       <input class="search" id="qFinder" type="search" placeholder="Search title, company or notes" aria-label="Search roles">
+      <button class="chip" data-src="li24" type="button" aria-pressed="true">LinkedIn, last 24h</button>
       <button class="chip" data-src="csm" type="button" aria-pressed="true">London CSM</button>
       <button class="chip" data-src="pm" type="button" aria-pressed="true">London PM</button>
       <button class="chip" data-src="pub" type="button" aria-pressed="true">UK public sector</button>
@@ -487,6 +508,7 @@ main{padding-block:var(--space-lg) calc(var(--space-2xl) + 56px);min-width:0}
       <button class="chip" data-src="ip" type="button" aria-pressed="true">Intelligent People</button>
     </div>
     <div class="toolbar">
+      <button class="chip" id="freshOnly" type="button" aria-pressed="false">Posted in the last 24h</button>
       <button class="chip" id="bestFit" type="button" aria-pressed="false">Best fit only</button>
       <button class="chip" id="hideTracked" type="button" aria-pressed="true">Hide roles already in Notion</button>
       <button class="chip" id="hideIgnored" type="button" aria-pressed="false">Hide ignored</button>
@@ -549,7 +571,7 @@ const STAGES = [
 ];
 const ACTIVE = ["Applied","In conversation","Interviewing","Final stage"];
 const CHASE_DAYS = 21;
-const SRC = {csm:"CSM agent",pm:"PM agent",pub:"Public sector",etc:"Escape the City",wttj:"Welcome to the Jungle",ip:"Intelligent People"};
+const SRC = {li24:"LinkedIn, last 24h",csm:"CSM agent",pm:"PM agent",pub:"Public sector",etc:"Escape the City",wttj:"Welcome to the Jungle",ip:"Intelligent People"};
 const BOARDS = [
   {src:"etc", label:"Escape the City", url:"https://www.escapethecity.org/search/jobs"},
   {src:"wttj", label:"Welcome to the Jungle", url:"https://www.welcometothejungle.com/en/jobs"},
@@ -672,7 +694,7 @@ function renderLeads(){
   const keys=new Set((apps||[]).map(a=>norm(a.company)+"|"+norm(a.role)));
   const cos=new Set((apps||[]).map(a=>norm(a.company)).filter(Boolean));
   const q=$("#qFinder").value.toLowerCase();
-  let list=L.filter(l=>srcOn.has(l.src)&&(!bestOnly||BEST[l.fit])&&(!q||[l.title,l.company,l.industry,l.location,...(l.flags||[])].join(" ").toLowerCase().includes(q)));
+  let list=L.filter(l=>srcOn.has(l.src)&&(!bestOnly||BEST[l.fit])&&(!freshOnly||isFresh(l))&&(!q||[l.title,l.company,l.industry,l.location,...(l.flags||[])].join(" ").toLowerCase().includes(q)));
   list.forEach(l=>{l.tracked=keys.has(norm(l.company)+"|"+norm(l.title)); l.coMatch=!l.tracked&&cos.has(norm(l.company)); l.ign=ignored.get(leadKey(l))||null});
   list=list.filter(l=>!l.closing||dayDiff(l.closing)>=0);   // drop public-sector roles past their closing date
   const total=list.length, nIgn=list.filter(l=>l.ign).length;
@@ -955,6 +977,7 @@ async function loadFiles(){
   const get=async(f,d)=>{ try{ const r=await fetch(f); return r.ok?await r.json():d }catch(e){ return d } };
   [leadsData,logos,domains,prep]=await Promise.all([get("data/leads.json",null),get("data/logos.json",{}),get("data/domains.json",{}),get("data/prep.json",[])]);
   if(!leadsData) $("#leads").innerHTML='<div class="empty">The job list didn\'t load. Reload the page; if it keeps failing, ask Claude to rebuild the finder data.</div>';
+  else mergeFresh(loadFreshCache());
   renderAll();
 }
 
@@ -980,19 +1003,49 @@ function todoGroup(t){
   if(d<0) return "Overdue"; if(d===0) return "Today"; if(d<=7) return "This week"; return "Later";
 }
 const GROUPS = ["Overdue","Today","This week","Later","No date","Completed"];
+/* long text: the first line is the Notion title (Task), the whole text lives in Notes */
+const TITLE_MAX = 120;
+function splitText(text){
+  const full=String(text||"").replace(/\r/g,"").trim(), first=full.split("\n")[0].trim();
+  let title=first;
+  if(title.length>TITLE_MAX){ const cut=title.slice(0,TITLE_MAX); title=(cut.slice(0,cut.lastIndexOf(" ")>60?cut.lastIndexOf(" "):TITLE_MAX)).replace(/[\s,.;:]+$/,"")+"…" }
+  return {title, notes: full!==title ? full : ""};
+}
+function fullText(t){
+  const n=(t.notes||"").trim(), head=(t.task||"").replace(/…$/,"").trim();
+  if(!n) return t.task||"";
+  return n.startsWith(head) ? n : `${t.task}\n\n${n}`;   // notes Claude or Notion added separately stay under the title
+}
+const parseCos = s=>String(s||"").split(/[,;\n]/).map(x=>x.trim()).filter(Boolean);
+/* multi-company picker: chips plus a text box that suggests companies from the board and the finder */
+function cosHTML(list){ return list.map(c=>`<span class="co-chip">${esc(c)}<button type="button" data-rm="${esc(c)}" aria-label="Remove ${esc(c)}">×</button></span>`).join("") }
+function cosPicker(list){ return `<div class="cos" data-cos>${cosHTML(list)}<input type="text" list="coList" placeholder="${list.length?"Add another":"Add companies"}" aria-label="Companies" autocomplete="off"><input type="hidden" name="company" value="${esc(list.join(", "))}"></div>` }
+const cosGet = box=>parseCos(box.querySelector("input[type=hidden]").value);
+function cosSet(box, list){
+  const uniq=[...new Map(list.map(c=>[c.toLowerCase(),c])).values()];
+  box.querySelector("input[type=hidden]").value=uniq.join(", ");
+  box.querySelectorAll(".co-chip").forEach(n=>n.remove());
+  box.insertAdjacentHTML("afterbegin", cosHTML(uniq));
+  box.querySelector("input[type=text]").placeholder=uniq.length?"Add another":"Add companies";
+}
+function cosCommit(box){ const inp=box.querySelector("input[type=text]"), add=parseCos(inp.value); if(add.length){ cosSet(box,[...cosGet(box),...add]); inp.value="" } }
+const growText = ta=>{ ta.style.height="auto"; ta.style.height=Math.min(ta.scrollHeight+2, window.innerHeight*0.6)+"px" };
 function todoRow(t){
-  if(editingTodo===t.id) return `<form class="todo edit" data-edit="${esc(t.id)}">
-      <input name="task" type="text" value="${esc(t.task)}" aria-label="To-do" required>
-      <input name="due" type="date" value="${esc(t.due)}" aria-label="Due date">
-      <select name="priority" aria-label="Priority"><option value="">None</option>${["High","Medium","Low"].map(p=>`<option${p===t.priority?" selected":""}>${p}</option>`).join("")}</select>
-      <input name="company" type="text" value="${esc(t.company)}" list="coList" placeholder="Company" aria-label="Company">
-      <div class="row-acts"><button class="btn sm primary" type="submit">Save</button><button class="btn sm" type="button" data-cancel>Cancel</button></div>
+  const cos=parseCos(t.company), text=fullText(t);
+  if(editingTodo===t.id) return `<form class="todo edit" data-edit="${esc(t.id)}" novalidate>
+      <textarea class="todo-text" name="task" rows="3" aria-label="To-do">${esc(text)}</textarea>
+      <div class="todo-opts">
+        <div class="opt"><label>Due <input name="due" type="date" value="${esc(t.due)}"></label></div>
+        <div class="opt"><label>Priority <select name="priority"><option value="">None</option>${["High","Medium","Low"].map(p=>`<option${p===t.priority?" selected":""}>${p}</option>`).join("")}</select></label></div>
+        <div class="opt opt-cos"><span class="opt-l">Companies</span>${cosPicker(cos)}</div>
+      </div>
+      <div class="row-acts"><button class="btn sm primary" type="submit">Save</button><button class="btn sm" type="button" data-cancel>Cancel</button><span class="hint">Ctrl+Enter saves</span></div>
     </form>`;
   const d=dayDiff(t.due), dueCls=t.done?"":d!==null&&d<0?" bad":d===0?" warn":"";
   return `<div class="todo${t.done?" done":""}">
-    <input type="checkbox" id="td-${esc(t.id)}" data-done="${esc(t.id)}"${t.done?" checked":""} aria-label="Mark ${esc(t.task)} ${t.done?"not done":"done"}">
-    <label class="todo-t" for="td-${esc(t.id)}">${esc(t.task)}</label>
-    <div class="meta">${t.due?`<span class="tag${dueCls}">${d===0?"Today":d===1?"Tomorrow":fmtD(t.due)}</span>`:""}${t.priority?`<span class="tag${t.priority==="High"?" bad":""}">${esc(t.priority)}</span>`:""}${t.company?`<span class="tag">${esc(t.company)}</span>`:""}${t.via==="Claude"?'<span class="tag prep">Added by Claude</span>':""}</div>
+    <input type="checkbox" data-done="${esc(t.id)}"${t.done?" checked":""} aria-label="Mark “${esc(t.task)}” ${t.done?"not done":"done"}">
+    <div class="todo-body"><div class="todo-t">${esc(text)}</div>
+      <div class="meta">${t.due?`<span class="tag${dueCls}">${d===0?"Today":d===1?"Tomorrow":fmtD(t.due)}</span>`:""}${t.priority?`<span class="tag${t.priority==="High"?" bad":""}">${esc(t.priority)}</span>`:""}${cos.map(c=>`<span class="tag co">${esc(c)}</span>`).join("")}${t.via==="Claude"?'<span class="tag prep">Added by Claude</span>':""}</div></div>
     <button class="btn sm" type="button" data-edit-open="${esc(t.id)}">Edit</button>
   </div>`;
 }
@@ -1002,7 +1055,8 @@ function renderTodos(){
   const over=open.filter(t=>{const d=dayDiff(t.due);return d!==null&&d<=0}).length;
   $("#nTodos").textContent = todos ? String(open.length) : "";
   $("#todoHint").textContent = todos ? `${open.length} open${over?`, ${over} due today or overdue`:""}` : "";
-  $("#coList").innerHTML=[...new Set((apps||[]).map(a=>a.company).filter(Boolean))].sort().map(c=>`<option value="${esc(c)}">`).join("");
+  $("#coList").innerHTML=[...new Set([...(apps||[]).map(a=>a.company),...(leadsData?leadsData.leads.map(l=>l.company):[]),...(todos||[]).flatMap(t=>parseCos(t.company))].filter(Boolean))].sort((a,b)=>a.localeCompare(b)).map(c=>`<option value="${esc(c)}">`).join("");
+  if(editingTodo && el.querySelector("[data-edit]")) return;   // never redraw over a to-do you're editing (Notion refreshes every minute)
   if(!todos){
     el.innerHTML = !mcp ? '<div class="empty">Your to-dos load from Notion when this page is opened on claude.ai.</div>'
       : todoErr ? `<div class="empty">Couldn’t load your to-dos from Notion (${esc(todoErr)}). Press Refresh in the sidebar to try again.</div>`
@@ -1017,15 +1071,17 @@ async function addTodo(){
   const text=$("#todoText").value.trim(), msg=$("#todoMsg");
   if(!text){ msg.textContent="Type or dictate a to-do first."; $("#todoText").focus(); return }
   if(!mcp){ msg.textContent="Open this page on claude.ai to save to Notion."; return }
-  const due=$("#todoDue").value, pri=$("#todoPri").value, co=$("#todoCo").value.trim();
-  const props={Task:text, "Added via":"App", Done:"__NO__"};
+  const box=$("#todoCos"); cosCommit(box);
+  const due=$("#todoDue").value, pri=$("#todoPri").value, co=cosGet(box).join(", "), {title, notes}=splitText(text);
+  const props={Task:title, "Added via":"App", Done:"__NO__"};
+  if(notes) props.Notes=notes;
   if(due){ props["date:Due:start"]=due; props["date:Due:is_datetime"]=0 }
   if(pri) props.Priority=pri; if(co) props.Company=co;
   const btn=$("#todoAdd"); btn.disabled=true; btn.textContent="Adding…"; msg.textContent="";
   try{
     await mcp.callTool(NOTION,"notion-create-pages",{parent:{type:"data_source_id",data_source_id:TODO_DS},pages:[{properties:props}],allow_async:false});
-    (todos=todos||[]).push({id:"new-"+Date.now(), task:text, done:false, due, priority:pri, company:co, via:"App", notes:"", created:new Date().toISOString(), pending:true});
-    $("#todoForm").reset(); renderTodos(); toast("Added to your to-dos in Notion"); $("#todoText").focus();
+    (todos=todos||[]).push({id:"new-"+Date.now(), task:title, done:false, due, priority:pri, company:co, via:"App", notes, created:new Date().toISOString(), pending:true});
+    $("#todoForm").reset(); cosSet(box,[]); growText($("#todoText")); renderTodos(); toast("Added to your to-dos in Notion"); $("#todoText").focus();
     mcp.invalidate(NOTION,"notion-query-data-sources").catch(()=>{});
   }catch(e){ msg.textContent = e&&e.code==="approval_required" ? "Allow this page to edit Notion, then press Add again." : "Not added. Check Notion before trying again: "+((e&&e.message)||"unknown error") }
   finally{ btn.disabled=false; btn.textContent="Add" }
@@ -1042,18 +1098,21 @@ async function setTodoDone(id, done){
 }
 async function saveTodoEdit(form){
   const id=form.dataset.edit, t=(todos||[]).find(x=>x.id===id); if(!t) return;
-  const v=Object.fromEntries(new FormData(form)); const task=(v.task||"").trim();
-  if(!task){ form.querySelector("[name=task]").focus(); return }
-  const props={};
-  if(task!==t.task) props.Task=task;
+  cosCommit(form.querySelector("[data-cos]"));
+  const v=Object.fromEntries(new FormData(form)); const text=(v.task||"").trim();
+  if(!text){ form.querySelector("[name=task]").focus(); return }
+  if(!mcp){ toast("Open on claude.ai to save to Notion"); return }
+  const {title, notes}=splitText(text), co=parseCos(v.company).join(", "), props={};
+  if(title!==t.task) props.Task=title;
+  if(notes!==(t.notes||"").trim() && text!==fullText(t).trim()) props.Notes=notes;
   if((v.due||"")!==t.due){ props["date:Due:start"]=v.due||null; if(v.due) props["date:Due:is_datetime"]=0 }
   if((v.priority||"")!==t.priority) props.Priority=v.priority||null;
-  if((v.company||"").trim()!==t.company) props.Company=(v.company||"").trim();
+  if(co!==parseCos(t.company).join(", ")) props.Company=co;
   if(!Object.keys(props).length){ editingTodo=null; renderTodos(); return }
   const btn=form.querySelector("[type=submit]"); btn.disabled=true; btn.textContent="Saving…";
   try{
     await mcp.callTool(NOTION,"notion-update-page",{page_id:id,command:"update_properties",properties:props,allow_async:false});
-    Object.assign(t,{task, due:v.due||"", priority:v.priority||"", company:(v.company||"").trim()}); editingTodo=null; renderTodos(); toast("Saved to Notion");
+    Object.assign(t,{task:title, notes:("Notes" in props)?notes:t.notes, due:v.due||"", priority:v.priority||"", company:co}); editingTodo=null; renderTodos(); toast("Saved to Notion");
     mcp.invalidate(NOTION,"notion-query-data-sources").catch(()=>{});
   }catch(e){ btn.disabled=false; btn.textContent="Save"; toast(e&&e.code==="approval_required"?"Allow this page to edit Notion, then try again":"Not saved: "+((e&&e.message)||"unknown error")) }
 }
@@ -1062,8 +1121,8 @@ async function saveTodoEdit(form){
   try{ dict = await claude.use("dictation") }catch(e){ dict = null }
   if(!dict) return;
   const mic=$("#todoMic"); mic.hidden=false;
-  dict.onPartial(({text})=>{ $("#todoText").value=(dictBase+" "+text).trim() });
-  dict.onFinal(({text})=>{ dictBase=(dictBase+" "+text).trim(); $("#todoText").value=dictBase });
+  dict.onPartial(({text})=>{ $("#todoText").value=(dictBase+" "+text).trim(); growText($("#todoText")) });
+  dict.onFinal(({text})=>{ dictBase=(dictBase+" "+text).trim(); $("#todoText").value=dictBase; growText($("#todoText")) });
   dict.onState(({state})=>{ const on=state==="listening"; mic.setAttribute("aria-pressed",on); mic.textContent=on?"Stop":"Dictate"; if(!on) $("#todoText").focus() });
   mic.onclick=()=>{
     if(mic.getAttribute("aria-pressed")==="true"){ dict.stop().catch(()=>{}); return }
@@ -1075,8 +1134,29 @@ $("#todoForm").addEventListener("submit",e=>{ e.preventDefault(); addTodo() });
 $("#showDone").onclick=e=>{ showDone=!showDone; e.currentTarget.setAttribute("aria-pressed",showDone); renderTodos() };
 $("#todoList").addEventListener("change",e=>{ const c=e.target.closest("[data-done]"); if(c) setTodoDone(c.dataset.done, c.checked) });
 $("#todoList").addEventListener("click",e=>{
-  const o=e.target.closest("[data-edit-open]"); if(o){ editingTodo=o.dataset.editOpen; renderTodos(); const f=$("#todoList [data-edit] [name=task]"); if(f) f.focus(); return }
-  if(e.target.closest("[data-cancel]")){ editingTodo=null; renderTodos() }
+  const o=e.target.closest("[data-edit-open]"); if(o){ editingTodo=null; renderTodos(); editingTodo=o.dataset.editOpen; $("#todoList").innerHTML=""; renderTodos(); const f=$("#todoList [data-edit] [name=task]"); if(f){ growText(f); f.focus(); f.setSelectionRange(f.value.length,f.value.length) } return }
+  if(e.target.closest("[data-cancel]")){ editingTodo=null; $("#todoList").innerHTML=""; renderTodos() }
+});
+/* the big text boxes grow as you type; Ctrl+Enter saves */
+document.addEventListener("input",e=>{ if(e.target.matches("textarea.todo-text")) growText(e.target) });
+document.addEventListener("keydown",e=>{
+  if(e.target.matches("textarea.todo-text")&&(e.ctrlKey||e.metaKey)&&e.key==="Enter"){ e.preventDefault(); e.target.form.requestSubmit() }
+});
+/* company chips: Enter or comma adds, Backspace on an empty box removes the last, × removes one */
+document.addEventListener("keydown",e=>{
+  const inp=e.target.closest&&e.target.closest("[data-cos] input[type=text]"); if(!inp) return;
+  const box=inp.closest("[data-cos]");
+  if((e.key==="Enter"||e.key===",")&&inp.value.trim()){ e.preventDefault(); cosCommit(box) }
+  else if(e.key==="Backspace"&&!inp.value){ const l=cosGet(box); if(l.length){ l.pop(); cosSet(box,l) } }
+});
+document.addEventListener("input",e=>{
+  const inp=e.target.closest&&e.target.closest("[data-cos] input[type=text]"); if(!inp||e.inputType==="insertText"||e.inputType==="deleteContentBackward") return;
+  const v=inp.value.trim(); if(v && [...$("#coList").options].some(o=>o.value===v)) cosCommit(inp.closest("[data-cos]"));   // picked from the suggestion list
+});
+document.addEventListener("focusout",e=>{ const inp=e.target.closest&&e.target.closest("[data-cos] input[type=text]"); if(inp) cosCommit(inp.closest("[data-cos]")) });
+document.addEventListener("click",e=>{
+  const rm=e.target.closest("[data-cos] [data-rm]"); if(rm){ const box=rm.closest("[data-cos]"); cosSet(box,cosGet(box).filter(c=>c!==rm.dataset.rm)); box.querySelector("input[type=text]").focus(); return }
+  const box=e.target.closest("[data-cos]"); if(box&&e.target===box) box.querySelector("input[type=text]").focus();
 });
 $("#todoList").addEventListener("submit",e=>{ const f=e.target.closest("[data-edit]"); if(!f) return; e.preventDefault(); saveTodoEdit(f) });
 
@@ -1158,6 +1238,96 @@ ${(text||"(not available)").slice(0,15000)}`;
     : "Couldn’t open that page (it may need a sign-in), so this is a guess from the link. Fill in the gaps, then add it.";
   openApp("__new__", fields);
 }
+
+/* ---------- refresh now: LinkedIn roles posted in the last 24 hours ---------- */
+const FRESH_SEARCHES = ["customer success manager","customer success associate","client success","customer relations manager","associate product manager","product analyst","product owner","product marketing manager","business analyst","business development executive"];
+const liSearchUrl = (kw, hours=24)=>`https://www.linkedin.com/jobs/search/?keywords=${encodeURIComponent(kw)}&location=${encodeURIComponent("London, England, United Kingdom")}&f_TPR=r${hours*3600}&sortBy=DD`;
+const TOO_SENIOR = /\b(senior|sr\.?|lead|head|director|principal|vp|vice president|staff|chief|intern(ship)?)\b/i;
+let freshOnly=false, freshStopped=false;
+const isFresh = l=> l.src==="li24" || (l.posted && dayDiff(l.posted)>=-1);
+const words = s=>s.replace(/\b\w/g,c=>c.toUpperCase());
+const agoMin = s=>{ const m=String(s||"").match(/(\d+)\s*(minute|hour|day|week)/i); return m ? +m[1]*({minute:1,hour:60,day:1440,week:10080}[m[2].toLowerCase()]) : 9e9 };
+const freshKey = l=>norm(l.company)+"|"+norm(l.title);
+function loadFreshCache(){ try{ const c=JSON.parse(localStorage.getItem("ljh-fresh")||"null"); return c&&Date.now()-c.at<36*3600e3 ? c : null }catch(e){ return null } }
+function saveFreshCache(leads,at){ try{ localStorage.setItem("ljh-fresh", JSON.stringify({at, leads})) }catch(e){} }
+function freshStamp(at){ const d=new Date(at); return d.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"})+(d.toDateString()!==new Date().toDateString()?" yesterday":"") }
+function mergeFresh(c){
+  if(!c||!leadsData) return 0;
+  const have=new Set(leadsData.leads.map(freshKey));
+  let n=0; for(const l of c.leads){ if(!have.has(freshKey(l))){ leadsData.leads.push(l); have.add(freshKey(l)); n++ } }
+  $("#freshMsg").textContent=`Last refreshed at ${freshStamp(c.at)}: ${c.leads.length} LinkedIn roles at your level posted in the 24 hours before that.`;
+  return n;
+}
+/* LinkedIn's results read as: title, title again, company, location, badges, "3 hours ago" */
+function parseLiText(pt){
+  const L=String(pt||"").split("\n").map(s=>s.trim()).filter(Boolean), out=[];
+  for(let i=0;i<L.length-3;i++){
+    if(L[i]!==L[i+1] || L[i].length<3 || L[i].length>160) continue;
+    const title=L[i], company=L[i+2], location=L[i+3]; let ago="";
+    for(let k=i+4;k<Math.min(i+8,L.length);k++){ if(/\b(minute|hour|day|week)s? ago$|^just now$/i.test(L[k])){ ago=L[k]; break } }
+    if(!/england|united kingdom|london|area/i.test(location)) continue;
+    out.push({title, company, location, ago}); i+=3;
+  }
+  return out;
+}
+/* when the browser pane is visible its links give each job's own page */
+function parseLiLinks(txt){
+  const out=new Map(), re=/link "([^"]{3,160})"[^\n]*?href="([^"]*\/jobs\/view\/[^"\s]+)"/g; let m;
+  while((m=re.exec(String(txt||"")))){
+    const href=m[2], id=(href.match(/(\d{8,})/)||[])[1]; if(!id) continue;
+    const slug=(href.split("/jobs/view/")[1]||"").split(/[?#]/)[0], cm=slug.match(/-at-(.+?)-\d{8,}/);
+    const title=m[1].replace(/\s+/g," ").replace(/ with verification$/i,"").trim(), company=cm?words(cm[1].replace(/-/g," ")):"";
+    const k=norm(company)+"|"+norm(title); if(company && !out.has(k)) out.set(k, `https://www.linkedin.com/jobs/view/${id}/`);
+    if(!out.has("|"+norm(title))) out.set("|"+norm(title), `https://www.linkedin.com/jobs/view/${id}/`);
+  }
+  return out;
+}
+async function freshScan(){
+  const msg=$("#freshMsg"), btn=$("#freshBtn"), stop=$("#freshStop");
+  if(!mcp){ msg.textContent="Refresh needs this page open in the Claude desktop app, where it can use Claude’s browser."; return }
+  if(!leadsData){ msg.textContent="The job list is still loading. Try again in a moment."; return }
+  freshStopped=false; btn.disabled=true; btn.textContent="Refreshing…"; stop.hidden=false;
+  const found=new Map(); let signIn=0, err="", searched=0;
+  for(let i=0;i<FRESH_SEARCHES.length && !freshStopped;i++){
+    const kw=FRESH_SEARCHES[i]; msg.textContent=`Searching LinkedIn ${i+1} of ${FRESH_SEARCHES.length}: “${kw}”, posted in the last 24 hours…`;
+    try{
+      await mcp.callTool(BROWSER,"navigate",{url:liSearchUrl(kw)});
+      const pt=payloadText(await mcp.callTool(BROWSER,"get_page_text",{max_chars:30000}));
+      let links=new Map(); try{ links=parseLiLinks(payloadText(await mcp.callTool(BROWSER,"read_page",{filter:"interactive",max_chars:40000}))) }catch(e){}
+      const jobs=parseLiText(pt); searched++;
+      if(!jobs.length && /sign in|join now|authwall|security verification/i.test(pt)) signIn++;
+      for(const j of jobs){
+        const k=norm(j.company)+"|"+norm(j.title); if(found.has(k)) continue;
+        const url=links.get(k)||links.get("|"+norm(j.title))||`https://www.linkedin.com/jobs/search/?keywords=${encodeURIComponent(j.title+" "+j.company)}&location=${encodeURIComponent("London, England, United Kingdom")}&f_TPR=r86400`;
+        found.set(k,{...j,url,kw});
+      }
+    }catch(e){
+      err=e&&e.code||"error";
+      if(["server_not_connected","not_in_manifest","approval_required","blocked_by_policy","consent_required","cancelled"].includes(err)) break;
+    }
+  }
+  const jobs=[...found.values()];
+  const keep=jobs.filter(j=>!TOO_SENIOR.test(j.title) && roleTheme(j.title) && roleTheme(j.title)!=="Others" && /london/i.test(j.location)).sort((a,b)=>agoMin(a.ago)-agoMin(b.ago));
+  const today=isoDay(TODAY);
+  const fresh=keep.map(j=>({src:"li24", family:roleTheme(j.title), title:j.title, company:j.company, fit:"", industry:"", location:j.location.replace(/, United Kingdom$/,""), mode:"", salary:"", posted:today,
+    url:j.url, flags:[j.ago?`Posted ${j.ago}`:"Posted in the last 24 hours", `Found searching “${j.kw}”`], added:today, ago:j.ago}));
+  const tracked=new Set((apps||[]).map(a=>norm(a.company)+"|"+norm(a.role)));
+  const at=Date.now(); if(searched) saveFreshCache(fresh, at);
+  const before=leadsData.leads.length; if(searched) mergeFresh({at, leads:fresh.filter(f=>!tracked.has(freshKey(f)))});
+  const added=leadsData.leads.length-before, dupes=fresh.length-added;
+  btn.disabled=false; btn.textContent="Refresh now"; stop.hidden=true;
+  srcOn.add("li24"); $('[data-src="li24"]').setAttribute("aria-pressed","true");
+  if(added){ freshOnly=true; $("#freshOnly").setAttribute("aria-pressed","true") }
+  renderLeads();
+  msg.textContent = err==="server_not_connected" ? "Claude’s browser isn’t available here. Open this page in the Claude desktop app to refresh."
+    : ["not_in_manifest","approval_required","consent_required"].includes(err) && !searched ? "Allow this page to use Claude’s browser, then press Refresh now again."
+    : searched && signIn===searched ? "LinkedIn asked for a sign-in. Sign in to LinkedIn once in Claude’s browser pane, then press Refresh now again."
+    : !searched ? "Couldn’t reach LinkedIn just now. Try again in a minute."
+    : `Refreshed at ${freshStamp(at)}${freshStopped?" (stopped early)":""}: ${keep.length} London roles at your level posted in the last 24 hours, newest first. ${added} new to your finder${dupes>0?`, ${dupes} already there or in your tracker`:""}.${jobs.length-keep.length>0?` ${jobs.length-keep.length} senior, off-target or outside London left out.`:""}`;
+}
+$("#freshBtn").onclick=()=>freshScan();
+$("#freshStop").onclick=()=>{ freshStopped=true; $("#freshMsg").textContent="Stopping after this search…" };
+$("#freshOnly").onclick=e=>{ freshOnly=!freshOnly; e.currentTarget.setAttribute("aria-pressed",freshOnly); renderLeads() };
 
 /* ---------- global search and actions (Ctrl K) ---------- */
 let omniItems=[], omniSel=0;
