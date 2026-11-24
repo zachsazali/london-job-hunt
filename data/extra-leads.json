@@ -1,9 +1,9 @@
 {
     "note":  "Roles gathered from job boards without an agent page (Escape the City, Welcome to the Jungle, Intelligent People). Each daily run replaces the list for any source it scanned. src: etc | wttj | ip.",
     "scanned":  {
-                    "ip":  "2026-11-23",
-                    "wttj":  "2026-11-23",
-                    "etc":  "2026-11-23"
+                    "ip":  "2026-11-24",
+                    "wttj":  "2026-11-24",
+                    "etc":  "2026-11-24"
                 },
     "leads":  [
                   {
@@ -82,23 +82,6 @@
                       "src":  "wttj",
                       "family":  "Customer Success",
                       "title":  "Customer Success Manager",
-                      "company":  "hyperexponential",
-                      "fit":  "Core",
-                      "industry":  "Insurance pricing AI SaaS",
-                      "location":  "London",
-                      "mode":  "No remote",
-                      "salary":  "",
-                      "posted":  "2026-11-19",
-                      "url":  "https://www.welcometothejungle.com/en/companies/hyperexponential/jobs/customer-success-manager_london",
-                      "flags":  [
-                                    "Listed as no remote"
-                                ],
-                      "added":  "2026-11-23"
-                  },
-                  {
-                      "src":  "wttj",
-                      "family":  "Customer Success",
-                      "title":  "Customer Success Manager",
                       "company":  "Workiva",
                       "fit":  "Core",
                       "industry":  "Reporting and GRC SaaS",
@@ -166,40 +149,6 @@
                   {
                       "src":  "wttj",
                       "family":  "Customer Success",
-                      "title":  "Customer Success Manager - Mid/Large Enterprise",
-                      "company":  "Klaviyo",
-                      "fit":  "Core",
-                      "industry":  "Marketing automation SaaS",
-                      "location":  "London",
-                      "mode":  "Hybrid, 3 days",
-                      "salary":  "£56–84k",
-                      "posted":  "2026-11-20",
-                      "url":  "https://www.welcometothejungle.com/en/companies/klaviyo/jobs/customer-success-manager-mid-large-enterprise_london_6voy2v3b",
-                      "flags":  [
-                                    "Also on the CS tracker"
-                                ],
-                      "added":  "2026-11-23"
-                  },
-                  {
-                      "src":  "wttj",
-                      "family":  "Customer Success",
-                      "title":  "Customer Success Manager - UK",
-                      "company":  "SourceWhale",
-                      "fit":  "Core",
-                      "industry":  "Recruitment productivity SaaS",
-                      "location":  "London",
-                      "mode":  "Hybrid",
-                      "salary":  "",
-                      "posted":  "2026-11-09",
-                      "url":  "https://www.welcometothejungle.com/en/companies/sourcewhale/jobs/customer-success-manager-uk_london_skoasbst",
-                      "flags":  [
-                                    "Recruitment tech: fits executive-search background"
-                                ],
-                      "added":  "2026-11-23"
-                  },
-                  {
-                      "src":  "wttj",
-                      "family":  "Customer Success",
                       "title":  "Customer Success Manager - UK Market",
                       "company":  "Spendesk",
                       "fit":  "Adjacent",
@@ -218,16 +167,16 @@
                       "src":  "wttj",
                       "family":  "Customer Success",
                       "title":  "Customer Success Manager",
-                      "company":  "Sona",
+                      "company":  "Beam",
                       "fit":  "Core",
-                      "industry":  "Frontline workforce AI SaaS",
+                      "industry":  "Welfare services tech for social good",
                       "location":  "London",
-                      "mode":  "No remote",
-                      "salary":  "£55–75k",
-                      "posted":  "2026-11-03",
-                      "url":  "https://www.welcometothejungle.com/en/companies/sona/jobs/customer-success-manager_london_xmpdm56v",
+                      "mode":  "Fully remote",
+                      "salary":  "£50–65k",
+                      "posted":  "2026-10-30",
+                      "url":  "https://www.welcometothejungle.com/en/companies/beam-1/jobs/user-enablement-specialist_london",
                       "flags":  [
-                                    "Listed as no remote"
+                                    "Link slug says user enablement specialist"
                                 ],
                       "added":  "2026-11-23"
                   },
@@ -243,23 +192,6 @@
                       "salary":  "",
                       "posted":  "2026-11-02",
                       "url":  "https://www.welcometothejungle.com/en/companies/mirakl/jobs/customer-success-consultant-b2c_london",
-                      "flags":  [
-
-                                ],
-                      "added":  "2026-11-23"
-                  },
-                  {
-                      "src":  "wttj",
-                      "family":  "Customer Success",
-                      "title":  "Global Customer Success Manager",
-                      "company":  "Bandwidth",
-                      "fit":  "Core",
-                      "industry":  "Enterprise communications platform",
-                      "location":  "London",
-                      "mode":  "Not specified",
-                      "salary":  "",
-                      "posted":  "2026-11-01",
-                      "url":  "https://www.welcometothejungle.com/en/companies/bandwidth/jobs/global-customer-success-manager_london_sbkmkx7d",
                       "flags":  [
 
                                 ],
@@ -286,23 +218,6 @@
                       "src":  "wttj",
                       "family":  "Customer Success",
                       "title":  "Customer Success Manager",
-                      "company":  "Beam",
-                      "fit":  "Core",
-                      "industry":  "Welfare services tech for social good",
-                      "location":  "London",
-                      "mode":  "Fully remote",
-                      "salary":  "£50–65k",
-                      "posted":  "2026-10-30",
-                      "url":  "https://www.welcometothejungle.com/en/companies/beam-1/jobs/user-enablement-specialist_london",
-                      "flags":  [
-                                    "Link slug says user enablement specialist"
-                                ],
-                      "added":  "2026-11-23"
-                  },
-                  {
-                      "src":  "wttj",
-                      "family":  "Customer Success",
-                      "title":  "Customer Success Manager",
                       "company":  "Blink",
                       "fit":  "Core",
                       "industry":  "Employee experience SaaS",
@@ -313,6 +228,23 @@
                       "url":  "https://www.welcometothejungle.com/en/companies/blink/jobs/customer-success-manager_london_bkjgfgib",
                       "flags":  [
                                     "Also on the CS tracker"
+                                ],
+                      "added":  "2026-11-23"
+                  },
+                  {
+                      "src":  "wttj",
+                      "family":  "Customer Success",
+                      "title":  "Global Customer Success Manager",
+                      "company":  "Bandwidth",
+                      "fit":  "Core",
+                      "industry":  "Enterprise communications platform",
+                      "location":  "London",
+                      "mode":  "Not specified",
+                      "salary":  "",
+                      "posted":  "2026-11-01",
+                      "url":  "https://www.welcometothejungle.com/en/companies/bandwidth/jobs/global-customer-success-manager_london_sbkmkx7d",
+                      "flags":  [
+
                                 ],
                       "added":  "2026-11-23"
                   },
@@ -331,23 +263,6 @@
                       "flags":  [
                                     "Private markets data: fits a PE background",
                                     "Enterprise: pay may sit above £70k"
-                                ],
-                      "added":  "2026-11-23"
-                  },
-                  {
-                      "src":  "wttj",
-                      "family":  "Customer Success",
-                      "title":  "Client Success Manager",
-                      "company":  "Nexxen",
-                      "fit":  "Core",
-                      "industry":  "Ad tech (CTV and video)",
-                      "location":  "London",
-                      "mode":  "Not specified",
-                      "salary":  "",
-                      "posted":  "2026-11-19",
-                      "url":  "https://www.welcometothejungle.com/en/companies/nexxen/jobs/client-success-manager_london_5wychhee",
-                      "flags":  [
-                                    "Also on the CS tracker"
                                 ],
                       "added":  "2026-11-23"
                   },
@@ -403,20 +318,56 @@
                       "added":  "2026-11-22"
                   },
                   {
-                      "src":  "etc",
+                      "src":  "wttj",
                       "family":  "Customer Success",
-                      "title":  "Enterprise Customer Success Manager",
-                      "company":  "Xero",
+                      "title":  "Customer Success Manager (Audit, UK)",
+                      "company":  "Trullion",
                       "fit":  "Core",
-                      "industry":  "Accounting SaaS",
+                      "industry":  "AI accounting automation SaaS",
                       "location":  "London",
-                      "mode":  "Not stated",
+                      "mode":  "Remote: not specified",
                       "salary":  "",
-                      "url":  "https://www.escapethecity.org/opportunity/62016-enterprise-customer-success-manager-at-xero",
+                      "posted":  "2026-10-28",
+                      "url":  "https://www.welcometothejungle.com/en/companies/trullion/jobs/customer-success-manager-audit-uk_london_dmnhaj4i",
                       "flags":  [
-                                    "Enterprise: pay may sit above £70k"
+                                    "Audit/accounting audience: check if audit background is essential"
                                 ],
-                      "added":  "2026-11-22"
+                      "added":  "2026-11-24"
+                  },
+                  {
+                      "src":  "wttj",
+                      "family":  "Account Management",
+                      "title":  "Client Services Manager (Streaming)",
+                      "company":  "Two Circles",
+                      "fit":  "Adjacent",
+                      "industry":  "Sports marketing and data",
+                      "location":  "London",
+                      "mode":  "Remote: not specified",
+                      "salary":  "",
+                      "posted":  "2026-11-19",
+                      "url":  "https://www.welcometothejungle.com/en/companies/two-circles/jobs/client-services-manager-streaming_london_penjgl6o",
+                      "flags":  [
+                                    "Sports/streaming context: check sector asks"
+                                ],
+                      "added":  "2026-11-24"
+                  },
+                  {
+                      "src":  "wttj",
+                      "family":  "Customer Success",
+                      "title":  "Client Success Analyst",
+                      "company":  "Intapp",
+                      "fit":  "Adjacent",
+                      "industry":  "DealCloud CRM for private capital",
+                      "location":  "London",
+                      "mode":  "Remote: not specified",
+                      "salary":  "",
+                      "posted":  "2026-11-01",
+                      "url":  "https://www.welcometothejungle.com/en/companies/intapp/jobs/client-success-analyst_london_stpm765c",
+                      "flags":  [
+                                    "PE-fit (DealCloud)",
+                                    "Analyst title: pay may sit below Â£50k"
+                                ],
+                      "added":  "2026-11-24"
                   },
                   {
                       "src":  "etc",
@@ -685,6 +636,23 @@
                                 ],
                       "posted":  "2026-10-27",
                       "added":  "2026-11-22"
+                  },
+                  {
+                      "src":  "etc",
+                      "family":  "Customer Success",
+                      "title":  "Customer Success Manager",
+                      "company":  "Yoti",
+                      "fit":  "Core",
+                      "industry":  "Digital identity SaaS",
+                      "location":  "London",
+                      "mode":  "Not stated",
+                      "salary":  "",
+                      "posted":  "2026-11-24",
+                      "url":  "https://www.escapethecity.org/opportunity/62206-customer-success-manager--at-yoti",
+                      "flags":  [
+                                    "Also on the CS tracker (LinkedIn)"
+                                ],
+                      "added":  "2026-11-24"
                   }
               ]
 }
