@@ -1,12 +1,13 @@
 <#
   Rebuilds app/data/leads.json and app/data/logos.json.
-  Usage: .\build-data.ps1 -Csm <csm.html> -Pm <pm.html> -Pub <pub.html> [-SkipLogos]
+  Usage: .\build-data.ps1 -Csm <csm.html> -Pm <pm.html> -Pub <pub.html> [-Xn <expert-network.html>] [-SkipLogos]
   Each input is the saved HTML of one job-agent page; the script reads its `const D=[...]` rows.
 #>
 param(
   [Parameter(Mandatory)][string]$Csm,
   [Parameter(Mandatory)][string]$Pm,
   [Parameter(Mandatory)][string]$Pub,
+  [string]$Xn,
   [switch]$SkipLogos
 )
 $ErrorActionPreference = 'Stop'
@@ -36,6 +37,13 @@ foreach ($r in (Get-Rows $Pm)) {
 foreach ($r in (Get-Rows $Pub)) {
   [void]$leads.Add([ordered]@{ src='pub'; family=$r[0]; title=$r[1]; company=$r[2]; industry=$r[3]; fit=$r[4]; location=$r[5]; mode=$r[6];
     salary=$r[7]; closing=$r[9]; posted=$r[10]; board=$r[11]; url=$r[12]; flags=@($r[13]); why=$r[14]; added=$r[15] })
+}
+# Expert Network & Deal Advisory agent: same columns as the public-sector page (employer, employerType in place of org, sector)
+if ($Xn) {
+  foreach ($r in (Get-Rows $Xn)) {
+    [void]$leads.Add([ordered]@{ src='xn'; family=$r[0]; title=$r[1]; company=$r[2]; industry=$r[3]; fit=$r[4]; location=$r[5]; mode=$r[6];
+      salary=$r[7]; closing=$r[9]; posted=$r[10]; board=$r[11]; url=$r[12]; flags=@($r[13]); why=$r[14]; added=$r[15] })
+  }
 }
 
 # Roles from boards without an agent page (Escape the City, Welcome to the Jungle, Intelligent People)

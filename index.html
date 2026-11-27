@@ -10,6 +10,7 @@
  * axes: light/grotesk-sans/chromatic-blue · posture: workbench · contrast: pass · v2.0.0 */
 /* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V3 · weakest: V, the shell and the kanban stay by request; the change went into the finder, now a dense role ledger instead of a card grid */
 /* Hallmark · answered F7 · tags, badges, next-step notes and contact rows share one small-chip recipe on purpose: they are one kind of object (a status label) at one size, told apart by fill colour */
+/* Hallmark · answered F4 · the red filled "Delete this job" is a destructive call to action the user asked for by name; it sits apart in its own zone and always asks to confirm */
 /* Hallmark · dropped #dStatus · the status picker is now #f-status inside the editable application form, which saves every field to Notion */
 /* Layout: a recruiter's pipeline desk in blues. Navy sidebar (icons when collapsed, a tab bar on phones); each view leads with what needs doing, then the working surface. */
 :root{
@@ -89,6 +90,12 @@ button{cursor:pointer}
 .btn.sm{min-height:32px;padding:var(--space-2xs) var(--space-sm);font-size:var(--text-sm)}
 .btn.danger{color:var(--color-bad);border-color:var(--color-bad)}
 .btn.danger:hover{background:var(--color-bad-soft);color:var(--color-bad)}
+.btn.danger-solid{background:var(--color-bad);border-color:var(--color-bad);color:var(--color-on-bad)}
+.btn.danger-solid:hover{background:color-mix(in oklab,var(--color-bad) 85%,var(--color-ink));border-color:color-mix(in oklab,var(--color-bad) 85%,var(--color-ink));color:var(--color-on-bad)}
+.btn.danger-solid:active{transform:translateY(1px)}
+.danger-zone{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-xs) var(--space-sm);margin-top:var(--space-xs);padding-top:var(--space-md);border-top:var(--rule-hair) solid var(--color-rule)}
+.danger-zone .del-q{flex:1 1 100%;font-size:var(--text-sm);color:var(--color-ink);background:var(--color-bad-soft);border-radius:var(--radius-sm);padding:var(--space-sm)}
+.toast-act{margin-left:var(--space-sm);border:0;background:none;color:var(--color-paper);font-weight:700;text-decoration:underline;text-underline-offset:0.16em;min-height:32px;cursor:pointer}
 .chip{min-height:32px;padding:var(--space-2xs) var(--space-sm);border:var(--rule-hair) solid var(--color-rule);border-radius:var(--radius-pill);background:var(--color-surface);color:var(--color-ink-2);font-size:var(--text-sm);font-weight:600;transition:border-color var(--dur-micro) var(--ease-out),background-color var(--dur-micro) var(--ease-out)}
 .chip:hover{border-color:var(--color-muted)}
 .chip:active{background:var(--color-paper-2)}
@@ -596,7 +603,43 @@ const TODAY = (()=>{const d=new Date(); d.setHours(0,0,0,0); return d})();
 const dayDiff = d=>d?Math.round((new Date(String(d).slice(0,10)+"T00:00:00")-TODAY)/864e5):null;   // + future, - past
 const fmtD = d=>d?new Date(String(d).slice(0,10)+"T00:00:00").toLocaleDateString("en-GB",{day:"numeric",month:"short"}):"";
 const ago = d=>{const n=-dayDiff(d); return n===0?"today":n===1?"1d ago":n+"d ago"};
-function toast(m){const t=$("#toast");t.textContent=m;t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>t.hidden=true,2800)}
+function toast(m, action){
+  const t=$("#toast"); t.textContent=m;
+  if(action){ const b=document.createElement("button"); b.type="button"; b.className="toast-act"; b.textContent=action.label; b.onclick=()=>{ t.hidden=true; action.run() }; t.append(" ", b) }
+  t.hidden=false; clearTimeout(toast.t); toast.t=setTimeout(()=>t.hidden=true, action?9000:2800);
+}
+/* delete a job: confirm on the page, move the Notion page to Trash, offer Undo */
+function askDelete(a){
+  const z=$("#delZone"); if(!z) return;
+  z.innerHTML=`<p class="del-q">Delete <b>${esc(a.role)}</b>${a.company?` at <b>${esc(a.company)}</b>`:""}? It comes off your board and goes to Notion’s Trash, where you can restore it for 30 days.</p>
+    <div class="row-acts"><button class="btn danger-solid" type="button" id="dDelYes">Yes, delete it</button><button class="btn" type="button" id="dDelNo">Keep it</button></div>`;
+  $("#dDelNo").focus();
+  $("#dDelNo").onclick=()=>openApp(a.id);
+  $("#dDelYes").onclick=()=>deleteApp(a);
+}
+async function deleteApp(a){
+  if(!mcp){ toast("Open this page on claude.ai to delete from Notion"); return }
+  if(String(a.id).startsWith("new-")){ toast("This job is still syncing. Press Refresh in the sidebar, then delete it."); return }
+  const btn=$("#dDelYes"); if(btn){ btn.disabled=true; btn.textContent="Deleting…" }
+  try{
+    await mcp.callTool(NOTION,"notion-delete-pages",{page_ids:[a.id], user_confirmed:true});
+    const i=apps.findIndex(x=>x.id===a.id); if(i>=0) apps.splice(i,1);
+    closeDrawer(); renderAll();
+    toast(`Deleted ${a.role}${a.company?` at ${a.company}`:""}.`, {label:"Undo", run:()=>restoreApp(a)});
+    mcp.invalidate(NOTION,"notion-query-data-sources").catch(()=>{});
+  }catch(e){
+    if(btn){ btn.disabled=false; btn.textContent="Yes, delete it" }
+    toast(e&&e.code==="approval_required" ? "Allow this page to delete in Notion, then try again" : "Not deleted: "+((e&&e.message)||"unknown error"));
+  }
+}
+async function restoreApp(a){
+  try{
+    await mcp.callTool(NOTION,"notion-restore-pages",{page_ids:[a.id]});
+    if(!apps.some(x=>x.id===a.id)) apps.push(a);
+    renderAll(); toast(`Restored ${a.role}`);
+    mcp.invalidate(NOTION,"notion-query-data-sources").catch(()=>{});
+  }catch(e){ toast("Couldn’t restore it here. It’s in Notion’s Trash for 30 days.") }
+}
 function hue(s){let h=0;for(const ch of s)h=(h*31+ch.charCodeAt(0))%360;return h}
 function logo(name, big){
   const n=(name||"?").trim(); const cls="logo"+(big?" lg":"");
@@ -835,10 +878,12 @@ function openApp(id, prefill){
     </form>
     ${isNew?"":`<section class="notes-box"><div class="notes-hd"><h3 class="sec-h">Notes</h3><span class="hint num" id="notesCount"></span></div><textarea id="appNotes" rows="6" maxlength="2000" placeholder="Reminders and points to remember: who you spoke to, what they asked, what to follow up on" aria-label="Notes for this application">${esc(a.notes||"")}</textarea><div class="row-acts"><button class="btn" type="button" id="notesStamp">Add today’s date</button><button class="btn" type="button" id="notesSave">Save notes</button><span class="hint" id="notesMsg" role="status">${a.notes?"Saved in Notion":""}</span></div></section>`}
     ${p.length?`<div class="prep-list"><h3 class="sec-h">Interview prep</h3>${p.map(x=>`<a class="btn" href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.label)}</a>`).join("")}</div>`:""}
-    <div class="row-acts">${!isNew&&a.status!=="Inactive"&&!["Offer","Rejected","Withdrawn"].includes(a.status)?`<button class="btn" type="button" id="dInactive">Inactive / no reply</button>`:""}${isNew?"":`<a class="btn" href="https://www.notion.so/${esc(a.id)}" target="_blank" rel="noopener">Open in Notion</a>`}${!isNew&&a.company?`<button class="btn" type="button" data-explore="${esc(a.company)}">Similar companies</button>`:""}<button class="btn" type="button" id="dClose">Close</button></div>`;
+    <div class="row-acts">${!isNew&&a.status!=="Inactive"&&!["Offer","Rejected","Withdrawn"].includes(a.status)?`<button class="btn" type="button" id="dInactive">Inactive / no reply</button>`:""}${isNew?"":`<a class="btn" href="https://www.notion.so/${esc(a.id)}" target="_blank" rel="noopener">Open in Notion</a>`}${!isNew&&a.company?`<button class="btn" type="button" data-explore="${esc(a.company)}">Similar companies</button>`:""}<button class="btn" type="button" id="dClose">Close</button></div>
+    ${isNew?"":`<div class="danger-zone" id="delZone"><button class="btn danger-solid" type="button" id="dDelete">Delete this job</button><span class="hint">Not a fit or not interested? Removes it from your board and Notion.</span></div>`}`;
   $("#drawer").hidden=false; $(isNew?"#f-role":"#f-status").focus();
   $("#dClose").onclick=closeDrawer;
   const di=$("#dInactive"); if(di) di.onclick=()=>{ setStatus(a.id,"Inactive"); closeDrawer() };
+  const dd=$("#dDelete"); if(dd) dd.onclick=()=>askDelete(a);
   $("#appForm").onsubmit=e=>{ e.preventDefault(); saveApp(a, isNew) };
   if(!isNew) wireNotes(a);
 }
