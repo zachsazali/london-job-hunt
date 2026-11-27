@@ -1,585 +1,644 @@
 {
-  "note": "Roles gathered from job boards without an agent page (Escape the City, Welcome to the Jungle, Intelligent People). Each daily run replaces the list for any source it scanned. src: etc | wttj | ip.",
-  "scanned": {
-    "ip": "2026-11-25",
-    "wttj": "2026-11-25",
-    "etc": "2026-11-25"
-  },
-  "leads": [
-    {
-      "src": "ip",
-      "family": "Product Marketing",
-      "title": "Product Marketing Manager (AI SaaS)",
-      "company": "Intelligent People (client unnamed)",
-      "fit": "Agency",
-      "industry": "AI SaaS",
-      "location": "UK remote / London hub",
-      "mode": "Remote",
-      "salary": "£65,000–£75,000",
-      "posted": "2026-11-19",
-      "url": "https://www.intelligentpeople.co.uk/job/product-marketing-manager-65-75k-ai-saas-uk-remote-london-hub-ja9925/",
-      "flags": [
-        "Agency",
-        "Top of range above £70k"
-      ],
-      "added": "2026-11-22"
-    },
-    {
-      "src": "ip",
-      "family": "Product",
-      "title": "Product Manager (Tech4Good B2B SaaS)",
-      "company": "Intelligent People (client unnamed)",
-      "fit": "Agency",
-      "industry": "Tech4Good B2B SaaS",
-      "location": "London",
-      "mode": "Hybrid",
-      "salary": "£65,000–£70,000",
-      "posted": "2026-10-29",
-      "url": "https://www.intelligentpeople.co.uk/job/product-manager-tech4good-b2b-saas-65-70k-hybrid-london-js9919/",
-      "flags": [
-        "Agency",
-        "Mid-level PM title: check product experience asked"
-      ],
-      "added": "2026-11-22"
-    },
-    {
-      "src": "ip",
-      "family": "Product",
-      "title": "Product Manager (Compound Pharmacy)",
-      "company": "Intelligent People (client unnamed)",
-      "fit": "Agency",
-      "industry": "Healthtech / pharmacy",
-      "location": "London",
-      "mode": "Hybrid, 4 days",
-      "salary": "£60,000–£75,000",
-      "posted": "2026-10-19",
-      "url": "https://www.intelligentpeople.co.uk/job/product-manager-compound-pharmacy-hybrid-4-days/",
-      "flags": [
-        "Agency",
-        "4 days in the office",
-        "Mid-level PM title: check product experience asked"
-      ],
-      "added": "2026-11-22"
-    },
-    {
-      "src": "wttj",
-      "family": "Customer Success",
-      "title": "Customer Success Manager",
-      "company": "Semperis",
-      "fit": "Core",
-      "industry": "Identity security SaaS",
-      "location": "London",
-      "mode": "Occasional remote",
-      "salary": "",
-      "posted": "2026-11-22",
-      "url": "https://www.welcometothejungle.com/en/companies/semperis/jobs/customer-success-manager_london_2hbidvrc",
-      "flags": [
-        "Mostly office-based"
-      ],
-      "added": "2026-11-23"
-    },
-    {
-      "src": "wttj",
-      "family": "Customer Success",
-      "title": "Customer Success Manager",
-      "company": "Workiva",
-      "fit": "Core",
-      "industry": "Reporting and GRC SaaS",
-      "location": "London",
-      "mode": "Not specified",
-      "salary": "",
-      "posted": "2026-11-19",
-      "url": "https://www.welcometothejungle.com/en/companies/workiva/jobs/customer-success-manager_london_34ob2sy2",
-      "flags": [],
-      "added": "2026-11-23"
-    },
-    {
-      "src": "wttj",
-      "family": "Customer Success",
-      "title": "Customer Success Manager (Corporate)",
-      "company": "AlphaSense",
-      "fit": "Core",
-      "industry": "Market intelligence AI SaaS",
-      "location": "London",
-      "mode": "Hybrid",
-      "salary": "",
-      "posted": "2026-11-19",
-      "url": "https://www.welcometothejungle.com/en/companies/alphasense/jobs/customer-success-manager-corporate_london_rlzsxbhf",
-      "flags": [
-        "Also on the CS tracker"
-      ],
-      "added": "2026-11-23"
-    },
-    {
-      "src": "wttj",
-      "family": "Customer Success",
-      "title": "Customer Success Manager (SMB)",
-      "company": "Hiya",
-      "fit": "Core",
-      "industry": "Call security SaaS",
-      "location": "London",
-      "mode": "Not specified",
-      "salary": "",
-      "posted": "2026-11-19",
-      "url": "https://www.welcometothejungle.com/en/companies/hiya-1/jobs/account-manager-smb_london_7in5bfv7",
-      "flags": [
-        "Earlier Hiya CS roles needed German/French/Spanish: check"
-      ],
-      "added": "2026-11-23"
-    },
-    {
-      "src": "wttj",
-      "family": "Customer Success",
-      "title": "Customer Success Manager - UK Market",
-      "company": "Spendesk",
-      "fit": "Adjacent",
-      "industry": "Spend management fintech",
-      "location": "London",
-      "mode": "Hybrid",
-      "salary": "",
-      "posted": "2026-11-07",
-      "url": "https://www.welcometothejungle.com/en/companies/spendesk/jobs/customer-success-manager-uk-market_london",
-      "flags": [],
-      "added": "2026-11-23"
-    },
-    {
-      "src": "wttj",
-      "family": "Customer Success",
-      "title": "Customer Success Manager",
-      "company": "Beam",
-      "fit": "Core",
-      "industry": "Welfare services tech for social good",
-      "location": "London",
-      "mode": "Fully remote",
-      "salary": "£50–65k",
-      "posted": "2026-10-30",
-      "url": "https://www.welcometothejungle.com/en/companies/beam-1/jobs/user-enablement-specialist_london",
-      "flags": [
-        "Link slug says user enablement specialist"
-      ],
-      "added": "2026-11-23"
-    },
-    {
-      "src": "wttj",
-      "family": "Customer Success",
-      "title": "Customer Success Consultant, B2C",
-      "company": "Mirakl",
-      "fit": "Core",
-      "industry": "E-commerce marketplace SaaS",
-      "location": "London",
-      "mode": "Occasional remote",
-      "salary": "",
-      "posted": "2026-11-02",
-      "url": "https://www.welcometothejungle.com/en/companies/mirakl/jobs/customer-success-consultant-b2c_london",
-      "flags": [],
-      "added": "2026-11-23"
-    },
-    {
-      "src": "wttj",
-      "family": "Customer Success",
-      "title": "Customer Success Manager",
-      "company": "Elliptic",
-      "fit": "Adjacent",
-      "industry": "Blockchain analytics",
-      "location": "London",
-      "mode": "Hybrid",
-      "salary": "",
-      "posted": "2026-10-31",
-      "url": "https://www.welcometothejungle.com/en/companies/elliptic/jobs/customer-success-manager_london-united-kingdom_7pj74b3e",
-      "flags": [
-        "Also on the CS tracker"
-      ],
-      "added": "2026-11-23"
-    },
-    {
-      "src": "wttj",
-      "family": "Customer Success",
-      "title": "Customer Success Manager",
-      "company": "Blink",
-      "fit": "Core",
-      "industry": "Employee experience SaaS",
-      "location": "London",
-      "mode": "Hybrid",
-      "salary": "",
-      "posted": "2026-10-30",
-      "url": "https://www.welcometothejungle.com/en/companies/blink/jobs/customer-success-manager_london_bkjgfgib",
-      "flags": [
-        "Also on the CS tracker"
-      ],
-      "added": "2026-11-23"
-    },
-    {
-      "src": "wttj",
-      "family": "Customer Success",
-      "title": "Enterprise Customer Success Manager",
-      "company": "Gain",
-      "fit": "Core",
-      "industry": "Private markets intelligence",
-      "location": "London",
-      "mode": "Occasional remote",
-      "salary": "",
-      "posted": "2026-10-28",
-      "url": "https://www.welcometothejungle.com/en/companies/gain/jobs/enterprise-customer-success-manager_london_usaxpeqq",
-      "flags": [
-        "Private markets data: fits a PE background",
-        "Enterprise: pay may sit above £70k"
-      ],
-      "added": "2026-11-23"
-    },
-    {
-      "src": "wttj",
-      "family": "Account Management",
-      "title": "Account Manager",
-      "company": "Dow Jones",
-      "fit": "Adjacent",
-      "industry": "Business news and financial data",
-      "location": "London",
-      "mode": "Occasional remote",
-      "salary": "",
-      "posted": "2026-11-19",
-      "url": "https://www.welcometothejungle.com/en/companies/dow-jones/jobs/account-manager_london_vvrgizmx",
-      "flags": [],
-      "added": "2026-11-22"
-    },
-    {
-      "src": "wttj",
-      "family": "Account Management",
-      "title": "Key Account Manager",
-      "company": "Xceptor",
-      "fit": "Adjacent",
-      "industry": "Data automation for financial institutions",
-      "location": "London",
-      "mode": "Not specified",
-      "salary": "",
-      "posted": "2026-11-19",
-      "url": "https://www.welcometothejungle.com/en/companies/xceptor/jobs/key-account-manager_london_xycsi7qn",
-      "flags": [],
-      "added": "2026-11-22"
-    },
-    {
-      "src": "wttj",
-      "family": "Account Management",
-      "title": "Account Manager",
-      "company": "Beam",
-      "fit": "Core",
-      "industry": "Welfare services tech for social good",
-      "location": "London",
-      "mode": "Hybrid",
-      "salary": "£45–60k",
-      "posted": "2026-10-17",
-      "url": "https://www.welcometothejungle.com/en/companies/beam-1/jobs/customer-success-manager_london",
-      "flags": [
-        "Link slug says customer success manager"
-      ],
-      "added": "2026-11-22"
-    },
-    {
-      "src": "wttj",
-      "family": "Customer Success",
-      "title": "Customer Success Manager (Audit, UK)",
-      "company": "Trullion",
-      "fit": "Core",
-      "industry": "AI accounting automation SaaS",
-      "location": "London",
-      "mode": "Remote: not specified",
-      "salary": "",
-      "posted": "2026-10-28",
-      "url": "https://www.welcometothejungle.com/en/companies/trullion/jobs/customer-success-manager-audit-uk_london_dmnhaj4i",
-      "flags": [
-        "Audit/accounting audience: check if audit background is essential"
-      ],
-      "added": "2026-11-24"
-    },
-    {
-      "posted": "",
-      "salary": "",
-      "flags": [],
-      "added": "2026-11-25",
-      "src": "wttj",
-      "family": "Customer Success",
-      "title": "Customer Success Manager, Mid Market - United Kingdom",
-      "company": "AB Tasty",
-      "fit": "Core",
-      "industry": "Experience optimisation and A/B testing SaaS",
-      "location": "London",
-      "mode": "Hybrid",
-      "url": "https://www.welcometothejungle.com/en/companies/ab-tasty/jobs/customer-success-manager-mid-market-united-kingdom_london"
-    },
-    {
-      "posted": "",
-      "salary": "",
-      "flags": [],
-      "added": "2026-11-25",
-      "src": "wttj",
-      "family": "Customer Success",
-      "title": "Client Success Account Manager",
-      "company": "Ledger",
-      "fit": "Adjacent",
-      "industry": "Crypto hardware wallets and digital-asset security",
-      "location": "London",
-      "mode": "Hybrid",
-      "url": "https://www.welcometothejungle.com/en/companies/ledger/jobs/client-success-account-manager_london"
-    },
-    {
-      "posted": "",
-      "salary": "",
-      "flags": [
-        "Enterprise: pay may sit above £70k"
-      ],
-      "added": "2026-11-25",
-      "src": "wttj",
-      "family": "Customer Success",
-      "title": "Enterprise Customer Success Manager",
-      "company": "Optimove",
-      "fit": "Core",
-      "industry": "CRM marketing and customer data platform SaaS",
-      "location": "London",
-      "mode": "Not specified",
-      "url": "https://www.welcometothejungle.com/en/companies/optimove/jobs/enterprise-customer-success-manager_london_lymqdz2b"
-    },
-    {
-      "src": "etc",
-      "family": "Customer Success",
-      "title": "Enterprise Customer Success Manager",
-      "company": "TiPJAR",
-      "fit": "Core",
-      "industry": "Hospitality tipping tech",
-      "location": "London",
-      "mode": "Not stated",
-      "salary": "",
-      "url": "https://www.escapethecity.org/opportunity/60188-enterprise-customer-success-manager-at-tipjar-at-tipjar",
-      "flags": [
-        "CS tracker screened it out: hospitality tech experience essential",
-        "Posted ~27 days ago"
-      ],
-      "added": "2026-11-22"
-    },
-    {
-      "src": "etc",
-      "family": "Customer Success",
-      "title": "Customer Success Executive",
-      "company": "Forest",
-      "fit": "Core",
-      "industry": "E-bike sharing",
-      "location": "London (Moorgate)",
-      "mode": "Not stated",
-      "salary": "",
-      "url": "https://www.escapethecity.org/opportunity/59663-customer-success-executive-at-forest",
-      "flags": [
-        "Posted over 30 days ago",
-        "Executive title: pay may sit below £50k"
-      ],
-      "added": "2026-11-22"
-    },
-    {
-      "src": "etc",
-      "family": "Account Management",
-      "title": "Technical Account Manager – Data.One",
-      "company": "ClearScore",
-      "fit": "Adjacent",
-      "industry": "Fintech (open banking data)",
-      "location": "London",
-      "mode": "Not stated",
-      "salary": "",
-      "url": "https://www.escapethecity.org/opportunity/technical-account-manager---dataone-at-clearscore",
-      "flags": [
-        "Technical"
-      ],
-      "posted": "2026-11-22",
-      "added": "2026-11-22"
-    },
-    {
-      "src": "etc",
-      "family": "Account Management",
-      "title": "Account Manager",
-      "company": "Thrive Worldwide",
-      "fit": "Outside",
-      "industry": "Wellbeing services for humanitarian organisations",
-      "location": "Remote / near London",
-      "mode": "Hybrid",
-      "salary": "",
-      "url": "https://www.escapethecity.org/opportunity/61486-account-manager-at-thrive-worldwide",
-      "flags": [],
-      "posted": "2026-11-11",
-      "added": "2026-11-22"
-    },
-    {
-      "src": "etc",
-      "family": "Account Management",
-      "title": "Partnership Account Manager",
-      "company": "Pod Point",
-      "fit": "Adjacent",
-      "industry": "EV charging",
-      "location": "London",
-      "mode": "Not stated",
-      "salary": "",
-      "url": "https://www.escapethecity.org/opportunity/61329-partnership-account-manager-at-pod-point",
-      "flags": [],
-      "posted": "2026-11-09",
-      "added": "2026-11-22"
-    },
-    {
-      "src": "etc",
-      "family": "Product",
-      "title": "Product Manager – Score",
-      "company": "ClearScore",
-      "fit": "Adjacent",
-      "industry": "Fintech (credit scores)",
-      "location": "London",
-      "mode": "Not stated",
-      "salary": "",
-      "url": "https://www.escapethecity.org/opportunity/62079-product-manager---score-at-clearscore",
-      "flags": [
-        "Mid-level PM title: check product experience asked"
-      ],
-      "posted": "2026-11-22",
-      "added": "2026-11-22"
-    },
-    {
-      "src": "etc",
-      "family": "Product",
-      "title": "Product Manager",
-      "company": "Thanks Ben",
-      "fit": "Core",
-      "industry": "Employee recognition and rewards SaaS",
-      "location": "London",
-      "mode": "Not stated",
-      "salary": "",
-      "url": "https://www.escapethecity.org/opportunity/62114-product-manager-at-thanks-ben",
-      "flags": [
-        "Mid-level PM title: check product experience asked"
-      ],
-      "added": "2026-11-23"
-    },
-    {
-      "src": "etc",
-      "family": "Product",
-      "title": "Product Manager / Designer",
-      "company": "TiPJAR",
-      "fit": "Core",
-      "industry": "Hospitality tipping tech",
-      "location": "London",
-      "mode": "Not stated",
-      "salary": "",
-      "url": "https://www.escapethecity.org/opportunity/61569-product-manager--designer-at-tipjar",
-      "flags": [
-        "Hybrid PM and design role"
-      ],
-      "added": "2026-11-23"
-    },
-    {
-      "src": "etc",
-      "family": "Product Marketing",
-      "title": "Product Marketing Manager",
-      "company": "Legatics",
-      "fit": "Core",
-      "industry": "Legal transaction SaaS",
-      "location": "London",
-      "mode": "Not stated",
-      "salary": "",
-      "url": "https://www.escapethecity.org/opportunity/62010-product-marketing-manager-at-legatics",
-      "flags": [
-        "Product tracker screened it out: solid B2B SaaS PMM essential"
-      ],
-      "added": "2026-11-23"
-    },
-    {
-      "src": "etc",
-      "family": "Product",
-      "title": "Product Manager",
-      "company": "Greater Change",
-      "fit": "Outside",
-      "industry": "Homelessness charity tech",
-      "location": "Remote / London",
-      "mode": "Remote",
-      "salary": "",
-      "url": "https://www.escapethecity.org/opportunity/61487-product-manager-at-greater-change",
-      "flags": [],
-      "posted": "2026-11-11",
-      "added": "2026-11-22"
-    },
-    {
-      "src": "etc",
-      "family": "Product",
-      "title": "Product Manager – B2B Products",
-      "company": "Forest",
-      "fit": "Core",
-      "industry": "E-bike sharing",
-      "location": "London (Moorgate)",
-      "mode": "Not stated",
-      "salary": "",
-      "url": "https://www.escapethecity.org/opportunity/61644-product-manager-%E2%80%93-b2b-products-at-forest",
-      "flags": [],
-      "posted": "2026-11-13",
-      "added": "2026-11-22"
-    },
-    {
-      "src": "etc",
-      "family": "Product",
-      "title": "Product Manager – Fleet",
-      "company": "Forest",
-      "fit": "Core",
-      "industry": "E-bike sharing",
-      "location": "London (Southwark)",
-      "mode": "Not stated",
-      "salary": "",
-      "url": "https://www.escapethecity.org/opportunity/61645-product-manager---fleet-at-forest",
-      "flags": [],
-      "posted": "2026-11-13",
-      "added": "2026-11-22"
-    },
-    {
-      "posted": "",
-      "salary": "",
-      "flags": [
-        "Motor-finance background may be asked",
-        "Fully remote"
-      ],
-      "added": "2026-11-25",
-      "src": "etc",
-      "family": "Account Management",
-      "title": "Account Manager (Motor Finance)",
-      "company": "Tandem",
-      "fit": "Adjacent",
-      "industry": "Green digital bank (motor finance)",
-      "location": "UK remote",
-      "mode": "Remote",
-      "url": "https://www.escapethecity.org/opportunity/62302-account-manager-motor-finance-at-tandem"
-    },
-    {
-      "posted": "",
-      "salary": "",
-      "flags": [
-        "Dealer-facing: may lean towards sales",
-        "Fully remote"
-      ],
-      "added": "2026-11-25",
-      "src": "etc",
-      "family": "Account Management",
-      "title": "Account Manager (Motor Finance – Dealers)",
-      "company": "Tandem",
-      "fit": "Adjacent",
-      "industry": "Green digital bank (motor finance)",
-      "location": "UK remote",
-      "mode": "Remote",
-      "url": "https://www.escapethecity.org/opportunity/62302-account-manager-motor-finance-%E2%80%93-dealers-at-tandem"
-    },
-    {
-      "posted": "2026-11-05",
-      "salary": "",
-      "flags": [
-        "Check PMM experience asked"
-      ],
-      "added": "2026-11-25",
-      "src": "etc",
-      "family": "Product Marketing",
-      "title": "Product Marketing Manager",
-      "company": "Humaans",
-      "fit": "Core",
-      "industry": "HR software (HRIS) SaaS",
-      "location": "London",
-      "mode": "Not stated",
-      "url": "https://www.escapethecity.org/opportunity/61230-product-marketing-manager-at-humaans"
-    }
-  ]
+    "note":  "Roles gathered from job boards without an agent page (Escape the City, Welcome to the Jungle, Intelligent People). Each daily run replaces the list for any source it scanned. src: etc | wttj | ip.",
+    "scanned":  {
+                    "ip":  "2026-11-27",
+                    "wttj":  "2026-11-27",
+                    "etc":  "2026-11-27"
+                },
+    "leads":  [
+                  {
+                      "src":  "ip",
+                      "family":  "Product Marketing",
+                      "title":  "Product Marketing Manager (AI SaaS)",
+                      "company":  "Intelligent People (client unnamed)",
+                      "fit":  "Agency",
+                      "industry":  "AI SaaS",
+                      "location":  "UK remote / London hub",
+                      "mode":  "Remote",
+                      "salary":  "£65,000–£75,000",
+                      "posted":  "2026-11-19",
+                      "url":  "https://www.intelligentpeople.co.uk/job/product-marketing-manager-65-75k-ai-saas-uk-remote-london-hub-ja9925/",
+                      "flags":  [
+                                    "Agency",
+                                    "Top of range above £70k"
+                                ],
+                      "added":  "2026-11-22"
+                  },
+                  {
+                      "src":  "ip",
+                      "family":  "Product",
+                      "title":  "Product Manager (Tech4Good B2B SaaS)",
+                      "company":  "Intelligent People (client unnamed)",
+                      "fit":  "Agency",
+                      "industry":  "Tech4Good B2B SaaS",
+                      "location":  "London",
+                      "mode":  "Hybrid",
+                      "salary":  "£65,000–£70,000",
+                      "posted":  "2026-10-29",
+                      "url":  "https://www.intelligentpeople.co.uk/job/product-manager-tech4good-b2b-saas-65-70k-hybrid-london-js9919/",
+                      "flags":  [
+                                    "Agency",
+                                    "Mid-level PM title: check product experience asked"
+                                ],
+                      "added":  "2026-11-22"
+                  },
+                  {
+                      "src":  "ip",
+                      "family":  "Product",
+                      "title":  "Product Manager (Compound Pharmacy)",
+                      "company":  "Intelligent People (client unnamed)",
+                      "fit":  "Agency",
+                      "industry":  "Healthtech / pharmacy",
+                      "location":  "London",
+                      "mode":  "Hybrid, 4 days",
+                      "salary":  "£60,000–£75,000",
+                      "posted":  "2026-10-19",
+                      "url":  "https://www.intelligentpeople.co.uk/job/product-manager-compound-pharmacy-hybrid-4-days/",
+                      "flags":  [
+                                    "Agency",
+                                    "4 days in the office",
+                                    "Mid-level PM title: check product experience asked"
+                                ],
+                      "added":  "2026-11-22"
+                  },
+                  {
+                      "src":  "wttj",
+                      "family":  "Customer Success",
+                      "title":  "Customer Success Manager",
+                      "company":  "Semperis",
+                      "fit":  "Core",
+                      "industry":  "Identity security SaaS",
+                      "location":  "London",
+                      "mode":  "Occasional remote",
+                      "salary":  "",
+                      "posted":  "2026-11-22",
+                      "url":  "https://www.welcometothejungle.com/en/companies/semperis/jobs/customer-success-manager_london_2hbidvrc",
+                      "flags":  [
+                                    "Mostly office-based"
+                                ],
+                      "added":  "2026-11-23"
+                  },
+                  {
+                      "src":  "wttj",
+                      "family":  "Customer Success",
+                      "title":  "Customer Success Manager",
+                      "company":  "Workiva",
+                      "fit":  "Core",
+                      "industry":  "Reporting and GRC SaaS",
+                      "location":  "London",
+                      "mode":  "Not specified",
+                      "salary":  "",
+                      "posted":  "2026-11-19",
+                      "url":  "https://www.welcometothejungle.com/en/companies/workiva/jobs/customer-success-manager_london_34ob2sy2",
+                      "flags":  [
+
+                                ],
+                      "added":  "2026-11-23"
+                  },
+                  {
+                      "src":  "wttj",
+                      "family":  "Customer Success",
+                      "title":  "Customer Success Manager (Corporate)",
+                      "company":  "AlphaSense",
+                      "fit":  "Core",
+                      "industry":  "Market intelligence AI SaaS",
+                      "location":  "London",
+                      "mode":  "Hybrid",
+                      "salary":  "",
+                      "posted":  "2026-11-19",
+                      "url":  "https://www.welcometothejungle.com/en/companies/alphasense/jobs/customer-success-manager-corporate_london_rlzsxbhf",
+                      "flags":  [
+                                    "Also on the CS tracker"
+                                ],
+                      "added":  "2026-11-23"
+                  },
+                  {
+                      "src":  "wttj",
+                      "family":  "Customer Success",
+                      "title":  "Customer Success Manager - UK Market",
+                      "company":  "Spendesk",
+                      "fit":  "Adjacent",
+                      "industry":  "Spend management fintech",
+                      "location":  "London",
+                      "mode":  "Hybrid",
+                      "salary":  "",
+                      "posted":  "2026-11-07",
+                      "url":  "https://www.welcometothejungle.com/en/companies/spendesk/jobs/customer-success-manager-uk-market_london",
+                      "flags":  [
+
+                                ],
+                      "added":  "2026-11-23"
+                  },
+                  {
+                      "src":  "wttj",
+                      "family":  "Customer Success",
+                      "title":  "Customer Success Manager",
+                      "company":  "Beam",
+                      "fit":  "Core",
+                      "industry":  "Welfare services tech for social good",
+                      "location":  "London",
+                      "mode":  "Fully remote",
+                      "salary":  "£50–65k",
+                      "posted":  "2026-10-30",
+                      "url":  "https://www.welcometothejungle.com/en/companies/beam-1/jobs/user-enablement-specialist_london",
+                      "flags":  [
+                                    "Link slug says user enablement specialist"
+                                ],
+                      "added":  "2026-11-23"
+                  },
+                  {
+                      "src":  "wttj",
+                      "family":  "Customer Success",
+                      "title":  "Customer Success Consultant, B2C",
+                      "company":  "Mirakl",
+                      "fit":  "Core",
+                      "industry":  "E-commerce marketplace SaaS",
+                      "location":  "London",
+                      "mode":  "Occasional remote",
+                      "salary":  "",
+                      "posted":  "2026-11-02",
+                      "url":  "https://www.welcometothejungle.com/en/companies/mirakl/jobs/customer-success-consultant-b2c_london",
+                      "flags":  [
+
+                                ],
+                      "added":  "2026-11-23"
+                  },
+                  {
+                      "src":  "wttj",
+                      "family":  "Customer Success",
+                      "title":  "Customer Success Manager",
+                      "company":  "Elliptic",
+                      "fit":  "Adjacent",
+                      "industry":  "Blockchain analytics",
+                      "location":  "London",
+                      "mode":  "Hybrid",
+                      "salary":  "",
+                      "posted":  "2026-10-31",
+                      "url":  "https://www.welcometothejungle.com/en/companies/elliptic/jobs/customer-success-manager_london-united-kingdom_7pj74b3e",
+                      "flags":  [
+                                    "Also on the CS tracker"
+                                ],
+                      "added":  "2026-11-23"
+                  },
+                  {
+                      "src":  "wttj",
+                      "family":  "Customer Success",
+                      "title":  "Customer Success Manager",
+                      "company":  "Blink",
+                      "fit":  "Core",
+                      "industry":  "Employee experience SaaS",
+                      "location":  "London",
+                      "mode":  "Hybrid",
+                      "salary":  "",
+                      "posted":  "2026-10-30",
+                      "url":  "https://www.welcometothejungle.com/en/companies/blink/jobs/customer-success-manager_london_bkjgfgib",
+                      "flags":  [
+                                    "Also on the CS tracker"
+                                ],
+                      "added":  "2026-11-23"
+                  },
+                  {
+                      "src":  "wttj",
+                      "family":  "Customer Success",
+                      "title":  "Enterprise Customer Success Manager",
+                      "company":  "Gain",
+                      "fit":  "Core",
+                      "industry":  "Private markets intelligence",
+                      "location":  "London",
+                      "mode":  "Occasional remote",
+                      "salary":  "",
+                      "posted":  "2026-10-28",
+                      "url":  "https://www.welcometothejungle.com/en/companies/gain/jobs/enterprise-customer-success-manager_london_usaxpeqq",
+                      "flags":  [
+                                    "Private markets data: fits a PE background",
+                                    "Enterprise: pay may sit above £70k"
+                                ],
+                      "added":  "2026-11-23"
+                  },
+                  {
+                      "src":  "wttj",
+                      "family":  "Account Management",
+                      "title":  "Account Manager",
+                      "company":  "Dow Jones",
+                      "fit":  "Adjacent",
+                      "industry":  "Business news and financial data",
+                      "location":  "London",
+                      "mode":  "Occasional remote",
+                      "salary":  "",
+                      "posted":  "2026-11-19",
+                      "url":  "https://www.welcometothejungle.com/en/companies/dow-jones/jobs/account-manager_london_vvrgizmx",
+                      "flags":  [
+
+                                ],
+                      "added":  "2026-11-22"
+                  },
+                  {
+                      "src":  "wttj",
+                      "family":  "Account Management",
+                      "title":  "Key Account Manager",
+                      "company":  "Xceptor",
+                      "fit":  "Adjacent",
+                      "industry":  "Data automation for financial institutions",
+                      "location":  "London",
+                      "mode":  "Not specified",
+                      "salary":  "",
+                      "posted":  "2026-11-19",
+                      "url":  "https://www.welcometothejungle.com/en/companies/xceptor/jobs/key-account-manager_london_xycsi7qn",
+                      "flags":  [
+
+                                ],
+                      "added":  "2026-11-22"
+                  },
+                  {
+                      "src":  "wttj",
+                      "family":  "Account Management",
+                      "title":  "Account Manager",
+                      "company":  "Beam",
+                      "fit":  "Core",
+                      "industry":  "Welfare services tech for social good",
+                      "location":  "London",
+                      "mode":  "Hybrid",
+                      "salary":  "£45–60k",
+                      "posted":  "2026-10-17",
+                      "url":  "https://www.welcometothejungle.com/en/companies/beam-1/jobs/customer-success-manager_london",
+                      "flags":  [
+                                    "Link slug says customer success manager"
+                                ],
+                      "added":  "2026-11-22"
+                  },
+                  {
+                      "src":  "wttj",
+                      "family":  "Customer Success",
+                      "title":  "Customer Success Manager (Audit, UK)",
+                      "company":  "Trullion",
+                      "fit":  "Core",
+                      "industry":  "AI accounting automation SaaS",
+                      "location":  "London",
+                      "mode":  "Remote: not specified",
+                      "salary":  "",
+                      "posted":  "2026-10-28",
+                      "url":  "https://www.welcometothejungle.com/en/companies/trullion/jobs/customer-success-manager-audit-uk_london_dmnhaj4i",
+                      "flags":  [
+                                    "Audit/accounting audience: check if audit background is essential"
+                                ],
+                      "added":  "2026-11-24"
+                  },
+                  {
+                      "posted":  "",
+                      "salary":  "",
+                      "flags":  [
+                                    "Enterprise: pay may sit above £70k"
+                                ],
+                      "added":  "2026-11-25",
+                      "src":  "wttj",
+                      "family":  "Customer Success",
+                      "title":  "Enterprise Customer Success Manager",
+                      "company":  "Optimove",
+                      "fit":  "Core",
+                      "industry":  "CRM marketing and customer data platform SaaS",
+                      "location":  "London",
+                      "mode":  "Not specified",
+                      "url":  "https://www.welcometothejungle.com/en/companies/optimove/jobs/enterprise-customer-success-manager_london_lymqdz2b"
+                  },
+                  {
+                      "src":  "etc",
+                      "family":  "Customer Success",
+                      "title":  "Enterprise Customer Success Manager",
+                      "company":  "TiPJAR",
+                      "fit":  "Core",
+                      "industry":  "Hospitality tipping tech",
+                      "location":  "London",
+                      "mode":  "Not stated",
+                      "salary":  "",
+                      "url":  "https://www.escapethecity.org/opportunity/60188-enterprise-customer-success-manager-at-tipjar-at-tipjar",
+                      "flags":  [
+                                    "CS tracker screened it out: hospitality tech experience essential",
+                                    "Posted ~27 days ago"
+                                ],
+                      "added":  "2026-11-22"
+                  },
+                  {
+                      "src":  "etc",
+                      "family":  "Customer Success",
+                      "title":  "Customer Success Executive",
+                      "company":  "Forest",
+                      "fit":  "Core",
+                      "industry":  "E-bike sharing",
+                      "location":  "London (Moorgate)",
+                      "mode":  "Not stated",
+                      "salary":  "",
+                      "url":  "https://www.escapethecity.org/opportunity/59663-customer-success-executive-at-forest",
+                      "flags":  [
+                                    "Posted over 30 days ago",
+                                    "Executive title: pay may sit below £50k"
+                                ],
+                      "added":  "2026-11-22"
+                  },
+                  {
+                      "src":  "etc",
+                      "family":  "Account Management",
+                      "title":  "Account Manager",
+                      "company":  "Thrive Worldwide",
+                      "fit":  "Outside",
+                      "industry":  "Wellbeing services for humanitarian organisations",
+                      "location":  "Remote / near London",
+                      "mode":  "Hybrid",
+                      "salary":  "",
+                      "url":  "https://www.escapethecity.org/opportunity/61486-account-manager-at-thrive-worldwide",
+                      "flags":  [
+
+                                ],
+                      "posted":  "2026-11-11",
+                      "added":  "2026-11-22"
+                  },
+                  {
+                      "src":  "etc",
+                      "family":  "Account Management",
+                      "title":  "Partnership Account Manager",
+                      "company":  "Pod Point",
+                      "fit":  "Adjacent",
+                      "industry":  "EV charging",
+                      "location":  "London",
+                      "mode":  "Not stated",
+                      "salary":  "",
+                      "url":  "https://www.escapethecity.org/opportunity/61329-partnership-account-manager-at-pod-point",
+                      "flags":  [
+
+                                ],
+                      "posted":  "2026-11-09",
+                      "added":  "2026-11-22"
+                  },
+                  {
+                      "src":  "etc",
+                      "family":  "Product",
+                      "title":  "Product Manager – Score",
+                      "company":  "ClearScore",
+                      "fit":  "Adjacent",
+                      "industry":  "Fintech (credit scores)",
+                      "location":  "London",
+                      "mode":  "Not stated",
+                      "salary":  "",
+                      "url":  "https://www.escapethecity.org/opportunity/62079-product-manager---score-at-clearscore",
+                      "flags":  [
+                                    "Mid-level PM title: check product experience asked"
+                                ],
+                      "posted":  "2026-11-22",
+                      "added":  "2026-11-22"
+                  },
+                  {
+                      "src":  "etc",
+                      "family":  "Product",
+                      "title":  "Product Manager",
+                      "company":  "Thanks Ben",
+                      "fit":  "Core",
+                      "industry":  "Employee recognition and rewards SaaS",
+                      "location":  "London",
+                      "mode":  "Not stated",
+                      "salary":  "",
+                      "url":  "https://www.escapethecity.org/opportunity/62114-product-manager-at-thanks-ben",
+                      "flags":  [
+                                    "Mid-level PM title: check product experience asked"
+                                ],
+                      "added":  "2026-11-23"
+                  },
+                  {
+                      "src":  "etc",
+                      "family":  "Product",
+                      "title":  "Product Manager / Designer",
+                      "company":  "TiPJAR",
+                      "fit":  "Core",
+                      "industry":  "Hospitality tipping tech",
+                      "location":  "London",
+                      "mode":  "Not stated",
+                      "salary":  "",
+                      "url":  "https://www.escapethecity.org/opportunity/61569-product-manager--designer-at-tipjar",
+                      "flags":  [
+                                    "Hybrid PM and design role"
+                                ],
+                      "added":  "2026-11-23"
+                  },
+                  {
+                      "src":  "etc",
+                      "family":  "Product Marketing",
+                      "title":  "Product Marketing Manager",
+                      "company":  "Legatics",
+                      "fit":  "Core",
+                      "industry":  "Legal transaction SaaS",
+                      "location":  "London",
+                      "mode":  "Not stated",
+                      "salary":  "",
+                      "url":  "https://www.escapethecity.org/opportunity/62010-product-marketing-manager-at-legatics",
+                      "flags":  [
+                                    "Product tracker screened it out: solid B2B SaaS PMM essential"
+                                ],
+                      "added":  "2026-11-23"
+                  },
+                  {
+                      "src":  "etc",
+                      "family":  "Product",
+                      "title":  "Product Manager",
+                      "company":  "Greater Change",
+                      "fit":  "Outside",
+                      "industry":  "Homelessness charity tech",
+                      "location":  "Remote / London",
+                      "mode":  "Remote",
+                      "salary":  "",
+                      "url":  "https://www.escapethecity.org/opportunity/61487-product-manager-at-greater-change",
+                      "flags":  [
+
+                                ],
+                      "posted":  "2026-11-11",
+                      "added":  "2026-11-22"
+                  },
+                  {
+                      "src":  "etc",
+                      "family":  "Product",
+                      "title":  "Product Manager – B2B Products",
+                      "company":  "Forest",
+                      "fit":  "Core",
+                      "industry":  "E-bike sharing",
+                      "location":  "London (Moorgate)",
+                      "mode":  "Not stated",
+                      "salary":  "",
+                      "url":  "https://www.escapethecity.org/opportunity/61644-product-manager-%E2%80%93-b2b-products-at-forest",
+                      "flags":  [
+
+                                ],
+                      "posted":  "2026-11-13",
+                      "added":  "2026-11-22"
+                  },
+                  {
+                      "src":  "etc",
+                      "family":  "Product",
+                      "title":  "Product Manager – Fleet",
+                      "company":  "Forest",
+                      "fit":  "Core",
+                      "industry":  "E-bike sharing",
+                      "location":  "London (Southwark)",
+                      "mode":  "Not stated",
+                      "salary":  "",
+                      "url":  "https://www.escapethecity.org/opportunity/61645-product-manager---fleet-at-forest",
+                      "flags":  [
+
+                                ],
+                      "posted":  "2026-11-13",
+                      "added":  "2026-11-22"
+                  },
+                  {
+                      "posted":  "",
+                      "salary":  "",
+                      "flags":  [
+                                    "Motor-finance background may be asked",
+                                    "Fully remote"
+                                ],
+                      "added":  "2026-11-25",
+                      "src":  "etc",
+                      "family":  "Account Management",
+                      "title":  "Account Manager (Motor Finance)",
+                      "company":  "Tandem",
+                      "fit":  "Adjacent",
+                      "industry":  "Green digital bank (motor finance)",
+                      "location":  "UK remote",
+                      "mode":  "Remote",
+                      "url":  "https://www.escapethecity.org/opportunity/62302-account-manager-motor-finance-at-tandem"
+                  },
+                  {
+                      "posted":  "",
+                      "salary":  "",
+                      "flags":  [
+                                    "Dealer-facing: may lean towards sales",
+                                    "Fully remote"
+                                ],
+                      "added":  "2026-11-25",
+                      "src":  "etc",
+                      "family":  "Account Management",
+                      "title":  "Account Manager (Motor Finance – Dealers)",
+                      "company":  "Tandem",
+                      "fit":  "Adjacent",
+                      "industry":  "Green digital bank (motor finance)",
+                      "location":  "UK remote",
+                      "mode":  "Remote",
+                      "url":  "https://www.escapethecity.org/opportunity/62302-account-manager-motor-finance-%E2%80%93-dealers-at-tandem"
+                  },
+                  {
+                      "posted":  "2026-11-05",
+                      "salary":  "",
+                      "flags":  [
+                                    "Check PMM experience asked"
+                                ],
+                      "added":  "2026-11-25",
+                      "src":  "etc",
+                      "family":  "Product Marketing",
+                      "title":  "Product Marketing Manager",
+                      "company":  "Humaans",
+                      "fit":  "Core",
+                      "industry":  "HR software (HRIS) SaaS",
+                      "location":  "London",
+                      "mode":  "Not stated",
+                      "url":  "https://www.escapethecity.org/opportunity/61230-product-marketing-manager-at-humaans"
+                  },
+                  {
+                      "src":  "wttj",
+                      "family":  "Customer Success",
+                      "title":  "Customer Success Manager",
+                      "company":  "Powtoon",
+                      "fit":  "Core",
+                      "industry":  "Video and visual communication SaaS",
+                      "location":  "London",
+                      "mode":  "Occasional remote",
+                      "salary":  "",
+                      "posted":  "2026-11-26",
+                      "url":  "https://www.welcometothejungle.com/en/companies/powtoon/jobs/customer-success-manager_london_2eqig7lv",
+                      "flags":  [
+                                    "Mostly office-based"
+                                ],
+                      "added":  "2026-11-27"
+                  },
+                  {
+                      "src":  "wttj",
+                      "family":  "Account Management",
+                      "title":  "Account Manager",
+                      "company":  "Kody",
+                      "fit":  "Adjacent",
+                      "industry":  "Payments and POS for hospitality (fintech)",
+                      "location":  "London",
+                      "mode":  "Not specified",
+                      "salary":  "",
+                      "posted":  "2026-11-26",
+                      "url":  "https://www.welcometothejungle.com/en/companies/kody/jobs/account-manager_london_j2gmkwrq",
+                      "flags":  [
+                                    "Two listings (also account-manager_london_irnrwhh6)",
+                                    "Check it is not a sales role"
+                                ],
+                      "added":  "2026-11-27"
+                  },
+                  {
+                      "src":  "wttj",
+                      "family":  "Customer Success",
+                      "title":  "Customer Success Manager",
+                      "company":  "Papirfly",
+                      "fit":  "Core",
+                      "industry":  "Brand management SaaS",
+                      "location":  "London",
+                      "mode":  "Not specified",
+                      "salary":  "",
+                      "posted":  "2026-10-22",
+                      "url":  "https://www.welcometothejungle.com/en/companies/papirfly/jobs/customer-success-manager_london_mpmeykpq",
+                      "flags":  [
+                                    "Posted over a month ago"
+                                ],
+                      "added":  "2026-11-27"
+                  },
+                  {
+                      "src":  "wttj",
+                      "family":  "Customer Success",
+                      "title":  "Customer Success Manager",
+                      "company":  "monday.com",
+                      "fit":  "Core",
+                      "industry":  "Work management SaaS",
+                      "location":  "London",
+                      "mode":  "Not specified",
+                      "salary":  "",
+                      "posted":  "2026-10-10",
+                      "url":  "https://www.welcometothejungle.com/en/companies/monday-com/jobs/customer-success-manager_london_cm32yksn",
+                      "flags":  [
+                                    "Posted over a month ago"
+                                ],
+                      "added":  "2026-11-27"
+                  },
+                  {
+                      "src":  "etc",
+                      "family":  "Product",
+                      "title":  "Product Manager",
+                      "company":  "Sylvera",
+                      "fit":  "Adjacent",
+                      "industry":  "Carbon credit ratings and data",
+                      "location":  "London",
+                      "mode":  "Not stated",
+                      "salary":  "",
+                      "posted":  "2026-11-03",
+                      "url":  "https://www.escapethecity.org/opportunity/60913-product-manager-at-sylvera",
+                      "flags":  [
+                                    "Mid-level PM title: check product experience asked"
+                                ],
+                      "added":  "2026-11-27"
+                  },
+                  {
+                      "src":  "etc",
+                      "family":  "Account Management",
+                      "title":  "Membership Account Manager",
+                      "company":  "Fora",
+                      "fit":  "Outside",
+                      "industry":  "Flexible workspace",
+                      "location":  "London",
+                      "mode":  "Not stated",
+                      "salary":  "",
+                      "posted":  "2026-11-26",
+                      "url":  "https://www.escapethecity.org/opportunity/62386-membership-account-manager-at-fora",
+                      "flags":  [
+
+                                ],
+                      "added":  "2026-11-27"
+                  }
+              ]
 }
